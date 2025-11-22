@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>better cc ported</title>
+    <style>
+        :root{
+            --blue-700: #0456a6;
+            --blue-400: #5fb0ff;
+            --accent: #cfe9ff;
+            --bg: #ffffff;
+        }
+        html,body{height:100%;margin:0;padding:0;}
+        body{
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg,var(--accent) 0%, #f7fbff 40%, var(--bg) 100%);
+            color: var(--blue-700);
+            padding:2rem;
+            overflow-x: hidden;
+        }
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header{
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        h1{
+            margin:0 0 0.5rem 0;
+            font-size: clamp(2rem, 6vw, 4rem);
+            line-height:1;
+            color: var(--blue-700);
+            letter-spacing: -0.02em;
+        }
+        p.lead{
+            margin:0 0 1.25rem 0;
+            color: #1464a8;
+            opacity:0.9;
+            font-size:1.05rem;
+        }
+        .badge{
+            display:inline-block;
+            background: linear-gradient(90deg,var(--blue-400),var(--blue-700));
+            color: #fff;
+            padding:0.35rem 0.75rem;
+            border-radius:999px;
+            font-weight:600;
+            font-size:0.85rem;
+            margin-bottom:1rem;
+            box-shadow: 0 6px 18px rgba(5,86,166,0.12);
+        }
+        .download-section{
+            background: linear-gradient(135deg,var(--blue-700),var(--blue-400));
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 12px 40px rgba(5,86,166,0.25);
+        }
+        .download-section h2{
+            margin: 0 0 0.75rem 0;
+            font-size: 2rem;
+        }
+        .download-section p{
+            margin: 0 0 1.5rem 0;
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+        .btn{
+            display:inline-block;
+            background: #fff;
+            color: var(--blue-700);
+            padding:1rem 3rem;
+            border-radius:10px;
+            font-weight:700;
+            font-size:1.2rem;
+            text-decoration:none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            border:none;
+            cursor:pointer;
+        }
+        .btn:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+        }
+        .btn:active{
+            transform: translateY(0);
+        }
+        .instructions{
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .instructions h3{
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+        .instructions ol{
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+        .instructions code{
+            background: rgba(255,255,255,0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .games-section h2{
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--blue-700);
+        }
+        .games-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .game-card{
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(4,86,166,0.08);
+            border: 1px solid rgba(5,86,166,0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .game-card:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(4,86,166,0.15);
+        }
+        .game-card h3{
+            margin: 0 0 0.75rem 0;
+            color: var(--blue-700);
+            font-size: 1.8rem;
+        }
+        .game-card p{
+            margin: 0 0 1.5rem 0;
+            color: #1464a8;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+        .game-icon{
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 6px 20px rgba(5,86,166,0.2);
+        }
+        .btn-play{
+            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(5,86,166,0.2);
+        }
+        .btn-play:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5,86,166,0.3);
+        }
+        .coming-soon{
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .coming-soon-badge{
+            background: #6c757d;
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        @media (prefers-color-scheme: dark){
+            body{background:linear-gradient(180deg,#05233a 0%, #071833 40%);}
+            .game-card{background:#041423; color:#cfefff; box-shadow: none; border:1px solid rgba(95,176,255,0.06)}
+            .game-card h3{color:#cfefff;}
+            .game-card p{color:#5fb0ff;}
+            h1{color:#cfefff;}
+            p.lead{color:#5fb0ff;}
+            .games-section h2{color:#cfefff;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">White & Blue Theme</div>
+            <h1>better cc ported</h1>
+            <p class="lead">This is a game website... have fun!</p>
+        </div>
+
+        <div class="download-section">
+            <h2>Download Website</h2>
+            <p>Get the full website to run offline on your computer</p>
+            <button onclick="downloadWebsite()" class="btn">Download Now</button>
+            
+            <div class="instructions">
+                <h3>How to Run Locally (to make unblockable):</h3>
+                <ol>
+                    <li>Click the <strong>"Download Now"</strong> button above</li>
+                    <li>Extract the downloaded file to a folder</li>
+                    <li>Open <code>home.html</code> in your browser</li>
+                    <li>Double Click <code>home.html</code> to open it</li>
+                    <li>Enjoy playing offline! Plus itt's unblockable</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="games-section">
+            <h2>Available Games</h2>
+            <!-- ovo game card -->
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">O</div>
+                    
+                    <h3>OVO</h3>
+                    <p>A challenging platformer game with precise controls and fun obstacles. Jump, slide, and master your way through levels!</p>
+                    <iframe src="games/ovo.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
+                    <a href="games/ovo.html" class="btn-play">Play Now</a>
+                </div>
+
+
+                <!-- game 2 card -->
+                <div class="game-card coming-soon">
+                    <div class="game-icon">2</div>
+                    <h3>Game 2</h3>
+                    <p>An exciting new game is coming soon. Stay tuned for more adventures and challenges!</p>
+                    
+                    <iframe src="games/gh/index.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
+                    
+                    <a href="games/gh/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card coming-soon">
+                    <div class="game-icon">3</div>
+                    <h3>Game 3</h3>
+                    <p>Another awesome game will be added here. Check back later for updates and new content!</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function downloadWebsite() {
+            const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>better cc ported</title>
+    <style>
+        :root{
+            --blue-700: #0456a6;
+            --blue-400: #5fb0ff;
+            --accent: #cfe9ff;
+            --bg: #ffffff;
+        }
+        html,body{height:100%;}
+        body{
+            margin:0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg,var(--accent) 0%, #f7fbff 40%, var(--bg) 100%);
+            color: var(--blue-700);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:3rem;
+        }
+        .card{
+            background: var(--bg);
+            border-radius:14px;
+            padding:3rem 2.5rem;
+            max-width:900px;
+            width:100%;
+            box-shadow: 0 10px 30px rgba(4,86,166,0.08);
+            border: 1px solid rgba(5,86,166,0.08);
+            text-align:center;
+        }
+        h1{
+            margin:0 0 0.5rem 0;
+            font-size: clamp(2rem, 6vw, 4rem);
+            line-height:1;
+            color: var(--blue-700);
+            letter-spacing: -0.02em;
+        }
+        p.lead{
+            margin:0 0 1.25rem 0;
+            color: #1464a8;
+            opacity:0.9;
+            font-size:1.05rem;
+        }
+        .badge{
+            display:inline-block;
+            background: linear-gradient(90deg,var(--blue-400),var(--blue-700));
+            color: #fff;
+            padding:0.35rem 0.75rem;
+            border-radius:999px;
+            font-weight:600;
+            font-size:0.85rem;
+            margin-bottom:1rem;
+            box-shadow: 0 6px 18px rgba(5,86,166,0.12);
+        }
+        .btn{
+            display:inline-block;
+            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            color: #fff;
+            padding:0.9rem 2.5rem;
+            border-radius:8px;
+            font-weight:600;
+            font-size:1.1rem;
+            text-decoration:none;
+            margin-top:1.5rem;
+            box-shadow: 0 8px 24px rgba(5,86,166,0.2);
+            transition: all 0.3s ease;
+            border:none;
+            cursor:pointer;
+        }
+        .btn:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(5,86,166,0.3);
+        }
+        @media (prefers-color-scheme: dark){
+            body{background:linear-gradient(180deg,#05233a 0%, #071833 40%);}
+            .card{background:#041423; color:#cfefff; box-shadow: none; border:1px solid rgba(95,176,255,0.06)}
+            h1{color:#cfefff;}
+            p.lead{color:#5fb0ff;}
+        }
+    </style>
+</head>
+<body>
+    <main class="card" role="main">
+        <div class="badge">White & Blue Theme</div>
+        <h1>better cc ported</h1>
+        <p class="lead">This is a game website... have fun!</p>
+        <a href="games/index.html" class="btn">Play OVO</a>
+    </main>
+</body>
+</html>`;
+
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'better-cc-ported.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Downloaded! Remember to double click the home.html to open it and play unblocked.');
+        }
+    </script>
+</body>
+</html>
