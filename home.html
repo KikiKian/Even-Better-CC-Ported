@@ -222,42 +222,59 @@
                 <ol>
                     <li>Click the <strong>"Download Now"</strong> button above</li>
                     <li>Extract the downloaded file to a folder</li>
-                    <li>Open <code>home.html</code> in your browser</li>
                     <li>Double Click <code>home.html</code> to open it</li>
-                    <li>Enjoy playing offline! Plus itt's unblockable</li>
+                    <li>Enjoy playing offline! Plus it's unblockable</li>
                 </ol>
             </div>
         </div>
 
         <div class="games-section">
             <h2>Available Games</h2>
-            <!-- ovo game card -->
             <div class="games-grid">
+                <!-- OVO -->
                 <div class="game-card">
                     <div class="game-icon">O</div>
-                    
                     <h3>OVO</h3>
                     <p>A challenging platformer game with precise controls and fun obstacles. Jump, slide, and master your way through levels!</p>
                     <iframe src="games/ovo.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
                     <a href="games/ovo.html" class="btn-play">Play Now</a>
                 </div>
 
-
-                <!-- game 2 card -->
-                <div class="game-card coming-soon">
-                    <div class="game-icon">2</div>
-                    <h3>Game 2</h3>
-                    <p>An exciting new game is coming soon. Stay tuned for more adventures and challenges!</p>
-                    
+                <!-- Game 2 -->
+                <div class="game-card">
+                    <div class="game-icon">G</div>
+                    <h3>Gladihoppers</h3>
+                    <p>Hop into the arena and battle your way through challenging levels in this exciting platformer!</p>
                     <iframe src="games/gh/index.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
-                    
                     <a href="games/gh/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <div class="game-card coming-soon">
-                    <div class="game-icon">3</div>
-                    <h3>Game 3</h3>
-                    <p>Another awesome game will be added here. Check back later for updates and new content!</p>
+                <!-- Bitlife -->
+                <div class="game-card">
+                    <div class="game-icon">BL</div>
+                    <h3>Bitlife</h3>
+                    <p>Go through the ups and downs of life in this interactive life simulation game.</p>
+                    <iframe src="games/bl/index.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
+                    <a href="games/bl/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <!-- BTD 4 -->
+                <div class="game-card">
+                    <div class="game-icon">BTD</div>
+                    <h3>Bloons Tower Defense 4</h3>
+                    <iframe src="games/btd/4/index.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
+                    <a href="games/btd/4/index.html" class="btn-play">Play Now</a>
+                    <p>Shoot the bloons and defend your territory in this classic tower defense game.</p>
+                    <span class="coming-soon-badge">Coming Soon</span>
+                </div>
+
+                <!-- Retro Ball -->
+                <div class="game-card">
+                    <div class="game-icon">RB</div>
+                    <h3>Retro Ball</h3>
+                    <iframe src="games/rb/index.html" style="width: 100%; height: 400px; border: 2px solid var(--blue-400); border-radius: 8px; margin-bottom: 1rem;"></iframe>
+                    <a href="games/rb/index.html" class="btn-play">Play Now</a>
+                    <p>Even more games coming soon. Keep checking back for updates!</p>
                     <span class="coming-soon-badge">Coming Soon</span>
                 </div>
             </div>
@@ -356,7 +373,7 @@
         <div class="badge">White & Blue Theme</div>
         <h1>better cc ported</h1>
         <p class="lead">This is a game website... have fun!</p>
-        <a href="games/index.html" class="btn">Play OVO</a>
+        <a href="games/ovo.html" class="btn">Play Games</a>
     </main>
 </body>
 </html>`;
@@ -365,7 +382,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'better-cc-ported.html';
+            a.download = 'home.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
