@@ -339,6 +339,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // This is what runs when the form submits
         window.submitRequest = async function(event) {
             event.preventDefault();
 
@@ -355,22 +356,22 @@
                 timestamp: new Date().toISOString()
             };
 
-            console.log("About to save request:", request);
+            console.log("🎮 About to save request:", request);
 
+            let docRef;
             try {
-                await addDoc(collection(db, "gameRequests"), request);
-                console.log("✅ Saved to Firestore:", request);
+                docRef = await addDoc(collection(db, "gameRequests"), request);
+                console.log("✅ Saved to Firestore with id:", docRef.id);
+                alert(`✅ Saved to Firebase with id: ${docRef.id}`);
             } catch (err) {
                 console.error("❌ Error saving request:", err);
-                alert("❌ Error saving request. Check console for details.");
-                return; // don't continue if Firestore failed
+                alert("❌ Error saving to Firebase: " + err.message);
+                return; // stop if save failed
             }
 
             const githubIssueUrl = `https://github.com/KikiKian/Even-Better-CC-Ported/issues/new?title=Game Request: ${encodeURIComponent(gameName)}&body=Requested by: ${encodeURIComponent(yourName)}%0A%0AReason: ${encodeURIComponent(reason)}`;
 
-            alert(`✅ Request submitted for "${gameName}"!\n\nYour request was saved. You can also create a GitHub issue to track it.`);
-
-            if (confirm("Would you like to create a GitHub issue for this request?")) {
+            if (confirm(`Your request was saved to Firebase.\n\nDo you also want to create a GitHub issue for "${gameName}"?`)) {
                 window.open(githubIssueUrl, "_blank");
             }
 
