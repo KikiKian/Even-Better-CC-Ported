@@ -225,9 +225,162 @@
             p.lead{color:#5fb0ff;}
             .games-section h2{color:#cfefff;}
         }
+        .modal{
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content{
+            background: var(--bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+        .modal-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-header h2{
+            margin: 0;
+            color: var(--blue-700);
+        }
+        .close-btn{
+            font-size: 2rem;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            border: none;
+            background: none;
+            transition: color 0.3s;
+        }
+        .close-btn:hover{
+            color: #333;
+        }
+        .form-group{
+            margin-bottom: 1.5rem;
+        }
+        .form-group label{
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--blue-700);
+            font-weight: 600;
+        }
+        .form-group input, .form-group textarea{
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--blue-400);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus{
+            outline: none;
+            border-color: var(--blue-700);
+        }
+        .form-group textarea{
+            resize: vertical;
+            min-height: 100px;
+        }
+        .submit-btn{
+            width: 100%;
+            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .submit-btn:hover{
+            transform: translateY(-2px);
+        }
+        @keyframes fadeIn{
+            from{opacity: 0;}
+            to{opacity: 1;}
+        }
+        @keyframes slideDown{
+            from{transform: translateY(-50px); opacity: 0;}
+            to{transform: translateY(0); opacity: 1;}
+        }
     </style>
 </head>
 <body>
+
+    <!-- Firebase + Firestore (module) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyClOeUmq_Dt-9ghRV4LF-HaAO7JRypNIWw",
+            authDomain: "even-better-cc-ported.firebaseapp.com",
+            projectId: "even-better-cc-ported",
+            storageBucket: "even-better-cc-ported.firebasestorage.app",
+            messagingSenderId: "662470608606",
+            appId: "1:662470608606:web:5cd8ae75395100fb6ea44f",
+            measurementId: "G-0VHFLZNVEJ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.submitRequest = async function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+
+            const gameName = document.getElementById('gameName').value;
+            const yourName = document.getElementById('yourName').value || 'Anonymous';
+            const reason = document.getElementById('reason').value;
+
+            const request = {
+                game: gameName,
+                name: yourName,
+                reason: reason,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log("About to save request:", request);
+
+            try {
+                await addDoc(collection(db, "gameRequests"), request);
+                console.log("✅ Saved to Firestore:", request);
+            } catch (err) {
+                console.error("❌ Error saving request:", err);
+                alert("❌ Error saving request. Check console for details.");
+                return; // don't continue if Firestore failed
+            }
+
+            const githubIssueUrl = `https://github.com/KikiKian/Even-Better-CC-Ported/issues/new?title=Game Request: ${encodeURIComponent(gameName)}&body=Requested by: ${encodeURIComponent(yourName)}%0A%0AReason: ${encodeURIComponent(reason)}`;
+
+            alert(`✅ Request submitted for "${gameName}"!\n\nYour request was saved. You can also create a GitHub issue to track it.`);
+
+            if (confirm("Would you like to create a GitHub issue for this request?")) {
+                window.open(githubIssueUrl, "_blank");
+            }
+
+            form.reset();
+            if (typeof window.closeRequestModal === "function") {
+                window.closeRequestModal();
+            }
+        };
+    </script>
+
     <div class="container">
         <div class="header">
             <div class="badge">White & Blue Theme</div>
@@ -253,13 +406,18 @@
             </div>
         </div>
 
+        <div class="download-section" style="background: linear-gradient(135deg,#28a745,#20c997); margin-bottom: 3rem;">
+            <h2>Request a Game</h2>
+            <p>Don't see your favorite game? Let us know what you'd like to see!</p>
+            <button onclick="openRequestModal()" class="btn">Request Game</button>
+        </div>
+
         <div class="games-section">
             <h2>Available Games</h2>
             <div class="search-bar">
                 <input type="text" id="gameSearch" placeholder="🔍 Search for games..." onkeyup="searchGames()">
             </div>
             <div class="games-grid">
-                <!-- OVO -->
                 <div class="game-card">
                     <div class="game-icon">O</div>
                     <h3>OVO</h3>
@@ -267,7 +425,6 @@
                     <a href="games/ovo.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- Gladihoppers -->
                 <div class="game-card">
                     <div class="game-icon">G</div>
                     <h3>Gladihoppers</h3>
@@ -275,7 +432,6 @@
                     <a href="games/gh/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- Bitlife -->
                 <div class="game-card">
                     <div class="game-icon">BL</div>
                     <h3>Bitlife</h3>
@@ -283,7 +439,6 @@
                     <a href="games/bl/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- BTD 4 -->
                 <div class="game-card">
                     <div class="game-icon">BTD</div>
                     <h3>Bloons Tower Defense 4</h3>
@@ -291,7 +446,6 @@
                     <a href="games/btd/4/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- Retro Bowl -->
                 <div class="game-card">
                     <div class="game-icon">RB</div>
                     <h3>Retro Bowl</h3>
@@ -299,7 +453,6 @@
                     <a href="games/rb/index.html" class="btn-play">Play Now</a>
                 </div> 
            
-                <!-- Minecraft 1.8 -->
                 <div class="game-card">
                     <div class="game-icon">MC</div>
                     <h3>MC 1.8</h3>
@@ -307,7 +460,6 @@
                     <a href="games/mc/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- FNAF 1 -->
                 <div class="game-card">
                     <div class="game-icon">FN</div>
                     <h3>FNAF 1</h3>
@@ -315,7 +467,6 @@
                     <a href="games/fnaf1/index.html" class="btn-play">Play Now</a>
                 </div>
 
-                <!-- Lunar Lander -->
                 <div class="game-card">
                     <div class="game-icon">LL</div>
                     <h3>Lunar Lander</h3>
@@ -325,7 +476,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Game Request Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Request a Game</h2>
+                <button class="close-btn" onclick="closeRequestModal()">&times;</button>
+            </div>
+            <form onsubmit="submitRequest(event)">
+                <div class="form-group">
+                    <label for="gameName">Game Name *</label>
+                    <input type="text" id="gameName" placeholder="e.g., Slope, Cookie Clicker" required>
+                </div>
+                <div class="form-group">
+                    <label for="yourName">Your Name (optional)</label>
+                    <input type="text" id="yourName" placeholder="Anonymous">
+                </div>
+                <div class="form-group">
+                    <label for="reason">Why do you want this game? (optional)</label>
+                    <textarea id="reason" placeholder="Tell us why you'd like to see this game added..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+        </div>
+    </div>
     
+    <!-- Normal JS (UI only) -->
     <script>
         function searchGames() {
             const input = document.getElementById('gameSearch');
@@ -342,6 +519,22 @@
                     card.style.display = 'none';
                 }
             });
+        }
+
+        function openRequestModal() {
+            document.getElementById('requestModal').style.display = 'block';
+        }
+
+        function closeRequestModal() {
+            document.getElementById('requestModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('requestModal');
+            if (event.target == modal) {
+                closeRequestModal();
+            }
         }
     </script>
 </body>
