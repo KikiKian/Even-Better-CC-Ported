@@ -1,0 +1,29 @@
+{
+  "name": "threejs-tetris-react",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.86.3",
+    "@react-three/fiber": "^8.16.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.157.0",
+    "three-stdlib": "^2.36.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@types/three": "^0.167.1",
+    "@types/web": "^0.0.153",
+    "@vitejs/plugin-react": "^4.0.3",
+    "sass": "^1.69.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
