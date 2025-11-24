@@ -713,7 +713,6 @@
                     window.closeRequestModal();
                 }
 
-                // reload global list + leaderboard
                 loadRequests();
             } catch (err) {
                 console.error("Error saving request:", err);
@@ -726,7 +725,7 @@
 
     <div class="container">
         <div class="header">
-            <div class="badge">White & Blue Theme</div>
+            <div class="badge">The Best CC Ported Link</div>
             <h1>better cc ported</h1>
             <p class="lead">This is a game website... have fun!</p>
         </div>
@@ -885,7 +884,6 @@
         </div>
     </div>
     
-    <!-- Normal JS (UI only) -->
     <script>
         function searchGames() {
             const input = document.getElementById('gameSearch');
@@ -912,7 +910,6 @@
             document.getElementById('requestModal').style.display = 'none';
         }
 
-        // Scroll to the global requests section
         function scrollToGlobalRequests() {
             const section = document.getElementById('globalRequests');
             if (section) {
@@ -920,7 +917,6 @@
             }
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('requestModal');
             if (event.target == modal) {
