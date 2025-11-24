@@ -321,23 +321,10 @@
 </head>
 <body>
 
-    <!-- Firebase + Firestore (module) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyClOeUmq_Dt-9ghRV4LF-HaAO7JRypNIWw",
-            authDomain: "even-better-cc-ported.firebaseapp.com",
-            projectId: "even-better-cc-ported",
-            storageBucket: "even-better-cc-ported.firebasestorage.app",
-            messagingSenderId: "662470608606",
-            appId: "1:662470608606:web:5cd8ae75395100fb6ea44f",
-            measurementId: "G-0VHFLZNVEJ"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    <!-- Request handler: Option 3 (Form backend like Formspree), no Firebase -->
+    <script>
+        // Replace this with your actual Formspree endpoint URL
+        const FORMSPREE_ENDPOINT = "https://formspree.io/f/xeodbypa";
 
         window.submitRequest = async function(event) {
             event.preventDefault();
@@ -348,35 +335,35 @@
             const yourName = document.getElementById('yourName').value || 'Anonymous';
             const reason = document.getElementById('reason').value;
 
-            const request = {
+            const payload = {
                 game: gameName,
                 name: yourName,
-                reason: reason,
-                timestamp: new Date().toISOString()
+                reason: reason
             };
 
-            console.log("About to save request:", request);
-
             try {
-                await addDoc(collection(db, "gameRequests"), request);
-                console.log("✅ Saved to Firestore:", request);
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert(`✅ Request submitted for "${gameName}"!`);
+                    form.reset();
+                    if (typeof window.closeRequestModal === "function") {
+                        window.closeRequestModal();
+                    }
+                } else {
+                    alert("❌ There was a problem submitting your request. Try again later.");
+                    console.error("Formspree error:", await response.text());
+                }
             } catch (err) {
-                console.error("❌ Error saving request:", err);
-                alert("❌ Error saving request. Check console for details.");
-                return; // don't continue if Firestore failed
-            }
-
-            const githubIssueUrl = `https://github.com/KikiKian/Even-Better-CC-Ported/issues/new?title=Game Request: ${encodeURIComponent(gameName)}&body=Requested by: ${encodeURIComponent(yourName)}%0A%0AReason: ${encodeURIComponent(reason)}`;
-
-            alert(`✅ Request submitted for "${gameName}"!\n\nYour request was saved. You can also create a GitHub issue to track it.`);
-
-            if (confirm("Would you like to create a GitHub issue for this request?")) {
-                window.open(githubIssueUrl, "_blank");
-            }
-
-            form.reset();
-            if (typeof window.closeRequestModal === "function") {
-                window.closeRequestModal();
+                alert("❌ Network error while submitting your request.");
+                console.error("Network error:", err);
             }
         };
     </script>
