@@ -202,20 +202,144 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(5,86,166,0.3);
         }
-        .coming-soon{
-            opacity: 0.5;
-            pointer-events: none;
+
+        /* Global request cards */
+        .requests-section{
+            margin-top: 2rem;
+            margin-bottom: 3rem;
         }
-        .coming-soon-badge{
-            background: #6c757d;
-            color: #fff;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 0.5rem;
+        .requests-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
         }
+        .request-card{
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 8px 24px rgba(4,86,166,0.08);
+            border: 1px solid rgba(5,86,166,0.08);
+            text-align: left;
+        }
+        .request-card-title{
+            margin: 0 0 0.25rem 0;
+            font-weight: 700;
+            color: var(--blue-700);
+            font-size: 1.1rem;
+        }
+        .request-card-meta{
+            margin: 0 0 0.5rem 0;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        .request-card-reason{
+            margin: 0 0 0.75rem 0;
+            font-size: 0.95rem;
+            color: #1464a8;
+        }
+
+        /* Like button */
+        .like-row{
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.25rem;
+        }
+        .like-button{
+            border:none;
+            border-radius:999px;
+            padding:0.25rem 0.7rem;
+            font-size:0.85rem;
+            cursor:pointer;
+            background:rgba(4,86,166,0.08);
+            color:var(--blue-700);
+            display:inline-flex;
+            align-items:center;
+            gap:0.25rem;
+        }
+        .like-button:hover{
+            background:rgba(4,86,166,0.18);
+        }
+        .like-button.liked{
+            background:rgba(4,86,166,0.3);
+            cursor:default;
+            opacity:0.8;
+        }
+        .like-count{
+            font-weight:600;
+            font-size:0.9rem;
+        }
+
+        /* Leaderboard */
+        .leaderboard-section{
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+        .leaderboard-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-end;
+            gap:1rem;
+            margin-bottom:0.75rem;
+        }
+        .leaderboard-title{
+            margin:0;
+            font-size:2rem;
+            color:var(--blue-700);
+        }
+        .leaderboard-subtitle{
+            margin:0.25rem 0 0 0;
+            font-size:0.95rem;
+            color:#1464a8;
+            opacity:0.9;
+        }
+        .leaderboard-badge{
+            padding:0.35rem 0.9rem;
+            border-radius:999px;
+            background:rgba(4,86,166,0.08);
+            font-size:0.85rem;
+            font-weight:600;
+            color:var(--blue-700);
+            white-space:nowrap;
+        }
+        .leaderboard-table-wrapper{
+            border-radius:14px;
+            overflow:hidden;
+            box-shadow:0 10px 30px rgba(4,86,166,0.1);
+            background:var(--bg);
+            border:1px solid rgba(4,86,166,0.08);
+        }
+        .leaderboard-table{
+            width:100%;
+            border-collapse:collapse;
+        }
+        .leaderboard-table thead{
+            background:linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            color:#fff;
+        }
+        .leaderboard-table th,
+        .leaderboard-table td{
+            padding:0.75rem 1rem;
+            text-align:left;
+            font-size:0.95rem;
+        }
+        .leaderboard-table th:first-child,
+        .leaderboard-table td:first-child{
+            width:48px;
+            text-align:center;
+        }
+        .leaderboard-table tbody tr:nth-child(even){
+            background:rgba(4,86,166,0.02);
+        }
+        .leaderboard-table tbody tr:first-child{
+            background:rgba(255,215,0,0.15);
+            font-weight:600;
+        }
+        .leaderboard-table tbody tr:first-child td:first-child::before{
+            content:"🥇";
+            margin-right:0.25rem;
+        }
+
         @media (prefers-color-scheme: dark){
             body{background:linear-gradient(180deg,#05233a 0%, #071833 40%);}
             .game-card{background:#041423; color:#cfefff; box-shadow: none; border:1px solid rgba(95,176,255,0.06)}
@@ -224,7 +348,24 @@
             h1{color:#cfefff;}
             p.lead{color:#5fb0ff;}
             .games-section h2{color:#cfefff;}
+            .request-card{background:#041423; color:#cfefff; border:1px solid rgba(95,176,255,0.06);}
+            .request-card-title{color:#cfefff;}
+            .request-card-reason{color:#5fb0ff;}
+            .leaderboard-table-wrapper{
+                background:#041423;
+                border:1px solid rgba(95,176,255,0.06);
+            }
+            .leaderboard-table thead{
+                background:linear-gradient(135deg,#0b4273,#166fb5);
+            }
+            .leaderboard-title{color:#cfefff;}
+            .leaderboard-subtitle{color:#5fb0ff;}
+            .leaderboard-badge{
+                background:rgba(95,176,255,0.1);
+                color:#cfefff;
+            }
         }
+
         .modal{
             display: none;
             position: fixed;
@@ -321,51 +462,266 @@
 </head>
 <body>
 
-    <!-- Request handler: Option 3 (Form backend like Formspree), no Firebase -->
-    <script>
-        // Replace this with your actual Formspree endpoint URL
-        const FORMSPREE_ENDPOINT = "https://formspree.io/f/xeodbypa";
+    <!-- Firebase + Firestore (GLOBAL requests + likes + leaderboard) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            query,
+            orderBy,
+            serverTimestamp,
+            doc,
+            updateDoc,
+            increment
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
+        const firebaseConfig = {
+            apiKey: "AIzaSyClOeUmq_Dt-9ghRV4LF-HaAO7JRypNIWw",
+            authDomain: "even-better-cc-ported.firebaseapp.com",
+            projectId: "even-better-cc-ported",
+            storageBucket: "even-better-cc-ported.firebasestorage.app",
+            messagingSenderId: "662470608606",
+            appId: "1:662470608606:web:0b8bfbf38f0de6c56ea44f",
+            measurementId: "G-HYYR7S4BK7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const requestsCol = collection(db, "gameRequests");
+
+        function getLikedIds() {
+            try {
+                const raw = localStorage.getItem("likedRequestIds");
+                if (!raw) return new Set();
+                const arr = JSON.parse(raw);
+                if (!Array.isArray(arr)) return new Set();
+                return new Set(arr);
+            } catch (e) {
+                console.error("Error reading likedRequestIds:", e);
+                return new Set();
+            }
+        }
+
+        function saveLikedIds(set) {
+            try {
+                const arr = Array.from(set);
+                localStorage.setItem("likedRequestIds", JSON.stringify(arr));
+            } catch (e) {
+                console.error("Error saving likedRequestIds:", e);
+            }
+        }
+
+        function buildLeaderboard(requests) {
+            const tbody = document.getElementById("leaderboardBody");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            if (!requests.length) {
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                cell.colSpan = 3;
+                cell.textContent = "No requests yet.";
+                cell.style.opacity = "0.8";
+                row.appendChild(cell);
+                tbody.appendChild(row);
+                return;
+            }
+
+            const byGame = {};
+            requests.forEach(r => {
+                const game = (r.game || "(Unknown game)").trim();
+                if (!byGame[game]) {
+                    byGame[game] = { game, count: 0, likes: 0 };
+                }
+                byGame[game].count += 1;
+                byGame[game].likes += r.likes || 0;
+            });
+
+            const list = Object.values(byGame);
+            list.sort((a, b) => {
+                if (b.likes !== a.likes) return b.likes - a.likes;
+                return b.count - a.count;
+            });
+
+            const top = list.slice(0, 10);
+
+            top.forEach((item, index) => {
+                const tr = document.createElement("tr");
+
+                const rankTd = document.createElement("td");
+                rankTd.textContent = index + 1;
+
+                const gameTd = document.createElement("td");
+                gameTd.textContent = item.game;
+
+                const statsTd = document.createElement("td");
+                statsTd.textContent = `${item.likes} like${item.likes === 1 ? "" : "s"} • ${item.count} request${item.count === 1 ? "" : "s"}`;
+
+                tr.appendChild(rankTd);
+                tr.appendChild(gameTd);
+                tr.appendChild(statsTd);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function loadRequests() {
+            const container = document.getElementById("requestsGrid");
+            if (!container) return;
+
+            container.innerHTML = "Loading requests...";
+
+            const likedIds = getLikedIds();
+            const allRequests = [];
+
+            try {
+                const q = query(requestsCol, orderBy("createdAt", "desc"));
+                const snapshot = await getDocs(q);
+
+                if (snapshot.empty) {
+                    container.innerHTML = "";
+                    const p = document.createElement("p");
+                    p.textContent = "No game requests yet. Be the first to request one!";
+                    p.style.opacity = "0.8";
+                    p.style.fontSize = "0.95rem";
+                    container.appendChild(p);
+                    buildLeaderboard([]);
+                    return;
+                }
+
+                container.innerHTML = "";
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+
+                    const game = data.game || "(Unknown game)";
+                    const name = data.name || "Anonymous";
+                    const reason = data.reason || "No reason provided.";
+                    const likes = data.likes || 0;
+
+                    let dateText = "";
+                    if (data.createdAt && data.createdAt.toDate) {
+                        const d = data.createdAt.toDate();
+                        dateText = d.toLocaleString();
+                    }
+
+                    allRequests.push({
+                        id,
+                        game,
+                        name,
+                        reason,
+                        likes,
+                        createdAt: data.createdAt || null
+                    });
+
+                    const card = document.createElement("div");
+                    card.className = "request-card";
+
+                    const titleEl = document.createElement("p");
+                    titleEl.className = "request-card-title";
+                    titleEl.textContent = game;
+
+                    const metaEl = document.createElement("p");
+                    metaEl.className = "request-card-meta";
+                    metaEl.textContent = dateText
+                        ? `Requested by ${name} • ${dateText}`
+                        : `Requested by ${name}`;
+
+                    const reasonEl = document.createElement("p");
+                    reasonEl.className = "request-card-reason";
+                    reasonEl.textContent = reason;
+
+                    const likeRow = document.createElement("div");
+                    likeRow.className = "like-row";
+
+                    const likeBtn = document.createElement("button");
+                    likeBtn.className = "like-button";
+                    likeBtn.innerHTML = "👍 Like";
+
+                    const countSpan = document.createElement("span");
+                    countSpan.className = "like-count";
+                    countSpan.textContent = likes;
+
+                    if (likedIds.has(id)) {
+                        likeBtn.classList.add("liked");
+                        likeBtn.innerHTML = "👍 Liked";
+                    }
+
+                    likeBtn.addEventListener("click", async () => {
+                        const likedAgain = getLikedIds();
+                        if (likedAgain.has(id)) {
+                            return;
+                        }
+                        try {
+                            const ref = doc(db, "gameRequests", id);
+                            await updateDoc(ref, { likes: increment(1) });
+
+                            likedAgain.add(id);
+                            saveLikedIds(likedAgain);
+
+                            await loadRequests();
+                        } catch (e) {
+                            console.error("Error liking request:", e);
+                            alert("❌ Could not like this request. Try again later.");
+                        }
+                    });
+
+                    likeRow.appendChild(likeBtn);
+                    likeRow.appendChild(countSpan);
+
+                    card.appendChild(titleEl);
+                    card.appendChild(metaEl);
+                    card.appendChild(reasonEl);
+                    card.appendChild(likeRow);
+
+                    container.appendChild(card);
+                });
+
+                buildLeaderboard(allRequests);
+            } catch (err) {
+                console.error("Error loading requests:", err);
+                container.innerHTML = "❌ Error loading requests.";
+                buildLeaderboard([]);
+            }
+        }
+
+        // Expose submitRequest globally so the form's onsubmit can call it
         window.submitRequest = async function(event) {
             event.preventDefault();
 
             const form = event.target;
-
             const gameName = document.getElementById('gameName').value;
             const yourName = document.getElementById('yourName').value || 'Anonymous';
             const reason = document.getElementById('reason').value;
 
-            const payload = {
-                game: gameName,
-                name: yourName,
-                reason: reason
-            };
-
             try {
-                const response = await fetch(FORMSPREE_ENDPOINT, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify(payload)
+                await addDoc(requestsCol, {
+                    game: gameName,
+                    name: yourName,
+                    reason: reason,
+                    likes: 0,
+                    createdAt: serverTimestamp()
                 });
 
-                if (response.ok) {
-                    alert(`✅ Request submitted for "${gameName}"!`);
-                    form.reset();
-                    if (typeof window.closeRequestModal === "function") {
-                        window.closeRequestModal();
-                    }
-                } else {
-                    alert("❌ There was a problem submitting your request. Try again later.");
-                    console.error("Formspree error:", await response.text());
+                alert(`You have submitted the form.\n\nGame: "${gameName}"`);
+
+                form.reset();
+                if (typeof window.closeRequestModal === "function") {
+                    window.closeRequestModal();
                 }
+
+                // reload global list + leaderboard
+                loadRequests();
             } catch (err) {
-                alert("❌ Network error while submitting your request.");
-                console.error("Network error:", err);
+                console.error("Error saving request:", err);
+                alert("❌ There was a problem submitting your request. Try again later.");
             }
         };
+
+        window.addEventListener("DOMContentLoaded", loadRequests);
     </script>
 
     <div class="container">
@@ -397,6 +753,35 @@
             <h2>Request a Game</h2>
             <p>Don't see your favorite game? Let us know what you'd like to see!</p>
             <button onclick="openRequestModal()" class="btn">Request Game</button>
+            <button onclick="scrollToGlobalRequests()" class="btn" style="margin-left: 1rem; background:#f0fff4; color:#1e7e34;">
+                View Global Requests
+            </button>
+        </div>
+
+        <!-- ⭐ TOP REQUESTED GAMES-->
+        <div class="leaderboard-section" id="leaderboard">
+            <div class="leaderboard-header">
+                <div>
+                    <h2 class="leaderboard-title">Top Requested Games</h2>
+                </div>
+                <div class="leaderboard-badge">
+                    🔥 Live community leaderboard
+                </div>
+            </div>
+            <div class="leaderboard-table-wrapper">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Game</th>
+                            <th>Stats</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Filled by buildLeaderboard() -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="games-section">
@@ -462,6 +847,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- Global requests section -->
+        <div class="requests-section" id="globalRequests">
+            <h2>Global Game Requests</h2>
+            <p class="lead" style="font-size:0.95rem; margin-bottom:1rem;">
+                These are game requests from everyone who has submitted through this website.
+            </p>
+            <div id="requestsGrid" class="requests-grid">
+                <!-- Filled by Firebase loadRequests() -->
+            </div>
+        </div>
     </div>
 
     <!-- Game Request Modal -->
@@ -514,6 +910,14 @@
 
         function closeRequestModal() {
             document.getElementById('requestModal').style.display = 'none';
+        }
+
+        // Scroll to the global requests section
+        function scrollToGlobalRequests() {
+            const section = document.getElementById('globalRequests');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Close modal when clicking outside
