@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>12 Mini Battles (Long Code)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #121318;
+      --panel: #1a1c24;
+      --text: #e8ecf0;
+      --accent: #5cc8ff;
+      --accent2: #ff7aa2;
+      --good: #8aff88;
+      --warn: #ffd56b;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 50% 0%, #141620, var(--bg));
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      overflow: hidden;
+    }
+
+    #app {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100%;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: linear-gradient(180deg, #10111a, #0b0c12);
+      border-bottom: 1px solid #242838;
+    }
+
+    header .title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    header .title h1 {
+      font-size: 18px;
+      margin: 0;
+      letter-spacing: 0.4px;
+    }
+    header .title .tag {
+      font-size: 12px;
+      color: #a2a8b8;
+      background: #0f1119;
+      border: 1px solid #22263a;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    #hud {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pill {
+      background: var(--panel);
+      border: 1px solid #272a3a;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .pill strong {
+      color: #cfd5e3;
+      font-weight: 600;
+    }
+
+    #main {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      height: calc(100vh - 108px);
+    }
+
+    #sidebar {
+      background: #0d0f16;
+      border-right: 1px solid #242838;
+      overflow-y: auto;
+    }
+    #sidebar h2 {
+      font-size: 12px;
+      margin: 12px 12px 6px 12px;
+      color: #9aa3b6;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+    .battle-list {
+      display: grid;
+      gap: 8px;
+      padding: 8px 8px 16px 8px;
+    }
+    .battle-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid #242838;
+      background: #0f111a;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s ease, transform .05s ease;
+      user-select: none;
+    }
+    .battle-item:hover { border-color: #2c3148; }
+    .battle-item:active { transform: scale(0.995); }
+    .battle-item .name { font-size: 13px; font-weight: 600; color: #e6eaf3; }
+    .battle-item .meta { font-size: 11px; color: #aab1c3; }
+    .battle-item .mode {
+      font-size: 11px;
+      color: #7aa9ff;
+      border: 1px solid #23324d;
+      background: #0c1322;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .battle-item.active { border-color: var(--accent); box-shadow: 0 0 0 1px inset rgba(92, 200, 255, .2); }
+
+    #stage {
+      position: relative;
+      background: #0c0e15;
+      display: grid;
+      place-items: center;
+    }
+
+    canvas {
+      display: block;
+      width: min(100%, 960px);
+      height: auto;
+      background:
+        radial-gradient(600px 300px at 50% 0%, #121523, #0c0e15);
+      border: 1px solid #242838;
+      border-radius: 14px;
+      box-shadow:
+        0 20px 40px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    #footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #0b0c12;
+      border-top: 1px solid #242838;
+      font-size: 12px;
+      color: #aeb6c9;
+    }
+
+    .btn {
+      appearance: none;
+      background: #11141d;
+      color: #dfe5f2;
+      border: 1px solid #2a2f42;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color .15s ease, transform .05s ease;
+    }
+    .btn:hover { border-color: #3a415f; }
+    .btn:active { transform: scale(0.99); }
+    .btn.primary {
+      background: linear-gradient(180deg, #0f1324, #0c1121);
+      border-color: #314a6f;
+    }
+
+    #overlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    #overlay .card {
+      width: min(500px, 92vw);
+      background: #0f121a;
+      border: 1px solid #283047;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+    #overlay .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #e8ecf0;
+    }
+    #overlay .card p { margin: 4px 0 12px 0; color: #b7bece; }
+    #overlay .row { display: flex; align-items: center; gap: 8px; }
+    #overlay .row .btn { flex: 1; }
+
+    .toast {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      background: #0f121a;
+      color: #dfe5f2;
+      border: 1px solid #283047;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .2s ease, transform .2s ease;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="title">
+        <h1>12 Mini Battles</h1>
+        <span class="tag">Local 2‑player</span>
+      </div>
+      <div id="hud">
+        <span class="pill"><strong>P1</strong> W/A/D/Space</span>
+        <span class="pill"><strong>P2</strong> Arrow keys/Enter</span>
+        <span class="pill"><strong>Pause</strong> Esc</span>
+      </div>
+    </header>
+
+    <div id="main">
+      <aside id="sidebar">
+        <h2>Pick a battle</h2>
+        <div id="battleList" class="battle-list"></div>
+      </aside>
+
+      <section id="stage">
+        <canvas id="game" width="960" height="540"></canvas>
+        <div id="overlay">
+          <div class="card">
+            <h3>Paused</h3>
+            <p>Press Esc to resume. Use the sidebar to switch battles.</p>
+            <div class="row">
+              <button id="resumeBtn" class="btn primary">Resume</button>
+              <button id="resetBtn" class="btn">Reset Round</button>
+            </div>
+          </div>
+        </div>
+        <div id="toast" class="toast">Round reset</div>
+      </section>
+    </div>
+
+    <footer id="footer">
+      <div>Wins — P1: <span id="wins1">0</span> · P2: <span id="wins2">0</span></div>
+      <div>
+        <button id="randomBtn" class="btn">Random battle</button>
+        <button id="nextBtn" class="btn">Next</button>
+        <button id="prevBtn" class="btn">Previous</button>
+        <button id="clearBtn" class="btn">Clear scores</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // --- Utility -------------------------------------------------------------
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const randInt = (min, max) => Math.floor(rand(min, max + 1));
+    const sign = (n) => (n === 0 ? 0 : n > 0 ? 1 : -1);
+
+    function showToast(msg, ms = 1200) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => t.classList.remove("show"), ms);
+    }
+
+    // --- Canvas/context ------------------------------------------------------
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+
+    function clear() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawGrid(alpha = 0.08) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = "#2a3042";
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawCenterLine() {
+      ctx.save();
+      ctx.strokeStyle = "#243048";
+      ctx.setLineDash([8, 12]);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 20);
+      ctx.lineTo(canvas.width / 2, canvas.height - 20);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // --- Input ---------------------------------------------------------------
+    const keys = new Set();
+    window.addEventListener("keydown", (e) => {
+      keys.add(e.key.toLowerCase());
+      if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault();
+      if (e.key === "Escape") togglePause(true);
+    });
+    window.addEventListener("keyup", (e) => keys.delete(e.key.toLowerCase()));
+
+    // --- Pause overlay -------------------------------------------------------
+    const overlay = document.getElementById("overlay");
+    function togglePause(force = null) {
+      const target = force ?? overlay.style.display !== "flex";
+      overlay.style.display = target ? "flex" : "none";
+      paused = target;
+    }
+    document.getElementById("resumeBtn").onclick = () => togglePause(false);
+    document.getElementById("resetBtn").onclick = () => { current.reset(); showToast("Round reset"); togglePause(false); };
+
+    // --- Score persistence ---------------------------------------------------
+    const winsEl1 = document.getElementById("wins1");
+    const winsEl2 = document.getElementById("wins2");
+    let wins = JSON.parse(localStorage.getItem("miniBattlesWins") || '{"p1":0,"p2":0}');
+    function saveWins() { localStorage.setItem("miniBattlesWins", JSON.stringify(wins)); winsEl1.textContent = wins.p1; winsEl2.textContent = wins.p2; }
+    function clearWins() { wins = { p1: 0, p2: 0 }; saveWins(); }
+    saveWins();
+    document.getElementById("clearBtn").onclick = clearWins;
+
+    // --- Battle registry -----------------------------------------------------
+    const battles = [];
+    let index = 0;
+    let paused = false;
+    let current = null;
+    const battleListEl = document.getElementById("battleList");
+
+    function registerBattle(id, name, mode, create) {
+      battles.push({ id, name, mode, create });
+    }
+
+    function renderBattleList() {
+      battleListEl.innerHTML = "";
+      battles.forEach((b, i) => {
+        const item = document.createElement("div");
+        item.className = "battle-item" + (i === index ? " active" : "");
+        const left = document.createElement("div");
+        const nm = document.createElement("div");
+        nm.className = "name";
+        nm.textContent = `${i + 1}. ${b.name}`;
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = "Best of 1 · First to score";
+        left.appendChild(nm);
+        left.appendChild(meta);
+        const mode = document.createElement("div");
+        mode.className = "mode";
+        mode.textContent = b.mode;
+        item.appendChild(left);
+        item.appendChild(mode);
+        item.onclick = () => switchTo(i);
+        battleListEl.appendChild(item);
+      });
+    }
+
+    function highlightActive() {
+      [...battleListEl.children].forEach((c, i) => c.classList.toggle("active", i === index));
+    }
+
+    // --- Game loop -----------------------------------------------------------
+    let last = performance.now();
+    function loop(t) {
+      const dt = (t - last) / 1000;
+      last = t;
+
+      if (!paused && current && current.update) current.update(dt);
+      if (current && current.draw) current.draw(ctx);
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // --- Switch battle -------------------------------------------------------
+    function switchTo(i) {
+      index = ((i % battles.length) + battles.length) % battles.length;
+      if (current && current.destroy) current.destroy();
+      current = battles[index].create();
+      current.reset();
+      renderBattleList();
+      highlightActive();
+      showToast(`Battle: ${battles[index].name}`, 900);
+    }
+
+    // --- Buttons -------------------------------------------------------------
+    document.getElementById("nextBtn").onclick = () => switchTo(index + 1);
+    document.getElementById("prevBtn").onclick = () => switchTo(index - 1);
+    document.getElementById("randomBtn").onclick = () => switchTo(randInt(0, battles.length - 1));
+
+    // --- Win handler ---------------------------------------------------------
+    function award(win) {
+      if (win === 1) wins.p1++; else if (win === 2) wins.p2++;
+      saveWins();
+      showToast(win === 1 ? "P1 scores!" : "P2 scores!");
+      setTimeout(() => current.reset(), 300);
+    }
+
+    // --- Shared helpers for battles -----------------------------------------
+    function drawScoreBanner(title, sub) {
+      ctx.save();
+      ctx.fillStyle = "#0c1019";
+      ctx.strokeStyle = "#27324b";
+      ctx.lineWidth = 2;
+      ctx.roundRect?.(20, 20, 300, 70, 12);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#e8ecf0";
+      ctx.font = "600 18px system-ui";
+      ctx.fillText(title, 36, 50);
+      ctx.fillStyle = "#aeb6c9";
+      ctx.font = "13px system-ui";
+      ctx.fillText(sub, 36, 70);
+      ctx.restore();
+    }
+
+    function drawPlayersHUD() {
+      ctx.save();
+      ctx.font = "600 16px system-ui";
+      ctx.fillStyle = "#9bd7ff";
+      ctx.fillText("P1", 30, canvas.height - 24);
+      ctx.fillStyle = "#ff9bbb";
+      ctx.fillText("P2", canvas.width - 60, canvas.height - 24);
+      ctx.restore();
+    }
+
+    // --- Battle 1: Dash duel -------------------------------------------------
+    registerBattle("dash", "Dash Duel", "Speed", () => {
+      const p1 = { x: 140, y: canvas.height / 2, vx: 0, vy: 0, color: "#5cc8ff" };
+      const p2 = { x: canvas.width - 140, y: canvas.height / 2, vx: 0, vy: 0, color: "#ff7aa2" };
+      const speed = 220, dash = 480, friction = 0.86;
+      const orb = { x: canvas.width / 2, y: canvas.height / 2, r: 16, hold: 0 }; // 0 none, 1 P1, 2 P2
+      const goalL = { x: 40, y: canvas.height / 2, r: 36 };
+      const goalR = { x: canvas.width - 40, y: canvas.height / 2, r: 36 };
+      let tDash1 = 0, tDash2 = 0;
+
+      function circle(x, y, r, color, stroke = "#22263a") {
+        ctx.save();
+        ctx.fillStyle = color; ctx.strokeStyle = stroke; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.restore();
+      }
+
+      function input(dt) {
+        const up1 = keys.has("w"), dn1 = keys.has("s"), lt1 = keys.has("a"), rt1 = keys.has("d"), dash1 = keys.has(" ");
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown"), lt2 = keys.has("arrowleft"), rt2 = keys.has("arrowright"), dash2 = keys.has("enter");
+
+        // Move
+        p1.vx += (rt1 - lt1) * speed * dt;
+        p1.vy += (dn1 - up1) * speed * dt;
+        p2.vx += (rt2 - lt2) * speed * dt;
+        p2.vy += (dn2 - up2) * speed * dt;
+
+        // Dash
+        if (dash1 && tDash1 <= 0) {
+          const dx = (rt1 - lt1), dy = (dn1 - up1);
+          const mag = Math.hypot(dx, dy) || 1;
+          p1.vx += (dx / mag) * dash;
+          p1.vy += (dy / mag) * dash;
+          tDash1 = 0.8;
+        }
+        if (dash2 && tDash2 <= 0) {
+          const dx = (rt2 - lt2), dy = (dn2 - up2);
+          const mag = Math.hypot(dx, dy) || 1;
+          p2.vx += (dx / mag) * dash;
+          p2.vy += (dy / mag) * dash;
+          tDash2 = 0.8;
+        }
+        tDash1 = Math.max(0, tDash1 - dt);
+        tDash2 = Math.max(0, tDash2 - dt);
+      }
+
+      function physics(dt) {
+        [p1, p2].forEach(p => {
+          p.vx *= friction; p.vy *= friction;
+          p.x = clamp(p.x + p.vx * dt, 40, canvas.width - 40);
+          p.y = clamp(p.y + p.vy * dt, 40, canvas.height - 40);
+        });
+
+        // Pickup orb
+        const d1 = Math.hypot(orb.x - p1.x, orb.y - p1.y);
+        const d2 = Math.hypot(orb.x - p2.x, orb.y - p2.y);
+        if (d1 < 28 && orb.hold !== 2) orb.hold = 1;
+        if (d2 < 28 && orb.hold !== 1) orb.hold = 2;
+
+        // Carry orb
+        if (orb.hold === 1) { orb.x = lerp(orb.x, p1.x, 0.25); orb.y = lerp(orb.y, p1.y - 18, 0.25); }
+        if (orb.hold === 2) { orb.x = lerp(orb.x, p2.x, 0.25); orb.y = lerp(orb.y, p2.y - 18, 0.25); }
+
+        // Score
+        if (Math.hypot(orb.x - goalL.x, orb.y - goalL.y) < goalL.r) { award(2); reset(); }
+        if (Math.hypot(orb.x - goalR.x, orb.y - goalR.y) < goalR.r) { award(1); reset(); }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawCenterLine();
+        drawScoreBanner("Dash Duel", "Carry the orb into the goal");
+        drawPlayersHUD();
+
+        circle(goalL.x, goalL.y, goalL.r, "#0d1324", "#23324d");
+        circle(goalR.x, goalR.y, goalR.r, "#1a0d14", "#3b2430");
+
+        circle(p1.x, p1.y, 16, p1.color);
+        circle(p2.x, p2.y, 16, p2.color);
+
+        circle(orb.x, orb.y, orb.r, "#ffd56b", "#3a3320");
+      }
+
+      function reset() {
+        p1.x = 140; p1.y = canvas.height / 2; p1.vx = 0; p1.vy = 0;
+        p2.x = canvas.width - 140; p2.y = canvas.height / 2; p2.vx = 0; p2.vy = 0;
+        orb.x = canvas.width / 2; orb.y = canvas.height / 2; orb.hold = 0;
+        tDash1 = 0; tDash2 = 0;
+      }
+
+      return {
+        update(dt) { input(dt); physics(dt); },
+        draw(ctx) { draw(ctx); },
+        reset,
+        destroy() {},
+      };
+    });
+
+    // --- Battle 2: Paddle clash ---------------------------------------------
+    registerBattle("paddle", "Paddle Clash", "Reflex", () => {
+      const ball = { x: canvas.width / 2, y: canvas.height / 2, vx: rand(-220, 220), vy: rand(-120, 120), r: 9 };
+      const p1 = { x: 40, y: canvas.height / 2, w: 14, h: 90, vy: 0, color: "#5cc8ff" };
+      const p2 = { x: canvas.width - 54, y: canvas.height / 2, w: 14, h: 90, vy: 0, color: "#ff7aa2" };
+      const speed = 300;
+
+      function resetBall(dir = sign(rand(-1, 1)) || 1) {
+        ball.x = canvas.width / 2; ball.y = canvas.height / 2;
+        ball.vx = dir * rand(200, 280);
+        ball.vy = rand(-160, 160);
+      }
+
+      function input(dt) {
+        const up1 = keys.has("w"), dn1 = keys.has("s");
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown");
+        p1.vy = (dn1 - up1) * speed;
+        p2.vy = (dn2 - up2) * speed;
+      }
+
+      function physics(dt) {
+        p1.y = clamp(p1.y + p1.vy * dt, p1.h / 2 + 20, canvas.height - p1.h / 2 - 20);
+        p2.y = clamp(p2.y + p2.vy * dt, p2.h / 2 + 20, canvas.height - p2.h / 2 - 20);
+        ball.x += ball.vx * dt; ball.y += ball.vy * dt;
+
+        if (ball.y < 20 + ball.r || ball.y > canvas.height - 20 - ball.r) ball.vy *= -1;
+
+        // Paddle collisions
+        function collide(p) {
+          const withinY = Math.abs(ball.y - p.y) < (p.h / 2 + ball.r);
+          const withinX = Math.abs(ball.x - p.x) < (p.w / 2 + ball.r);
+          if (withinX && withinY) {
+            ball.vx *= -1;
+            ball.vx += sign(ball.vx) * 20;
+            ball.vy += (ball.y - p.y) * 2.0;
+          }
+        }
+        collide(p1); collide(p2);
+
+        // Score conditions
+        if (ball.x < 0) { award(2); reset(); }
+        if (ball.x > canvas.width) { award(1); reset(); }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Paddle Clash", "Classic pong with a twist");
+        drawPlayersHUD();
+
+        // arena bounds
+        ctx.save();
+        ctx.strokeStyle = "#243048"; ctx.lineWidth = 2;
+        ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+        ctx.restore();
+
+        // paddles
+        [p1, p2].forEach(p => {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d"; ctx.lineWidth = 2;
+          ctx.fillRect(p.x - p.w / 2, p.y - p.h / 2, p.w, p.h);
+          ctx.strokeRect(p.x - p.w / 2, p.y - p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+
+        // ball
+        ctx.save();
+        ctx.fillStyle = "#ffd56b"; ctx.strokeStyle = "#3a3320"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.restore();
+      }
+
+      function reset() {
+        p1.y = canvas.height / 2; p2.y = canvas.height / 2;
+        resetBall(sign(rand(-1, 1)) || 1);
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Battle 3: Platform tug ---------------------------------------------
+    registerBattle("platform", "Platform Tug", "Arena", () => {
+      const groundY = canvas.height - 80;
+      const gravity = 980, move = 240, jump = 420, knock = 340;
+      function makePlayer(x, color) { return { x, y: groundY, vx: 0, vy: 0, w: 26, h: 36, onGround: true, color }; }
+      const p1 = makePlayer(160, "#5cc8ff");
+      const p2 = makePlayer(canvas.width - 160, "#ff7aa2");
+
+      function input(dt) {
+        const up1 = keys.has("w"), lt1 = keys.has("a"), rt1 = keys.has("d");
+        const up2 = keys.has("arrowup"), lt2 = keys.has("arrowleft"), rt2 = keys.has("arrowright");
+
+        if (lt1) p1.vx = -move; else if (rt1) p1.vx = move; else p1.vx = lerp(p1.vx, 0, 0.2);
+        if (lt2) p2.vx = -move; else if (rt2) p2.vx = move; else p2.vx = lerp(p2.vx, 0, 0.2);
+
+        if (up1 && p1.onGround) { p1.vy = -jump; p1.onGround = false; }
+        if (up2 && p2.onGround) { p2.vy = -jump; p2.onGround = false; }
+      }
+
+      function physics(dt) {
+        // apply gravity
+        [p1, p2].forEach(p => {
+          p.vy += gravity * dt;
+          p.x = clamp(p.x + p.vx * dt, 30, canvas.width - 30);
+          p.y += p.vy * dt;
+          if (p.y >= groundY) { p.y = groundY; p.vy = 0; p.onGround = true; }
+        });
+
+        // collision knockback
+        const overlap = Math.abs(p1.x - p2.x) < (p1.w / 2 + p2.w / 2) && Math.abs(p1.y - p2.y) < (p1.h / 2 + p2.h / 2);
+        if (overlap) {
+          const dir = sign(p1.x - p2.x) || (Math.random() < 0.5 ? -1 : 1);
+          p1.vx += dir * knock * dt;
+          p2.vx -= dir * knock * dt;
+        }
+
+        // fall off edges to score
+        if (p1.y > canvas.height) { award(2); reset(); }
+        if (p2.y > canvas.height) { award(1); reset(); }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Platform Tug", "Knock your opponent off the stage");
+        drawPlayersHUD();
+
+        // ground
+        ctx.save();
+        ctx.fillStyle = "#182034"; ctx.strokeStyle = "#27324b"; ctx.lineWidth = 2;
+        ctx.fillRect(20, groundY + 18, canvas.width - 40, 10);
+        ctx.strokeRect(20, groundY + 18, canvas.width - 40, 10);
+        ctx.restore();
+
+        // platforms
+        ctx.save();
+        ctx.fillStyle = "#141a2b"; ctx.strokeStyle = "#27324b"; ctx.lineWidth = 2;
+        ctx.fillRect(180, groundY - 160, 160, 14);
+        ctx.strokeRect(180, groundY - 160, 160, 14);
+        ctx.fillRect(canvas.width - 340, groundY - 120, 160, 14);
+        ctx.strokeRect(canvas.width - 340, groundY - 120, 160, 14);
+        ctx.restore();
+
+        // players
+        [p1, p2].forEach(p => {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d"; ctx.lineWidth = 2;
+          ctx.fillRect(p.x - p.w / 2, p.y - p.h, p.w, p.h);
+          ctx.strokeRect(p.x - p.w / 2, p.y - p.h, p.w, p.h);
+          ctx.restore();
+        });
+      }
+
+      function reset() {
+        Object.assign(p1, { x: 160, y: groundY, vx: 0, vy: 0, onGround: true });
+        Object.assign(p2, { x: canvas.width - 160, y: groundY, vx: 0, vy: 0, onGround: true });
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Battle 4: Target sprint --------------------------------------------
+    registerBattle("targets", "Target Sprint", "Accuracy", () => {
+      const targets = [];
+      const limit = 7;
+      const speed = 240;
+
+      function spawn() {
+        targets.length = 0;
+        for (let i = 0; i < limit; i++) {
+          targets.push({ x: rand(80, canvas.width - 80), y: rand(80, canvas.height - 80), r: rand(10, 18), hit: 0 });
+        }
+      }
+
+      const p1 = { x: 120, y: canvas.height / 2, vx: 0, vy: 0, color: "#5cc8ff" };
+      const p2 = { x: canvas.width - 120, y: canvas.height / 2, vx: 0, vy: 0, color: "#ff7aa2" };
+
+      function input(dt) {
+        const up1 = keys.has("w"), dn1 = keys.has("s"), lt1 = keys.has("a"), rt1 = keys.has("d"), shoot1 = keys.has(" ");
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown"), lt2 = keys.has("arrowleft"), rt2 = keys.has("arrowright"), shoot2 = keys.has("enter");
+
+        p1.vx = (rt1 - lt1) * speed; p1.vy = (dn1 - up1) * speed;
+        p2.vx = (rt2 - lt2) * speed; p2.vy = (dn2 - up2) * speed;
+
+        // tap to hit nearest target within radius
+        function tryHit(p) {
+          let idx = -1, dist = Infinity;
+          targets.forEach((t, i) => {
+            if (t.hit) return;
+            const d = Math.hypot(t.x - p.x, t.y - p.y);
+            if (d < dist) { dist = d; idx = i; }
+          });
+          if (idx >= 0 && dist < 30) {
+            targets[idx].hit = p === p1 ? 1 : 2;
+            const pWin = targets.every(t => t.hit !== 0);
+            if (pWin) { award(p === p1 ? 1 : 2); reset(); }
+          }
+        }
+        if (shoot1) tryHit(p1);
+        if (shoot2) tryHit(p2);
+      }
+
+      function physics(dt) {
+        [p1, p2].forEach(p => {
+          p.x = clamp(p.x + p.vx * dt, 30, canvas.width - 30);
+          p.y = clamp(p.y + p.vy * dt, 30, canvas.height - 30);
+        });
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Target Sprint", "Tag all targets before your rival");
+        drawPlayersHUD();
+
+        targets.forEach(t => {
+          ctx.save();
+          const color = t.hit === 0 ? "#ffd56b" : (t.hit === 1 ? "#5cc8ff" : "#ff7aa2");
+          const stroke = t.hit ? "#23324d" : "#3a3320";
+          ctx.fillStyle = color; ctx.strokeStyle = stroke; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(t.x, t.y, t.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.restore();
+        });
+
+        [p1, p2].forEach(p => {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d"; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function reset() {
+        p1.x = 120; p1.y = canvas.height / 2; p2.x = canvas.width - 120; p2.y = canvas.height / 2;
+        p1.vx = p1.vy = p2.vx = p2.vy = 0;
+        spawn();
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Battle 5: Sumo rings ------------------------------------------------
+    registerBattle("sumo", "Sumo Rings", "Momentum", () => {
+      const center = { x: canvas.width / 2, y: canvas.height / 2, r: 160 };
+      function makePlayer(x, color) { return { x, y: center.y, vx: 0, vy: 0, r: 18, color }; }
+      const p1 = makePlayer(center.x - 80, "#5cc8ff");
+      const p2 = makePlayer(center.x + 80, "#ff7aa2");
+      const accel = 520, drag = 0.90, bump = 380;
+
+      function input(dt) {
+        const up1 = keys.has("w"), dn1 = keys.has("s"), lt1 = keys.has("a"), rt1 = keys.has("d");
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown"), lt2 = keys.has("arrowleft"), rt2 = keys.has("arrowright");
+
+        p1.vx += (rt1 - lt1) * accel * dt;
+        p1.vy += (dn1 - up1) * accel * dt;
+        p2.vx += (rt2 - lt2) * accel * dt;
+        p2.vy += (dn2 - up2) * accel * dt;
+      }
+
+      function physics(dt) {
+        [p1, p2].forEach(p => {
+          p.vx *= drag; p.vy *= drag;
+          p.x += p.vx * dt; p.y += p.vy * dt;
+
+          // constrain to circle
+          const d = Math.hypot(p.x - center.x, p.y - center.y);
+          if (d > center.r - p.r) {
+            const nx = (p.x - center.x) / d;
+            const ny = (p.y - center.y) / d;
+            const overlap = d - (center.r - p.r);
+            p.x -= nx * overlap; p.y -= ny * overlap;
+            const dot = p.vx * nx + p.vy * ny;
+            p.vx -= dot * nx * 1.4;
+            p.vy -= dot * ny * 1.4;
+          }
+        });
+
+        // collide players
+        const dx = p2.x - p1.x, dy = p2.y - p1.y, d = Math.hypot(dx, dy);
+        if (d < p1.r + p2.r) {
+          const nx = dx / (d || 1), ny = dy / (d || 1);
+          p1.vx -= nx * bump * dt; p1.vy -= ny * bump * dt;
+          p2.vx += nx * bump * dt; p2.vy += ny * bump * dt;
+        }
+
+        // out of ring scores
+        const d1 = Math.hypot(p1.x - center.x, p1.y - center.y);
+        const d2 = Math.hypot(p2.x - center.x, p2.y - center.y);
+        if (d1 > center.r + 40) { award(2); reset(); }
+        if (d2 > center.r + 40) { award(1); reset(); }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Sumo Rings", "Push them out of the circle");
+        drawPlayersHUD();
+
+        ctx.save();
+        ctx.strokeStyle = "#243048"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(center.x, center.y, center.r, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+
+        [p1, p2].forEach(p => {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d"; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function reset() {
+        Object.assign(p1, { x: center.x - 80, y: center.y, vx: 0, vy: 0 });
+        Object.assign(p2, { x: center.x + 80, y: center.y, vx: 0, vy: 0 });
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Battle 6: Cannon duel ----------------------------------------------
+    registerBattle("cannon", "Cannon Duel", "Timing", () => {
+      const g = 640; // gravity
+      const wind = rand(-80, 80);
+      const groundY = canvas.height - 60;
+      const p1 = { x: 120, y: groundY, angle: Math.PI / 4, pow: 340, color: "#5cc8ff", cooldown: 0 };
+      const p2 = { x: canvas.width - 120, y: groundY, angle: (3 * Math.PI) / 4, pow: 340, color: "#ff7aa2", cooldown: 0 };
+      const shots = [];
+
+      function fire(p) {
+        if (p.cooldown > 0) return;
+        p.cooldown = 0.6;
+        const vx = Math.cos(p.angle) * p.pow * (p === p1 ? 1 : -1);
+        const vy = -Math.sin(p.angle) * p.pow;
+        shots.push({ x: p.x, y: p.y - 20, vx, vy, r: 6, owner: p === p1 ? 1 : 2 });
+      }
+
+      function input(dt) {
+        // P1: W/S angle, A/D power, Space shoot
+        const up1 = keys.has("w"), dn1 = keys.has("s"), lt1 = keys.has("a"), rt1 = keys.has("d"), shoot1 = keys.has(" ");
+        p1.angle = clamp(p1.angle + (up1 - dn1) * 1.4 * dt, 0.1, 1.3);
+        p1.pow = clamp(p1.pow + (rt1 - lt1) * 260 * dt, 140, 520);
+        if (shoot1) fire(p1);
+
+        // P2: ArrowUp/Down angle, ArrowLeft/Right power, Enter shoot
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown"), lt2 = keys.has("arrowleft"), rt2 = keys.has("arrowright"), shoot2 = keys.has("enter");
+        p2.angle = clamp(p2.angle + (up2 - dn2) * 1.4 * dt, 0.1, 1.3);
+        p2.pow = clamp(p2.pow + (rt2 - lt2) * 260 * dt, 140, 520);
+        if (shoot2) fire(p2);
+      }
+
+      function physics(dt) {
+        p1.cooldown = Math.max(0, p1.cooldown - dt);
+        p2.cooldown = Math.max(0, p2.cooldown - dt);
+
+        shots.forEach(s => {
+          s.vy += g * dt;
+          s.vx += wind * 0.3 * dt;
+          s.x += s.vx * dt;
+          s.y += s.vy * dt;
+
+          // ground
+          if (s.y >= groundY - 4) s.hitGround = true;
+          // hit players
+          const target = s.owner === 1 ? p2 : p1;
+          if (Math.hypot(s.x - target.x, s.y - target.y) < 24) s.hit = target === p2 ? 2 : 1;
+        });
+
+        // resolve hits
+        for (let i = shots.length - 1; i >= 0; i--) {
+          const s = shots[i];
+          if (s.hit === 1) { award(1); reset(); break; }
+          if (s.hit === 2) { award(2); reset(); break; }
+          if (s.hitGround || s.x < 0 || s.x > canvas.width || s.y > canvas.height + 40) {
+            shots.splice(i, 1);
+          }
+        }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Cannon Duel", `Adjust angle/power. Wind: ${wind.toFixed(0)}`);
+        drawPlayersHUD();
+
+        // ground line
+        ctx.save();
+        ctx.strokeStyle = "#243048"; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(20, groundY); ctx.lineTo(canvas.width - 20, groundY); ctx.stroke();
+        ctx.restore();
+
+        // players + barrels
+        function drawCannon(p, dir) {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d"; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 18, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(dir * p.angle);
+          ctx.fillStyle = "#aeb6c9";
+          ctx.fillRect(0, -4, dir * 30, 8);
+          ctx.restore();
+
+          ctx.save();
+          ctx.fillStyle = "#8aa3c7";
+          ctx.font = "12px system-ui";
+          ctx.fillText(`Pow ${p.pow.toFixed(0)}`, p.x - 26, p.y - 30);
+          ctx.fillText(`CD ${p.cooldown.toFixed(2)}`, p.x - 26, p.y - 14);
+          ctx.restore();
+        }
+        drawCannon(p1, 1);
+        drawCannon(p2, -1);
+
+        // shots
+        shots.forEach(s => {
+          ctx.save();
+          ctx.fillStyle = s.owner === 1 ? "#ffd56b" : "#ff9bbb";
+          ctx.strokeStyle = "#3a3320"; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function reset() {
+        shots.length = 0;
+        Object.assign(p1, { angle: Math.PI / 4, pow: 340, cooldown: 0 });
+        Object.assign(p2, { angle: (3 * Math.PI) / 4, pow: 340, cooldown: 0 });
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Battle 7: Laser lanes ----------------------------------------------
+    registerBattle("laser", "Laser Lanes", "Precision", () => {
+      const lanes = 5;
+      const spacing = (canvas.height - 120) / (lanes - 1);
+      const p1 = { lane: 2, x: 140, color: "#5cc8ff", cooldown: 0 };
+      const p2 = { lane: 2, x: canvas.width - 140, color: "#ff7aa2", cooldown: 0 };
+      const shots = [];
+
+      function laneY(i) { return 60 + i * spacing; }
+
+      function input(dt) {
+        const up1 = keys.has("w"), dn1 = keys.has("s"), shoot1 = keys.has(" ");
+        const up2 = keys.has("arrowup"), dn2 = keys.has("arrowdown"), shoot2 = keys.has("enter");
+
+        if (up1) p1.lane = clamp(p1.lane - 1, 0, lanes - 1);
+        if (dn1) p1.lane = clamp(p1.lane + 1, 0, lanes - 1);
+        if (up2) p2.lane = clamp(p2.lane - 1, 0, lanes - 1);
+        if (dn2) p2.lane = clamp(p2.lane + 1, 0, lanes - 1);
+
+        p1.cooldown = Math.max(0, p1.cooldown - dt);
+        p2.cooldown = Math.max(0, p2.cooldown - dt);
+
+        if (shoot1 && p1.cooldown <= 0) {
+          p1.cooldown = 0.4;
+          shots.push({ x: p1.x + 10, y: laneY(p1.lane), vx: 520, owner: 1 });
+        }
+        if (shoot2 && p2.cooldown <= 0) {
+          p2.cooldown = 0.4;
+          shots.push({ x: p2.x - 10, y: laneY(p2.lane), vx: -520, owner: 2 });
+        }
+      }
+
+      function physics(dt) {
+        for (let i = shots.length - 1; i >= 0; i--) {
+          const s = shots[i];
+          s.x += s.vx * dt;
+          // hit opponents sharing lane
+          const target = s.owner === 1 ? p2 : p1;
+          const sameLane = (s.owner === 1 ? p1.lane : p2.lane) === target.lane;
+          if (sameLane && Math.abs(s.y - laneY(target.lane)) < 2 && Math.abs(s.x - target.x) < 18) {
+            award(s.owner); reset(); break;
+          }
+          if (s.x < 0 || s.x > canvas.width) shots.splice(i, 1);
+        }
+      }
+
+      function draw() {
+        clear();
+        drawGrid(0.06);
+        drawScoreBanner("Laser Lanes", "Shift lanes and snipe a hit");
+        drawPlayersHUD();
+
+        // lanes
+        ctx.save();
+        ctx.strokeStyle = "#243048"; ctx.lineWidth = 2;
+        for (let i = 0; i < lanes; i++) {
+          ctx.beginPath(); ctx.moveTo(60, laneY(i)); ctx.lineTo(canvas.width - 60, laneY(i)); ctx.stroke();
+        }
+        ctx.restore();
+
+        // players markers
+        function marker(p) {
+          ctx.save();
+          ctx.fillStyle = p.color; ctx.strokeStyle = "#23324d";
+          ctx.beginPath(); ctx.arc(p.x, laneY(p.lane), 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.restore();
+        }
+        marker(p1);
+        marker(p2);
+
+        // shots
+        shots.forEach(s => {
+          ctx.save();
+          ctx.strokeStyle = s.owner === 1 ? "#9bd7ff" : "#ff9bbb";
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x + (s.owner === 1 ? 12 : -12), s.y); ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function reset() {
+        p1.lane = 2; p2.lane = 2; p1.cooldown = p2.cooldown = 0; shots.length = 0;
+      }
+
+      return { update(dt) { input(dt); physics(dt); }, draw, reset, destroy() {} };
+    });
+
+    // --- Init ----------------------------------------------------------------
+    renderBattleList();
+    switchTo(0);
+
+    // --- Polyfill for roundRect on some browsers -----------------------------
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+        const rr = Array.isArray(r) ? r : [r, r, r, r];
+        this.beginPath();
+        this.moveTo(x + rr[0], y);
+        this.lineTo(x + w - rr[1], y);
+        this.quadraticCurveTo(x + w, y, x + w, y + rr[1]);
+        this.lineTo(x + w, y + h - rr[2]);
+        this.quadraticCurveTo(x + w, y + h, x + w - rr[2], y + h);
+        this.lineTo(x + rr[3], y + h);
+        this.quadraticCurveTo(x, y + h, x, y + h - rr[3]);
+        this.lineTo(x, y + rr[0]);
+        this.quadraticCurveTo(x, y, x + rr[0], y);
+        return this;
+      };
+    }
+  </script>
+</body>
+</html>
