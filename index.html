@@ -461,6 +461,213 @@
             from{transform: translateY(-50px); opacity: 0;}
             to{transform: translateY(0); opacity: 1;}
         }
+
+        /* Tab Navigation */
+        .tabs-container{
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(4,86,166,0.1);
+        }
+        .tabs{
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tab-button{
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blue-700);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .tab-button:hover{
+            color: var(--blue-400);
+            background: rgba(95,176,255,0.1);
+        }
+        .tab-button.active{
+            color: var(--blue-700);
+            border-bottom-color: var(--blue-700);
+            background: rgba(4,86,166,0.05);
+        }
+        .tab-content{
+            display: none;
+        }
+        .tab-content.active{
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Announcements Section */
+        .announcements-section{
+            margin-bottom: 3rem;
+        }
+        .announcements-section > h2{
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--blue-700);
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .announcements-section > h2::after{
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blue-400), var(--blue-700));
+            border-radius: 2px;
+        }
+        .announcement-card{
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(4,86,166,0.12), 0 2px 8px rgba(4,86,166,0.08);
+            border: 1px solid rgba(5,86,166,0.1);
+            border-left: 5px solid;
+            border-image: linear-gradient(135deg, var(--blue-400), var(--blue-700)) 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .announcement-card::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue-400), var(--blue-700), var(--blue-400));
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer{
+            0%{ background-position: -200% 0; }
+            100%{ background-position: 200% 0; }
+        }
+        .announcement-card:hover{
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 50px rgba(4,86,166,0.2), 0 5px 15px rgba(4,86,166,0.15);
+            border-color: rgba(5,86,166,0.2);
+        }
+        .announcement-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+        .announcement-title{
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--blue-700);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+        .announcement-date{
+            font-size: 0.9rem;
+            color: #1464a8;
+            opacity: 0.8;
+            white-space: nowrap;
+            padding: 0.4rem 0.8rem;
+            background: rgba(95,176,255,0.1);
+            border-radius: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .announcement-date::before{
+            content: '📅';
+            font-size: 0.85rem;
+        }
+        .announcement-content{
+            color: #1464a8;
+            line-height: 1.8;
+            margin: 0;
+            font-size: 1.05rem;
+        }
+        .announcement-badge{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--blue-400), var(--blue-700));
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 4px 15px rgba(4,86,166,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: all 0.3s ease;
+        }
+        .announcement-badge:hover{
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(4,86,166,0.4);
+        }
+        .announcement-card:nth-child(2) .announcement-badge{
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+        }
+        .announcement-card:nth-child(2) .announcement-badge:hover{
+            box-shadow: 0 6px 20px rgba(40,167,69,0.4);
+        }
+        .announcement-card:nth-child(3) .announcement-badge{
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+        .announcement-card:nth-child(3) .announcement-badge:hover{
+            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+        }
+
+        @media (prefers-color-scheme: dark){
+            .tab-button{
+                color: #cfefff;
+            }
+            .tab-button:hover{
+                color: #5fb0ff;
+                background: rgba(95,176,255,0.15);
+            }
+            .tab-button.active{
+                color: #cfefff;
+                border-bottom-color: #5fb0ff;
+                background: rgba(95,176,255,0.1);
+            }
+            .announcement-card{
+                background: linear-gradient(135deg, rgba(4,20,35,0.95) 0%, rgba(4,20,35,0.85) 100%);
+                border: 1px solid rgba(95,176,255,0.15);
+                box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(95,176,255,0.1);
+            }
+            .announcement-card:hover{
+                box-shadow: 0 15px 50px rgba(0,0,0,0.4), 0 5px 15px rgba(95,176,255,0.2);
+            }
+            .announcement-title{
+                color: #cfefff;
+            }
+            .announcement-content{
+                color: #5fb0ff;
+            }
+            .announcement-date{
+                background: rgba(95,176,255,0.15);
+                color: #5fb0ff;
+            }
+            .announcements-section > h2{
+                color: #cfefff;
+            }
+        }
     </style>
 </head>
 <body>
@@ -733,6 +940,41 @@
             <p class="lead">This is a game website... have fun!</p>
         </div>
 
+        <!-- Announcements Section -->
+        <div class="announcements-section" style="margin-bottom: 3rem;">
+            <h2>📢 Announcements</h2>
+            
+            <div class="announcement-card">
+                <div class="announcement-header">
+                    <div>
+                        <div class="announcement-badge">Update</div>
+                        <h3 class="announcement-title">🛡️ Improved Cloakings</h3>
+                    </div>
+                    <span class="announcement-date">Recently</span>
+                </div>
+                <p class="announcement-content">
+                    We've improved our cloaking technology to provide better protection and access. Enjoy a more reliable experience!
+                </p>
+            </div>
+
+            <div class="announcement-card">
+                <div class="announcement-header">
+                    <div>
+                        <div class="announcement-badge">New</div>
+                        <h3 class="announcement-title">🎮 Games Added</h3>
+                    </div>
+                    <span class="announcement-date">Recently</span>
+                </div>
+                <p class="announcement-content">
+                    <strong style="color: var(--blue-700); font-size: 1.1rem;">New games available:</strong><br><br>
+                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">🎯 <strong>OVO++</strong> - Enhanced platformer experience</span><br>
+                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">🍪 <strong>Cookie Clicker</strong> - Addictive idle clicker</span><br>
+                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">⚔️ <strong>12 Mini Battles</strong> - Exciting mini challenges</span><br><br>
+                    <span style="color: var(--blue-700); font-weight: 600;">Check them out below! 👇</span>
+                </p>
+            </div>
+        </div>
+
         <div class="download-section">
             <h2>Download Website</h2>
             <p>Get the full website with all games to run offline on your computer</p>
@@ -975,6 +1217,31 @@
     </div>
     
     <script>
+        function switchTab(tabName, buttonElement) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const selectedTab = document.getElementById(tabName + 'Tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Add active class to clicked button
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+        }
+
         function searchGames() {
             const input = document.getElementById('gameSearch');
             const filter = input.value.toLowerCase();
