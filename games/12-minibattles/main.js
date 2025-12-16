@@ -6,9 +6,10 @@ let p1 = 0;
 let p2 = 0;
 let gameOver = false;
 
-let rope = 0;        // battle 3
-let canPress = false; // battle 4
-let reactionStarted = false;
+let rope = 0;            // battle 3
+let canPress = false;   // battle 4
+let spam1 = 0;          // battle 5
+let spam2 = 0;
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -52,6 +53,14 @@ function draw() {
     ctx.font = "32px Arial";
     ctx.fillText(canPress ? "GO!" : "WAIT...", 330, 240);
   }
+
+  /* -------- BATTLE 5 -------- */
+  if (battle === 5) {
+    ctx.font = "28px Arial";
+    ctx.fillText("Battle 5: SPAM!", 300, 80);
+    ctx.fillText("Player 1: " + spam1, 220, 220);
+    ctx.fillText("Player 2: " + spam2, 220, 260);
+  }
 }
 
 document.addEventListener("keydown", (e) => {
@@ -85,9 +94,20 @@ document.addEventListener("keydown", (e) => {
   else if (battle === 4) {
     if (!canPress) {
       alert(key === "a" ? "Player 2 Wins!" : "Player 1 Wins!");
+      startBattle5();
       return;
     }
     alert(key === "a" ? "Player 1 Wins!" : "Player 2 Wins!");
+    startBattle5();
+  }
+
+  /* Battle 5 */
+  else if (battle === 5) {
+    if (key === "a") spam1++;
+    if (key === "l") spam2++;
+
+    if (spam1 >= 15) alert("Player 1 Wins!");
+    if (spam2 >= 15) alert("Player 2 Wins!");
   }
 });
 
@@ -95,11 +115,16 @@ function startBattle4() {
   battle = 4;
   rope = 0;
   canPress = false;
-  reactionStarted = false;
 
   setTimeout(() => {
     canPress = true;
   }, 1000 + Math.random() * 2000);
+}
+
+function startBattle5() {
+  battle = 5;
+  spam1 = 0;
+  spam2 = 0;
 }
 
 function loop() {
