@@ -701,6 +701,167 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const requestsCol = collection(db, "gameRequests");
+        const profilesCol = collection(db, "profiles");
+        const ratingsCol = collection(db, "ratings");
+        const gameStatsCol = collection(db, "gameStats");
+
+        // Auth State Management
+        let currentUser = null;
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (user) {
+                await initializeUserProfile(user);
+                updateProfileUI();
+            } else {
+                // Don't auto-sign in anonymously - require login
+                updateProfileUI();
+            }
+        });
+
+        // Initialize User Profile
+        async function initializeUserProfile(user) {
+            const profileRef = doc(profilesCol, user.uid);
+            const profileSnap = await getDoc(profileRef);
+            if (!profileSnap.exists()) {
+                await setDoc(profileRef, {
+                    uid: user.uid,
+                    email: user.email || '',
+                    displayName: user.displayName || 'User',
+                    username: user.displayName || `user_${user.uid.substring(0, 8)}`,
+                    gamesPlayed: 0,
+                    favoriteGenres: {},
+                    totalPlayTime: 0,
+                    createdAt: serverTimestamp(),
+                    lastLogin: serverTimestamp()
+                });
+            } else {
+                // Update last login
+                await updateDoc(profileRef, {
+                    lastLogin: serverTimestamp()
+                });
+            }
+        }
+
+        // Update Profile UI
+        function updateProfileUI() {
+            const profileBtn = document.getElementById('profileBtn');
+            if (profileBtn) {
+                if (currentUser) {
+                    profileBtn.textContent = currentUser.displayName || currentUser.email || '👤 Profile';
+                } else {
+                    profileBtn.textContent = 'Sign In';
+                }
+            }
+        }
+
+        // Login Functions
+        window.signUp = async function(email, password, username) {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                if (username) {
+                    await updateAuthProfile(userCredential.user, { displayName: username });
+                }
+                await initializeUserProfile(userCredential.user);
+                closeLoginModal();
+                alert('Account created successfully!');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        };
+
+        window.signIn = async function(email, password) {
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                closeLoginModal();
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        };
+
+        window.signOutUser = async function() {
+            try {
+                await signOut(auth);
+                alert('Signed out successfully');
+            } catch (error) {
+                alert('Error signing out: ' + error.message);
+            }
+        };
+
+        // Get Global Profile
+        window.getGlobalProfile = async function(uid) {
+            const profileRef = doc(profilesCol, uid);
+            const profileSnap = await getDoc(profileRef);
+            return profileSnap.exists() ? profileSnap.data() : null;
+        };
+
+        // Get All Profiles (for leaderboard)
+        window.getAllProfiles = async function() {
+            const q = query(profilesCol, orderBy("gamesPlayed", "desc"));
+            const snapshot = await getDocs(q);
+            const profiles = [];
+            snapshot.forEach(doc => {
+                profiles.push({ id: doc.id, ...doc.data() });
+            });
+            return profiles;
+        };
+
+        // Track Game Play
+        window.trackGamePlay = async function(gameName, category) {
+            if (!currentUser) return;
+            const uid = currentUser.uid;
+            const profileRef = doc(profilesCol, uid);
+            const profileSnap = await getDoc(profileRef);
+            
+            if (profileSnap.exists()) {
+                const data = profileSnap.data();
+                const gamesPlayed = (data.gamesPlayed || 0) + 1;
+                const favoriteGenres = data.favoriteGenres || {};
+                favoriteGenres[category] = (favoriteGenres[category] || 0) + 1;
+                
+                await updateDoc(profileRef, {
+                    gamesPlayed: gamesPlayed,
+                    favoriteGenres: favoriteGenres
+                });
+            }
+        };
+
+        // Get User Stats
+        window.getUserStats = async function() {
+            if (!currentUser) return null;
+            const profileRef = doc(profilesCol, currentUser.uid);
+            const profileSnap = await getDoc(profileRef);
+            return profileSnap.exists() ? profileSnap.data() : null;
+        };
+
+        // Rating Functions
+        window.submitRating = async function(gameName, rating, review) {
+            if (!currentUser) {
+                alert("Please sign in to rate games");
+                return;
+            }
+            try {
+                await addDoc(ratingsCol, {
+                    gameName: gameName,
+                    userId: currentUser.uid,
+                    rating: rating,
+                    review: review || "",
+                    createdAt: serverTimestamp()
+                });
+                alert("Rating submitted!");
+            } catch (err) {
+                console.error("Error submitting rating:", err);
+            }
+        };
+
+        window.getGameRatings = async function(gameName) {
+            const q = query(ratingsCol, where("gameName", "==", gameName));
+            const snapshot = await getDocs(q);
+            const ratings = [];
+            snapshot.forEach(doc => {
+                ratings.push(doc.data());
+            });
+            return ratings;
+        };
 
         function getLikedIds() {
             try {
