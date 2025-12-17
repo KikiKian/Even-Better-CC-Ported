@@ -10,4 +10,5 @@ Website Cloaking - Website logo and title is now disguised as canvas
 Request Games - Requests are stored in firebase and can be viewed globally
 
 **Important Note**
+
 The games ARE NOT MINE and are from other repositories on github
