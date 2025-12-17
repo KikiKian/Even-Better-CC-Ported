@@ -35,6 +35,9 @@ This project focuses on **accessibility, simplicity, and easy hosting**.
 
 ---
 
+📦 **Changelog:** [View version history](CHANGELOG.md)
+
+
 ## ✨ Features
 
 - 🎮 Multiple browser-playable games  
