@@ -229,16 +229,24 @@
             font-weight: 700;
             color: var(--blue-700);
             font-size: 1.1rem;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
         .request-card-meta{
             margin: 0 0 0.5rem 0;
             font-size: 0.85rem;
             opacity: 0.8;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
         .request-card-reason{
             margin: 0 0 0.75rem 0;
             font-size: 0.95rem;
             color: #1464a8;
+            line-height: 1.45;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         /* Like button */
@@ -437,6 +445,13 @@
         .form-group textarea{
             resize: vertical;
             min-height: 100px;
+        }
+        .char-counter{
+            margin-top: 0.35rem;
+            text-align: right;
+            font-size: 0.8rem;
+            color: #1464a8;
+            opacity: 0.9;
         }
         .submit-btn{
             width: 100%;
@@ -672,6 +687,8 @@
 </head>
 <body>
 
+    <script src="firebase-config.js"></script>
+
     <!-- Firebase + Firestore (GLOBAL requests + likes + leaderboard) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
@@ -688,15 +705,10 @@
             increment
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyClOeUmq_Dt-9ghRV4LF-HaAO7JRypNIWw",
-            authDomain: "even-better-cc-ported.firebaseapp.com",
-            projectId: "even-better-cc-ported",
-            storageBucket: "even-better-cc-ported.firebasestorage.app",
-            messagingSenderId: "662470608606",
-            appId: "1:662470608606:web:0b8bfbf38f0de6c56ea44f",
-            measurementId: "G-HYYR7S4BK7"
-        };
+        const firebaseConfig = window.FIREBASE_CONFIG;
+        if (!firebaseConfig) {
+            throw new Error("Missing Firebase config. Create website/firebase-config.js");
+        }
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -704,6 +716,23 @@
         const profilesCol = collection(db, "profiles");
         const ratingsCol = collection(db, "ratings");
         const gameStatsCol = collection(db, "gameStats");
+        const REQUEST_LIMITS = {
+            game: 60,
+            name: 30,
+            reason: 350
+        };
+
+        function normalizeRequestText(value) {
+            return String(value || "")
+                .replace(/[\u0000-\u001F\u007F]/g, "")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function truncateText(value, limit) {
+            if (value.length <= limit) return value;
+            return value.slice(0, limit);
+        }
 
         // Auth State Management
         let currentUser = null;
@@ -968,9 +997,9 @@
                     const data = docSnap.data();
                     const id = docSnap.id;
 
-                    const game = data.game || "(Unknown game)";
-                    const name = data.name || "Anonymous";
-                    const reason = data.reason || "No reason provided.";
+                    const game = truncateText(normalizeRequestText(data.game || "(Unknown game)"), REQUEST_LIMITS.game);
+                    const name = truncateText(normalizeRequestText(data.name || "Anonymous"), REQUEST_LIMITS.name);
+                    const reason = truncateText(normalizeRequestText(data.reason || "No reason provided."), REQUEST_LIMITS.reason);
                     const likes = data.likes || 0;
 
                     let dateText = "";
@@ -1064,9 +1093,15 @@
             event.preventDefault();
 
             const form = event.target;
-            const gameName = document.getElementById('gameName').value;
-            const yourName = document.getElementById('yourName').value || 'Anonymous';
-            const reason = document.getElementById('reason').value;
+            const gameName = truncateText(normalizeRequestText(document.getElementById('gameName').value), REQUEST_LIMITS.game);
+            const rawName = normalizeRequestText(document.getElementById('yourName').value);
+            const yourName = truncateText(rawName || 'Anonymous', REQUEST_LIMITS.name);
+            const reason = truncateText(normalizeRequestText(document.getElementById('reason').value), REQUEST_LIMITS.reason);
+
+            if (!gameName) {
+                alert("Please enter a game name.");
+                return;
+            }
 
             try {
                 await addDoc(requestsCol, {
@@ -1338,6 +1373,20 @@
                     <a href="games/dm/index.html" class="btn-play">Play Now</a>
             </div>
 
+                <div class="game-card">
+                    <div class="game-icon">SL</div>
+                    <h3>Slope</h3>
+                    <p>Roll down a fast neon track, dodge obstacles, and survive as long as you can in this reflex-based runner.</p>
+                    <a href="games/slope/index.html" class="btn-play">Play Now</a>
+            </div>
+
+                <div class="game-card">
+                    <div class="game-icon">PK</div>
+                    <h3>Pokemon JS</h3>
+                    <p>A fan-made browser remake of classic Pokemon Red/Blue style gameplay with battles, maps, and progression.</p>
+                    <a href="games/pokemon-js-main/build/index.html" class="btn-play">Play Now</a>
+            </div>
+
 
         </div>        
         <!-- Global requests section -->
@@ -1362,15 +1411,18 @@
             <form onsubmit="submitRequest(event)">
                 <div class="form-group">
                     <label for="gameName">Game Name *</label>
-                    <input type="text" id="gameName" placeholder="e.g., Slope, Cookie Clicker" required>
+                    <input type="text" id="gameName" placeholder="e.g., Slope, Cookie Clicker" maxlength="60" required>
+                    <div id="gameNameCount" class="char-counter">0/60</div>
                 </div>
                 <div class="form-group">
                     <label for="yourName">Your Name (optional)</label>
-                    <input type="text" id="yourName" placeholder="Anonymous">
+                    <input type="text" id="yourName" placeholder="Anonymous" maxlength="30">
+                    <div id="yourNameCount" class="char-counter">0/30</div>
                 </div>
                 <div class="form-group">
                     <label for="reason">Why do you want this game? (optional)</label>
-                    <textarea id="reason" placeholder="Tell us why you'd like to see this game added..."></textarea>
+                    <textarea id="reason" placeholder="Tell us why you'd like to see this game added..." maxlength="350"></textarea>
+                    <div id="reasonCount" class="char-counter">0/350</div>
                 </div>
                 <button type="submit" class="submit-btn">Submit Request</button>
             </form>
@@ -1422,6 +1474,7 @@
 
         function openRequestModal() {
             document.getElementById('requestModal').style.display = 'block';
+            updateAllCounters();
         }
 
         function closeRequestModal() {
@@ -1441,6 +1494,41 @@
                 closeRequestModal();
             }
         }
+
+        function bindCounter(inputId, counterId) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(counterId);
+            if (!input || !counter) return;
+
+            const max = Number(input.getAttribute('maxlength')) || 0;
+            const update = () => {
+                counter.textContent = `${input.value.length}/${max}`;
+            };
+
+            input.addEventListener('input', update);
+            update();
+        }
+
+        function updateAllCounters() {
+            const pairs = [
+                ['gameName', 'gameNameCount'],
+                ['yourName', 'yourNameCount'],
+                ['reason', 'reasonCount']
+            ];
+            pairs.forEach(([inputId, counterId]) => {
+                const input = document.getElementById(inputId);
+                const counter = document.getElementById(counterId);
+                if (!input || !counter) return;
+                const max = Number(input.getAttribute('maxlength')) || 0;
+                counter.textContent = `${input.value.length}/${max}`;
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            bindCounter('gameName', 'gameNameCount');
+            bindCounter('yourName', 'yourNameCount');
+            bindCounter('reason', 'reasonCount');
+        });
     </script>
 </body>
 </html>
