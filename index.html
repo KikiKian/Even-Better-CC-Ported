@@ -7,8 +7,7 @@
     <!-- Tab icon (favicon) -->
 <link rel="icon" type="image/x-icon" href="https://issaquah.instructure.com/favicon.ico">
 
-    <style>
-        :root{
+    <style>        :root{
             --blue-700: #0456a6;
             --blue-400: #5fb0ff;
             --accent: #cfe9ff;
@@ -697,6 +696,7 @@
             onAuthStateChanged,
             createUserWithEmailAndPassword,
             signInWithEmailAndPassword,
+            signInAnonymously,
             signOut,
             updateProfile as updateAuthProfile
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
@@ -725,6 +725,8 @@
         const profilesCol = db ? collection(db, "profiles") : null;
         const ratingsCol = db ? collection(db, "ratings") : null;
         const gameStatsCol = db ? collection(db, "gameStats") : null;
+        const LOCAL_REQUESTS_KEY = "localGameRequests";
+        let lastCommunityAuthError = null;
         const REQUEST_LIMITS = {
             game: 60,
             name: 30,
@@ -743,13 +745,29 @@
             return value.slice(0, limit);
         }
 
+        async function ensureCommunityAuth() {
+            if (!auth) return false;
+            if (currentUser) return true;
+            try {
+                await signInAnonymously(auth);
+                lastCommunityAuthError = null;
+                return true;
+            } catch (err) {
+                lastCommunityAuthError = err || null;
+                console.error("Anonymous auth failed:", err);
+                return false;
+            }
+        }
+
         // Auth State Management
         let currentUser = null;
         if (auth) {
             onAuthStateChanged(auth, async (user) => {
                 currentUser = user;
                 if (user) {
-                    await initializeUserProfile(user);
+                    if (!user.isAnonymous) {
+                        await initializeUserProfile(user);
+                    }
                     updateProfileUI();
                 } else {
                     // Don't auto-sign in anonymously - require login
@@ -760,6 +778,7 @@
 
         // Initialize User Profile
         async function initializeUserProfile(user) {
+            if (!profilesCol || !user || user.isAnonymous) return;
             const profileRef = doc(profilesCol, user.uid);
             const profileSnap = await getDoc(profileRef);
             if (!profileSnap.exists()) {
@@ -944,6 +963,82 @@
             }
         }
 
+        function getLocalRequests() {
+            try {
+                const raw = localStorage.getItem(LOCAL_REQUESTS_KEY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed)) return [];
+                return parsed;
+            } catch (e) {
+                console.error("Error reading local requests:", e);
+                return [];
+            }
+        }
+
+        function saveLocalRequest(entry) {
+            const existing = getLocalRequests();
+            existing.push(entry);
+            try {
+                localStorage.setItem(LOCAL_REQUESTS_KEY, JSON.stringify(existing));
+            } catch (e) {
+                console.error("Error saving local request:", e);
+            }
+        }
+
+        function renderLocalRequests(container) {
+            const localRequests = getLocalRequests().slice().reverse();
+            container.innerHTML = "";
+
+            const info = document.createElement("p");
+            info.textContent = "Cloud requests are blocked by Firebase permissions. Showing local requests only.";
+            info.style.opacity = "0.85";
+            info.style.fontSize = "0.95rem";
+            container.appendChild(info);
+
+            if (!localRequests.length) {
+                const p = document.createElement("p");
+                p.textContent = "No local requests yet.";
+                p.style.opacity = "0.8";
+                p.style.fontSize = "0.95rem";
+                container.appendChild(p);
+                buildLeaderboard([]);
+                return;
+            }
+
+            localRequests.forEach((entry) => {
+                const card = document.createElement("div");
+                card.className = "request-card";
+
+                const titleEl = document.createElement("p");
+                titleEl.className = "request-card-title";
+                titleEl.textContent = entry.game || "(Unknown game)";
+
+                const metaEl = document.createElement("p");
+                metaEl.className = "request-card-meta";
+                metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local draft"}`;
+
+                const reasonEl = document.createElement("p");
+                reasonEl.className = "request-card-reason";
+                reasonEl.textContent = entry.reason || "No reason provided.";
+
+                const noteEl = document.createElement("p");
+                noteEl.className = "request-card-meta";
+                noteEl.textContent = "Stored locally on this device (Firebase permissions issue).";
+
+                card.appendChild(titleEl);
+                card.appendChild(metaEl);
+                card.appendChild(reasonEl);
+                card.appendChild(noteEl);
+                container.appendChild(card);
+            });
+
+            buildLeaderboard(localRequests.map((r) => ({
+                game: r.game || "(Unknown game)",
+                likes: 0
+            })));
+        }
+
         function buildLeaderboard(requests) {
             const tbody = document.getElementById("leaderboardBody");
             if (!tbody) return;
@@ -1062,7 +1157,7 @@
                     const metaEl = document.createElement("p");
                     metaEl.className = "request-card-meta";
                     metaEl.textContent = dateText
-                        ? `Requested by ${name} • ${dateText}`
+                        ? `Requested by ${name} � ${dateText}`
                         : `Requested by ${name}`;
 
                     const reasonEl = document.createElement("p");
@@ -1074,7 +1169,7 @@
 
                     const likeBtn = document.createElement("button");
                     likeBtn.className = "like-button";
-                    likeBtn.innerHTML = "👍 Like";
+                    likeBtn.innerHTML = "?? Like";
 
                     const countSpan = document.createElement("span");
                     countSpan.className = "like-count";
@@ -1082,25 +1177,37 @@
 
                     if (likedIds.has(id)) {
                         likeBtn.classList.add("liked");
-                        likeBtn.innerHTML = "👍 Liked";
+                        likeBtn.innerHTML = "?? Liked";
                     }
 
                     likeBtn.addEventListener("click", async () => {
                         const likedAgain = getLikedIds();
-                        if (likedAgain.has(id)) {
-                            return;
-                        }
-                        try {
+                        if (likedAgain.has(id)) return;
+
+                        const doLike = async () => {
                             const ref = doc(db, "gameRequests", id);
                             await updateDoc(ref, { likes: increment(1) });
-
                             likedAgain.add(id);
                             saveLikedIds(likedAgain);
-
                             await loadRequests();
+                        };
+
+                        try {
+                            await doLike();
                         } catch (e) {
+                            if (e?.code === "permission-denied") {
+                                const authed = await ensureCommunityAuth();
+                                if (authed) {
+                                    try {
+                                        await doLike();
+                                        return;
+                                    } catch (retryErr) {
+                                        console.error("Retry like failed:", retryErr);
+                                    }
+                                }
+                            }
                             console.error("Error liking request:", e);
-                            alert("❌ Could not like this request. Try again later.");
+                            alert("Could not like this request. Check Firestore rules for gameRequests.");
                         }
                     });
 
@@ -1117,6 +1224,19 @@
 
                 buildLeaderboard(allRequests);
             } catch (err) {
+                if (err?.code === "permission-denied") {
+                    const authed = await ensureCommunityAuth();
+                    if (authed) return loadRequests();
+                    renderLocalRequests(container);
+                    if (lastCommunityAuthError) {
+                        const authHint = document.createElement("p");
+                        authHint.style.opacity = "0.8";
+                        authHint.style.fontSize = "0.9rem";
+                        authHint.textContent = `Auth detail: ${lastCommunityAuthError.code || "unknown"} - ${lastCommunityAuthError.message || "Unknown auth error"}`;
+                        container.appendChild(authHint);
+                    }
+                    return;
+                }
                 console.error("Error loading requests:", err);
                 container.innerHTML = "Error loading requests.";
                 const hint = document.createElement("p");
@@ -1147,7 +1267,7 @@
                 return;
             }
 
-            try {
+            const writeRequest = async () => {
                 await addDoc(requestsCol, {
                     game: gameName,
                     name: yourName,
@@ -1155,16 +1275,50 @@
                     likes: 0,
                     createdAt: serverTimestamp()
                 });
+            };
 
+            try {
+                await writeRequest();
                 alert(`You have submitted the form.\n\nGame: "${gameName}"`);
-
                 form.reset();
                 if (typeof window.closeRequestModal === "function") {
                     window.closeRequestModal();
                 }
-
                 loadRequests();
             } catch (err) {
+                if (err?.code === "permission-denied") {
+                    const authed = await ensureCommunityAuth();
+                    if (authed) {
+                        try {
+                            await writeRequest();
+                            alert(`You have submitted the form.\n\nGame: "${gameName}"`);
+                            form.reset();
+                            if (typeof window.closeRequestModal === "function") {
+                                window.closeRequestModal();
+                            }
+                            loadRequests();
+                            return;
+                        } catch (retryErr) {
+                            console.error("Retry save request failed:", retryErr);
+                        }
+                    }
+                    saveLocalRequest({
+                        game: gameName,
+                        name: yourName,
+                        reason: reason,
+                        dateText: new Date().toLocaleString()
+                    });
+                    const authDetail = lastCommunityAuthError
+                        ? `\nAuth detail: ${lastCommunityAuthError.code || "unknown"} - ${lastCommunityAuthError.message || "Unknown auth error"}`
+                        : "";
+                    alert(`Firebase blocked this request, so it was saved locally on your device.${authDetail}\n\nLikely fixes: enable Anonymous Auth and add this site domain in Firebase Auth > Settings > Authorized domains.`);
+                    form.reset();
+                    if (typeof window.closeRequestModal === "function") {
+                        window.closeRequestModal();
+                    }
+                    loadRequests();
+                    return;
+                }
                 console.error("Error saving request:", err);
                 alert(`There was a problem submitting your request.\n\n${err?.message || "Unknown error"}`);
             }
