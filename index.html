@@ -53,6 +53,90 @@
             margin-bottom:1rem;
             box-shadow: 0 6px 18px rgba(5,86,166,0.12);
         }
+        .forums-access{
+            margin: 0 auto 2rem auto;
+            max-width: 900px;
+            border-radius: 18px;
+            padding: 1.25rem 1.4rem;
+            background: linear-gradient(125deg, #0f6ec9, #2d90e9 46%, #62b6ff);
+            color: #fff;
+            box-shadow: 0 14px 34px rgba(4,86,166,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .forums-access h2{
+            margin: 0;
+            font-size: clamp(1.3rem, 2.6vw, 2rem);
+            letter-spacing: -0.01em;
+        }
+        .forums-access p{
+            margin: 0.35rem 0 0 0;
+            opacity: 0.96;
+            line-height: 1.45;
+            max-width: 60ch;
+        }
+        .btn-forums{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: #0456a6;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 0.75rem 1.25rem;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-forums:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(0,0,0,0.28);
+        }
+        .announcement-actions{
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+        .announcement-link{
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, #0f6ec9, #0456a6);
+            border-radius: 999px;
+            padding: 0.55rem 0.95rem;
+            font-weight: 700;
+            font-size: 0.92rem;
+            box-shadow: 0 8px 20px rgba(4,86,166,0.25);
+            transition: transform 0.2s ease;
+        }
+        .announcement-link:hover{
+            transform: translateY(-1px);
+        }
+        .forums-float{
+            position: fixed;
+            right: 1.1rem;
+            bottom: 1.1rem;
+            z-index: 1200;
+            text-decoration: none;
+            background: linear-gradient(135deg, #0456a6, #2f99f0);
+            color: #fff;
+            border-radius: 999px;
+            padding: 0.82rem 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 12px 26px rgba(4,86,166,0.35);
+            border: 1px solid rgba(255,255,255,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .forums-float:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(4,86,166,0.42);
+        }
         .download-section{
             background: linear-gradient(135deg,var(--blue-700),var(--blue-400));
             color: #fff;
@@ -646,6 +730,17 @@
         .announcement-card:nth-child(3) .announcement-badge:hover{
             box-shadow: 0 6px 20px rgba(255,107,107,0.4);
         }
+        @media (max-width: 760px){
+            .forums-access{
+                padding: 1rem;
+            }
+            .forums-float{
+                right: 0.75rem;
+                bottom: 0.75rem;
+                padding: 0.72rem 0.95rem;
+                font-size: 0.92rem;
+            }
+        }
 
         @media (prefers-color-scheme: dark){
             .tab-button{
@@ -680,6 +775,12 @@
             }
             .announcements-section > h2{
                 color: #cfefff;
+            }
+            .forums-access{
+                background: linear-gradient(125deg, #0b4273, #0f5e9f 46%, #1872b9);
+            }
+            .announcement-link{
+                background: linear-gradient(135deg, #0f5e9f, #0b4273);
             }
         }
     </style>
@@ -1332,7 +1433,17 @@
             <div class="badge">The Best CC Ported Link</div>
             <h1>better cc ported</h1>
             <p class="lead">This is a game website... have fun!</p>
-        </div>        <!-- Announcements Section -->
+        </div>
+
+        <div class="forums-access">
+            <div>
+                <h2>Community Forums Are Open</h2>
+                <p>Report bugs, request games, and share feedback with the community in one place.</p>
+            </div>
+            <a href="forums.html" class="btn-forums">Join The Forums</a>
+        </div>
+
+        <!-- Announcements Section -->
         <div class="announcements-section" style="margin-bottom: 3rem;">
             <h2>Announcements</h2>
 
@@ -1352,6 +1463,32 @@
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
+                        <div class="announcement-badge">New Games</div>
+                        <h3 class="announcement-title">Fresh games just added</h3>
+                    </div>
+                    <span class="announcement-date">February 2026</span>
+                </div>
+                <p class="announcement-content">
+                    New additions now available on the homepage include Slope and Pokemon JS. Jump in from the Available Games section and try them out.
+                </p>
+            </div>
+
+            <div class="announcement-card">
+                <div class="announcement-header">
+                    <div>
+                        <div class="announcement-badge">Fixed Games</div>
+                        <h3 class="announcement-title">Recent game fixes and stability updates</h3>
+                    </div>
+                    <span class="announcement-date">February 2026</span>
+                </div>
+                <p class="announcement-content">
+                    Street Fighter path/case issues were corrected for better cross-platform loading, and request/board reliability was improved across the site.
+                </p>
+            </div>
+
+            <div class="announcement-card">
+                <div class="announcement-header">
+                    <div>
                         <div class="announcement-badge">Community</div>
                         <h3 class="announcement-title">Community forums are now live</h3>
                     </div>
@@ -1360,6 +1497,9 @@
                 <p class="announcement-content">
                     You can now post new game requests, bug reports, and complaints in the forums page so updates are easier to track.
                 </p>
+                <div class="announcement-actions">
+                    <a href="forums.html" class="announcement-link">Open Community Forums</a>
+                </div>
             </div>
         </div>
 
@@ -1623,6 +1763,8 @@
             </form>
         </div>
     </div>
+
+    <a class="forums-float" href="forums.html">Community Forums</a>
     
     <script>
         function switchTab(tabName, buttonElement) {

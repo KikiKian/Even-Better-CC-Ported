@@ -4,50 +4,327 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Forums</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root{
-            --blue-700:#0456a6;
-            --blue-400:#5fb0ff;
-            --bg:#f5faff;
-            --card:#ffffff;
+        :root {
+            --ink: #0a1e35;
+            --ink-soft: #1a3d64;
+            --brand-1: #52a6ff;
+            --brand-2: #0456a6;
+            --paper: #f6fbff;
+            --card: #ffffff;
+            --line: rgba(4, 86, 166, 0.16);
+            --glow: 0 20px 50px rgba(4, 86, 166, 0.18);
         }
-        html,body{margin:0;padding:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:#123;}
-        .wrap{max-width:980px;margin:0 auto;padding:1.5rem;}
-        .topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;}
-        .title{margin:0;color:var(--blue-700);font-size:clamp(1.6rem,4vw,2.4rem);}
-        .btn{display:inline-block;padding:.65rem 1rem;border-radius:10px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
-        .btn-home{background:#e8f2ff;color:var(--blue-700)}
-        .grid{display:grid;grid-template-columns:1fr;gap:1rem}
-        .card{background:var(--card);border:1px solid rgba(4,86,166,.12);border-radius:14px;padding:1rem 1.1rem;box-shadow:0 8px 24px rgba(4,86,166,.08)}
-        .card h2{margin:.2rem 0 .8rem 0;color:var(--blue-700);font-size:1.25rem}
-        .field{margin-bottom:.85rem}
-        .field label{display:block;margin-bottom:.35rem;font-weight:600;color:var(--blue-700)}
-        .field input,.field textarea,.field select{width:100%;padding:.65rem;border:2px solid #b9ddff;border-radius:8px;font:inherit;box-sizing:border-box}
-        .field textarea{min-height:110px;resize:vertical}
-        .counter{text-align:right;font-size:.8rem;color:#1464a8}
-        .submit{background:linear-gradient(135deg,var(--blue-400),var(--blue-700));color:#fff}
-        .notice{font-size:.9rem;opacity:.85;margin:.2rem 0 .6rem 0}
-        .posts{display:grid;gap:.8rem}
-        .post{background:#fff;border:1px solid rgba(4,86,166,.14);border-radius:10px;padding:.85rem}
-        .meta{font-size:.82rem;color:#467;opacity:.9;margin-bottom:.35rem;word-break:break-word}
-        .post h3{margin:.1rem 0 .4rem 0;color:#0f3f76;font-size:1.05rem;word-break:break-word}
-        .post p{margin:0;line-height:1.45;white-space:pre-wrap;word-break:break-word}
-        .tag{display:inline-block;background:#e9f4ff;color:#0b4d94;font-size:.75rem;padding:.2rem .5rem;border-radius:999px;font-weight:700;margin-right:.35rem}
-        @media (min-width:860px){.grid{grid-template-columns:360px 1fr}}
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Space Grotesk", "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 12%, rgba(82, 166, 255, 0.25), transparent 38%),
+                radial-gradient(circle at 88% 0%, rgba(4, 86, 166, 0.25), transparent 42%),
+                linear-gradient(180deg, #edf7ff 0%, #f9fcff 54%, #f2f8ff 100%);
+            padding: 1.35rem;
+        }
+
+        .shell {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.86));
+            backdrop-filter: blur(8px);
+            box-shadow: var(--glow);
+            padding: 1.25rem 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 0.9rem;
+        }
+
+        .tagline {
+            margin: 0;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+            font-family: "IBM Plex Mono", monospace;
+        }
+
+        .title {
+            margin: 0.2rem 0 0 0;
+            font-size: clamp(1.85rem, 3.8vw, 3rem);
+            line-height: 1;
+            color: var(--brand-2);
+        }
+
+        .hero-copy {
+            margin: 0.5rem 0 0 0;
+            color: var(--ink-soft);
+            max-width: 68ch;
+            line-height: 1.55;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            padding: 0.62rem 1rem;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+            box-shadow: 0 10px 24px rgba(4, 86, 166, 0.25);
+        }
+
+        .btn-ghost {
+            color: var(--brand-2);
+            background: #e9f4ff;
+            border-color: rgba(4, 86, 166, 0.18);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            border-radius: 999px;
+            padding: 0.33rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--brand-2);
+            background: rgba(82, 166, 255, 0.16);
+            border: 1px solid rgba(4, 86, 166, 0.14);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(4, 86, 166, 0.1);
+            padding: 1rem;
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--brand-2);
+        }
+
+        .subtitle {
+            margin: 0.5rem 0 0.9rem 0;
+            color: var(--ink-soft);
+            font-size: 0.95rem;
+        }
+
+        .field {
+            margin-bottom: 0.8rem;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 0.32rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--brand-2);
+        }
+
+        .field input,
+        .field textarea,
+        .field select {
+            width: 100%;
+            border: 2px solid #badaff;
+            background: #fbfeff;
+            border-radius: 10px;
+            padding: 0.62rem 0.68rem;
+            font: inherit;
+            color: var(--ink);
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            outline: none;
+            border-color: var(--brand-2);
+            box-shadow: 0 0 0 3px rgba(82, 166, 255, 0.2);
+        }
+
+        .field textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .counter {
+            margin-top: 0.25rem;
+            text-align: right;
+            font-size: 0.76rem;
+            color: var(--ink-soft);
+            font-family: "IBM Plex Mono", monospace;
+        }
+
+        .feed-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.7rem;
+        }
+
+        .status {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+        }
+
+        .search {
+            width: 100%;
+            max-width: 260px;
+            border: 2px solid #badaff;
+            background: #fbfeff;
+            border-radius: 999px;
+            padding: 0.5rem 0.86rem;
+            font: inherit;
+            color: var(--ink);
+        }
+
+        .search:focus {
+            outline: none;
+            border-color: var(--brand-2);
+            box-shadow: 0 0 0 3px rgba(82, 166, 255, 0.2);
+        }
+
+        .posts {
+            display: grid;
+            gap: 0.68rem;
+        }
+
+        .post {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 0.76rem;
+            background: linear-gradient(180deg, #fff, #f8fcff);
+        }
+
+        .meta {
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.3rem;
+            color: var(--ink-soft);
+            font-size: 0.8rem;
+            word-break: break-word;
+        }
+
+        .post h3 {
+            margin: 0.1rem 0 0.34rem 0;
+            color: var(--ink);
+            font-size: 1rem;
+            word-break: break-word;
+        }
+
+        .post p {
+            margin: 0;
+            color: var(--ink-soft);
+            line-height: 1.48;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .type-tag {
+            border-radius: 999px;
+            padding: 0.2rem 0.54rem;
+            font-size: 0.72rem;
+            font-family: "IBM Plex Mono", monospace;
+            background: #e8f4ff;
+            color: #0f4f94;
+            border: 1px solid rgba(4, 86, 166, 0.18);
+        }
+
+        @media (max-width: 920px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <script src="firebase-config.js"></script>
-    <div class="wrap">
-        <div class="topbar">
-            <h1 class="title">Community Forums</h1>
-            <a href="index.html" class="btn btn-home">Back To Home</a>
-        </div>
+    <main class="shell">
+        <section class="hero">
+            <div class="hero-top">
+                <div>
+                    <p class="tagline">Community Space</p>
+                    <h1 class="title">Forums</h1>
+                    <p class="hero-copy">Post game requests, bug reports, and feedback in one place so issues are easier to track and discuss.</p>
+                </div>
+                <div class="hero-actions">
+                    <a href="index.html" class="btn btn-ghost">Back To Home</a>
+                    <a href="#newPost" class="btn btn-primary">Create New Post</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <span class="chip">Game Requests</span>
+                <span class="chip">Bug Reports</span>
+                <span class="chip">General Feedback</span>
+            </div>
+        </section>
 
-        <div class="grid">
-            <section class="card">
+        <section class="layout">
+            <section id="newPost" class="panel">
                 <h2>New Post</h2>
-                <p class="notice">Use this page for new game requests, complaints, or bug reports.</p>
+                <p class="subtitle">Be specific in the details section so fixes and requests can be handled faster.</p>
                 <form id="forumForm">
                     <div class="field">
                         <label for="postType">Category</label>
@@ -73,17 +350,20 @@
                         <textarea id="postBody" maxlength="500" required></textarea>
                         <div id="bodyCount" class="counter">0/500</div>
                     </div>
-                    <button class="btn submit" type="submit">Post To Forum</button>
+                    <button class="btn btn-primary" type="submit" style="width:100%;">Post To Forum</button>
                 </form>
             </section>
 
-            <section class="card">
-                <h2>Recent Posts</h2>
-                <p id="forumStatus" class="notice">Loading posts...</p>
+            <section class="panel">
+                <div class="feed-top">
+                    <h2 style="margin:0;">Recent Posts</h2>
+                    <input id="searchPosts" class="search" type="search" placeholder="Search title/body...">
+                </div>
+                <p id="forumStatus" class="status">Loading posts...</p>
                 <div id="posts" class="posts"></div>
             </section>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
@@ -94,8 +374,10 @@
         const statusEl = document.getElementById("forumStatus");
         const postsEl = document.getElementById("posts");
         const form = document.getElementById("forumForm");
+        const searchInput = document.getElementById("searchPosts");
 
         let forumCol = null;
+        let cachedPosts = [];
 
         const config = window.FIREBASE_CONFIG;
         if (config) {
@@ -133,22 +415,42 @@
             localStorage.setItem(LOCAL_KEY, JSON.stringify(posts));
         }
 
+        function sortPosts(posts) {
+            return posts.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+        }
+
+        function getFilteredPosts() {
+            const term = (searchInput.value || "").trim().toLowerCase();
+            if (!term) return cachedPosts;
+            return cachedPosts.filter((post) => {
+                const haystack = `${post.type || ""} ${post.title || ""} ${post.body || ""} ${post.name || ""}`.toLowerCase();
+                return haystack.includes(term);
+            });
+        }
+
         function renderPosts(list) {
             postsEl.innerHTML = "";
             if (!list.length) {
-                postsEl.innerHTML = "<p class='notice'>No posts yet. Be the first.</p>";
+                postsEl.innerHTML = "<p class='status'>No matching posts yet.</p>";
                 return;
             }
+
             list.forEach((post) => {
                 const item = document.createElement("article");
                 item.className = "post";
+
                 const meta = document.createElement("div");
                 meta.className = "meta";
+
                 const tag = document.createElement("span");
-                tag.className = "tag";
+                tag.className = "type-tag";
                 tag.textContent = post.type || "General Feedback";
+
+                const byline = document.createElement("span");
+                byline.textContent = `${post.name || "Anonymous"} - ${formatDate(post.createdAt)}`;
+
                 meta.appendChild(tag);
-                meta.appendChild(document.createTextNode(`${post.name || "Anonymous"} - ${formatDate(post.createdAt)}`));
+                meta.appendChild(byline);
 
                 const title = document.createElement("h3");
                 title.textContent = post.title || "(No title)";
@@ -163,20 +465,28 @@
             });
         }
 
+        function renderCurrentView() {
+            renderPosts(getFilteredPosts());
+        }
+
         async function loadPosts() {
             if (!forumCol) {
-                renderPosts(readLocal().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))));
+                cachedPosts = sortPosts(readLocal());
+                renderCurrentView();
                 return;
             }
+
             try {
                 const snap = await getDocs(query(forumCol, orderBy("createdAt", "desc")));
                 const list = [];
                 snap.forEach((d) => list.push({ id: d.id, ...d.data() }));
-                renderPosts(list);
+                cachedPosts = list;
                 statusEl.textContent = "Live community posts";
+                renderCurrentView();
             } catch (err) {
                 statusEl.textContent = `Firestore unavailable (${err?.message || "error"}). Showing local posts.`;
-                renderPosts(readLocal().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))));
+                cachedPosts = sortPosts(readLocal());
+                renderCurrentView();
             }
         }
 
@@ -205,13 +515,15 @@
 
             form.reset();
             updateCounters();
-            loadPosts();
+            await loadPosts();
         });
 
         function bindCounter(inputId, outId, max) {
             const input = document.getElementById(inputId);
             const out = document.getElementById(outId);
-            const update = () => out.textContent = `${input.value.length}/${max}`;
+            const update = () => {
+                out.textContent = `${input.value.length}/${max}`;
+            };
             input.addEventListener("input", update);
             update();
         }
@@ -225,6 +537,7 @@
             document.getElementById("bodyCount").textContent = `${body.value.length}/${LIMITS.body}`;
         }
 
+        searchInput.addEventListener("input", renderCurrentView);
         bindCounter("postTitle", "titleCount", LIMITS.title);
         bindCounter("postName", "nameCount", LIMITS.name);
         bindCounter("postBody", "bodyCount", LIMITS.body);
