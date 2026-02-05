@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forums</title>
+    <style>
+        :root{
+            --blue-700:#0456a6;
+            --blue-400:#5fb0ff;
+            --bg:#f5faff;
+            --card:#ffffff;
+        }
+        html,body{margin:0;padding:0;background:var(--bg);font-family:Segoe UI,Arial,sans-serif;color:#123;}
+        .wrap{max-width:980px;margin:0 auto;padding:1.5rem;}
+        .topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;}
+        .title{margin:0;color:var(--blue-700);font-size:clamp(1.6rem,4vw,2.4rem);}
+        .btn{display:inline-block;padding:.65rem 1rem;border-radius:10px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
+        .btn-home{background:#e8f2ff;color:var(--blue-700)}
+        .grid{display:grid;grid-template-columns:1fr;gap:1rem}
+        .card{background:var(--card);border:1px solid rgba(4,86,166,.12);border-radius:14px;padding:1rem 1.1rem;box-shadow:0 8px 24px rgba(4,86,166,.08)}
+        .card h2{margin:.2rem 0 .8rem 0;color:var(--blue-700);font-size:1.25rem}
+        .field{margin-bottom:.85rem}
+        .field label{display:block;margin-bottom:.35rem;font-weight:600;color:var(--blue-700)}
+        .field input,.field textarea,.field select{width:100%;padding:.65rem;border:2px solid #b9ddff;border-radius:8px;font:inherit;box-sizing:border-box}
+        .field textarea{min-height:110px;resize:vertical}
+        .counter{text-align:right;font-size:.8rem;color:#1464a8}
+        .submit{background:linear-gradient(135deg,var(--blue-400),var(--blue-700));color:#fff}
+        .notice{font-size:.9rem;opacity:.85;margin:.2rem 0 .6rem 0}
+        .posts{display:grid;gap:.8rem}
+        .post{background:#fff;border:1px solid rgba(4,86,166,.14);border-radius:10px;padding:.85rem}
+        .meta{font-size:.82rem;color:#467;opacity:.9;margin-bottom:.35rem;word-break:break-word}
+        .post h3{margin:.1rem 0 .4rem 0;color:#0f3f76;font-size:1.05rem;word-break:break-word}
+        .post p{margin:0;line-height:1.45;white-space:pre-wrap;word-break:break-word}
+        .tag{display:inline-block;background:#e9f4ff;color:#0b4d94;font-size:.75rem;padding:.2rem .5rem;border-radius:999px;font-weight:700;margin-right:.35rem}
+        @media (min-width:860px){.grid{grid-template-columns:360px 1fr}}
+    </style>
+</head>
+<body>
+    <script src="firebase-config.js"></script>
+    <div class="wrap">
+        <div class="topbar">
+            <h1 class="title">Community Forums</h1>
+            <a href="index.html" class="btn btn-home">Back To Home</a>
+        </div>
+
+        <div class="grid">
+            <section class="card">
+                <h2>New Post</h2>
+                <p class="notice">Use this page for new game requests, complaints, or bug reports.</p>
+                <form id="forumForm">
+                    <div class="field">
+                        <label for="postType">Category</label>
+                        <select id="postType" required>
+                            <option value="New Game Request">New Game Request</option>
+                            <option value="Complaint">Complaint</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="General Feedback">General Feedback</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="postTitle">Title</label>
+                        <input id="postTitle" type="text" maxlength="80" required>
+                        <div id="titleCount" class="counter">0/80</div>
+                    </div>
+                    <div class="field">
+                        <label for="postName">Your Name (optional)</label>
+                        <input id="postName" type="text" maxlength="30" placeholder="Anonymous">
+                        <div id="nameCount" class="counter">0/30</div>
+                    </div>
+                    <div class="field">
+                        <label for="postBody">Details</label>
+                        <textarea id="postBody" maxlength="500" required></textarea>
+                        <div id="bodyCount" class="counter">0/500</div>
+                    </div>
+                    <button class="btn submit" type="submit">Post To Forum</button>
+                </form>
+            </section>
+
+            <section class="card">
+                <h2>Recent Posts</h2>
+                <p id="forumStatus" class="notice">Loading posts...</p>
+                <div id="posts" class="posts"></div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const LIMITS = { title: 80, name: 30, body: 500 };
+        const LOCAL_KEY = "forumPostsLocal";
+        const statusEl = document.getElementById("forumStatus");
+        const postsEl = document.getElementById("posts");
+        const form = document.getElementById("forumForm");
+
+        let forumCol = null;
+
+        const config = window.FIREBASE_CONFIG;
+        if (config) {
+            const app = initializeApp(config);
+            const db = getFirestore(app);
+            forumCol = collection(db, "forumPosts");
+        } else {
+            statusEl.textContent = "Firebase unavailable. Using local-only posts on this device.";
+        }
+
+        function normalize(value) {
+            return String(value || "").replace(/[\u0000-\u001F\u007F]/g, "").replace(/\s+/g, " ").trim();
+        }
+
+        function truncate(value, max) {
+            return value.length > max ? value.slice(0, max) : value;
+        }
+
+        function formatDate(value) {
+            if (!value) return "No date";
+            if (typeof value === "string") return value;
+            if (value.toDate) return value.toDate().toLocaleString();
+            return "No date";
+        }
+
+        function readLocal() {
+            try {
+                return JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
+            } catch {
+                return [];
+            }
+        }
+
+        function saveLocal(posts) {
+            localStorage.setItem(LOCAL_KEY, JSON.stringify(posts));
+        }
+
+        function renderPosts(list) {
+            postsEl.innerHTML = "";
+            if (!list.length) {
+                postsEl.innerHTML = "<p class='notice'>No posts yet. Be the first.</p>";
+                return;
+            }
+            list.forEach((post) => {
+                const item = document.createElement("article");
+                item.className = "post";
+                const meta = document.createElement("div");
+                meta.className = "meta";
+                const tag = document.createElement("span");
+                tag.className = "tag";
+                tag.textContent = post.type || "General Feedback";
+                meta.appendChild(tag);
+                meta.appendChild(document.createTextNode(`${post.name || "Anonymous"} - ${formatDate(post.createdAt)}`));
+
+                const title = document.createElement("h3");
+                title.textContent = post.title || "(No title)";
+
+                const body = document.createElement("p");
+                body.textContent = post.body || "";
+
+                item.appendChild(meta);
+                item.appendChild(title);
+                item.appendChild(body);
+                postsEl.appendChild(item);
+            });
+        }
+
+        async function loadPosts() {
+            if (!forumCol) {
+                renderPosts(readLocal().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))));
+                return;
+            }
+            try {
+                const snap = await getDocs(query(forumCol, orderBy("createdAt", "desc")));
+                const list = [];
+                snap.forEach((d) => list.push({ id: d.id, ...d.data() }));
+                renderPosts(list);
+                statusEl.textContent = "Live community posts";
+            } catch (err) {
+                statusEl.textContent = `Firestore unavailable (${err?.message || "error"}). Showing local posts.`;
+                renderPosts(readLocal().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt))));
+            }
+        }
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const type = document.getElementById("postType").value;
+            const title = truncate(normalize(document.getElementById("postTitle").value), LIMITS.title);
+            const name = truncate(normalize(document.getElementById("postName").value) || "Anonymous", LIMITS.name);
+            const body = truncate(normalize(document.getElementById("postBody").value), LIMITS.body);
+
+            if (!title || !body) return;
+
+            if (forumCol) {
+                try {
+                    await addDoc(forumCol, { type, title, name, body, createdAt: serverTimestamp() });
+                } catch {
+                    const local = readLocal();
+                    local.push({ type, title, name, body, createdAt: new Date().toLocaleString() });
+                    saveLocal(local);
+                }
+            } else {
+                const local = readLocal();
+                local.push({ type, title, name, body, createdAt: new Date().toLocaleString() });
+                saveLocal(local);
+            }
+
+            form.reset();
+            updateCounters();
+            loadPosts();
+        });
+
+        function bindCounter(inputId, outId, max) {
+            const input = document.getElementById(inputId);
+            const out = document.getElementById(outId);
+            const update = () => out.textContent = `${input.value.length}/${max}`;
+            input.addEventListener("input", update);
+            update();
+        }
+
+        function updateCounters() {
+            const title = document.getElementById("postTitle");
+            const name = document.getElementById("postName");
+            const body = document.getElementById("postBody");
+            document.getElementById("titleCount").textContent = `${title.value.length}/${LIMITS.title}`;
+            document.getElementById("nameCount").textContent = `${name.value.length}/${LIMITS.name}`;
+            document.getElementById("bodyCount").textContent = `${body.value.length}/${LIMITS.body}`;
+        }
+
+        bindCounter("postTitle", "titleCount", LIMITS.title);
+        bindCounter("postName", "nameCount", LIMITS.name);
+        bindCounter("postBody", "bodyCount", LIMITS.body);
+        loadPosts();
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { SCENE_WIDTH, STAGE_WIDTH } from '../../../constants/Stage.js';
+import { SCENE_WIDTH, STAGE_WIDTH } from '../../../constants/stage.js';
 import { DRAW_DEBUG } from '../../../constants/battle.js';
 import { FighterAttackType } from '../../../constants/fighter.js';
 import {

@@ -3,7 +3,7 @@ import {
 	STAGE_MID_POINT,
 	STAGE_PADDING,
 	STAGE_WIDTH,
-} from '../../constants/Stage.js';
+} from '../../constants/stage.js';
 import { FRAME_TIME } from '../../constants/game.js';
 import { playSound } from '../../engine/SoundHandler.js';
 import { drawFrame } from '../../utils/context.js';

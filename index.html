@@ -693,6 +693,14 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import {
+            getAuth,
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            updateProfile as updateAuthProfile
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import {
             getFirestore,
             collection,
             addDoc,
@@ -702,20 +710,21 @@
             serverTimestamp,
             doc,
             updateDoc,
-            increment
+            increment,
+            getDoc,
+            setDoc,
+            where
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = window.FIREBASE_CONFIG;
-        if (!firebaseConfig) {
-            throw new Error("Missing Firebase config. Create website/firebase-config.js");
-        }
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const requestsCol = collection(db, "gameRequests");
-        const profilesCol = collection(db, "profiles");
-        const ratingsCol = collection(db, "ratings");
-        const gameStatsCol = collection(db, "gameStats");
+        const firebaseReady = !!firebaseConfig;
+        const app = firebaseReady ? initializeApp(firebaseConfig) : null;
+        const auth = app ? getAuth(app) : null;
+        const db = app ? getFirestore(app) : null;
+        const requestsCol = db ? collection(db, "gameRequests") : null;
+        const profilesCol = db ? collection(db, "profiles") : null;
+        const ratingsCol = db ? collection(db, "ratings") : null;
+        const gameStatsCol = db ? collection(db, "gameStats") : null;
         const REQUEST_LIMITS = {
             game: 60,
             name: 30,
@@ -736,16 +745,18 @@
 
         // Auth State Management
         let currentUser = null;
-        onAuthStateChanged(auth, async (user) => {
-            currentUser = user;
-            if (user) {
-                await initializeUserProfile(user);
-                updateProfileUI();
-            } else {
-                // Don't auto-sign in anonymously - require login
-                updateProfileUI();
-            }
-        });
+        if (auth) {
+            onAuthStateChanged(auth, async (user) => {
+                currentUser = user;
+                if (user) {
+                    await initializeUserProfile(user);
+                    updateProfileUI();
+                } else {
+                    // Don't auto-sign in anonymously - require login
+                    updateProfileUI();
+                }
+            });
+        }
 
         // Initialize User Profile
         async function initializeUserProfile(user) {
@@ -785,6 +796,10 @@
 
         // Login Functions
         window.signUp = async function(email, password, username) {
+            if (!auth) {
+                alert("Authentication is currently unavailable.");
+                return;
+            }
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 if (username) {
@@ -799,6 +814,10 @@
         };
 
         window.signIn = async function(email, password) {
+            if (!auth) {
+                alert("Authentication is currently unavailable.");
+                return;
+            }
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 closeLoginModal();
@@ -808,6 +827,10 @@
         };
 
         window.signOutUser = async function() {
+            if (!auth) {
+                alert("Authentication is currently unavailable.");
+                return;
+            }
             try {
                 await signOut(auth);
                 alert('Signed out successfully');
@@ -818,6 +841,7 @@
 
         // Get Global Profile
         window.getGlobalProfile = async function(uid) {
+            if (!profilesCol) return null;
             const profileRef = doc(profilesCol, uid);
             const profileSnap = await getDoc(profileRef);
             return profileSnap.exists() ? profileSnap.data() : null;
@@ -825,6 +849,7 @@
 
         // Get All Profiles (for leaderboard)
         window.getAllProfiles = async function() {
+            if (!profilesCol) return [];
             const q = query(profilesCol, orderBy("gamesPlayed", "desc"));
             const snapshot = await getDocs(q);
             const profiles = [];
@@ -836,7 +861,7 @@
 
         // Track Game Play
         window.trackGamePlay = async function(gameName, category) {
-            if (!currentUser) return;
+            if (!currentUser || !profilesCol) return;
             const uid = currentUser.uid;
             const profileRef = doc(profilesCol, uid);
             const profileSnap = await getDoc(profileRef);
@@ -856,7 +881,7 @@
 
         // Get User Stats
         window.getUserStats = async function() {
-            if (!currentUser) return null;
+            if (!currentUser || !profilesCol) return null;
             const profileRef = doc(profilesCol, currentUser.uid);
             const profileSnap = await getDoc(profileRef);
             return profileSnap.exists() ? profileSnap.data() : null;
@@ -864,6 +889,10 @@
 
         // Rating Functions
         window.submitRating = async function(gameName, rating, review) {
+            if (!ratingsCol) {
+                alert("Ratings are currently unavailable.");
+                return;
+            }
             if (!currentUser) {
                 alert("Please sign in to rate games");
                 return;
@@ -883,6 +912,7 @@
         };
 
         window.getGameRatings = async function(gameName) {
+            if (!ratingsCol) return [];
             const q = query(ratingsCol, where("gameName", "==", gameName));
             const snapshot = await getDocs(q);
             const ratings = [];
@@ -971,6 +1001,11 @@
         async function loadRequests() {
             const container = document.getElementById("requestsGrid");
             if (!container) return;
+            if (!requestsCol) {
+                container.innerHTML = "Requests are temporarily unavailable.";
+                buildLeaderboard([]);
+                return;
+            }
 
             container.innerHTML = "Loading requests...";
 
@@ -1083,7 +1118,12 @@
                 buildLeaderboard(allRequests);
             } catch (err) {
                 console.error("Error loading requests:", err);
-                container.innerHTML = "❌ Error loading requests.";
+                container.innerHTML = "Error loading requests.";
+                const hint = document.createElement("p");
+                hint.style.opacity = "0.8";
+                hint.style.fontSize = "0.9rem";
+                hint.textContent = `Details: ${err?.message || "Unknown error"}`;
+                container.appendChild(hint);
                 buildLeaderboard([]);
             }
         }
@@ -1091,6 +1131,10 @@
         // Expose submitRequest globally so the form's onsubmit can call it
         window.submitRequest = async function(event) {
             event.preventDefault();
+            if (!requestsCol) {
+                alert("Requests are temporarily unavailable.");
+                return;
+            }
 
             const form = event.target;
             const gameName = truncateText(normalizeRequestText(document.getElementById('gameName').value), REQUEST_LIMITS.game);
@@ -1122,7 +1166,7 @@
                 loadRequests();
             } catch (err) {
                 console.error("Error saving request:", err);
-                alert("❌ There was a problem submitting your request. Try again later.");
+                alert(`There was a problem submitting your request.\n\n${err?.message || "Unknown error"}`);
             }
         };
 
@@ -1134,39 +1178,33 @@
             <div class="badge">The Best CC Ported Link</div>
             <h1>better cc ported</h1>
             <p class="lead">This is a game website... have fun!</p>
-        </div>
-
-        <!-- Announcements Section -->
+        </div>        <!-- Announcements Section -->
         <div class="announcements-section" style="margin-bottom: 3rem;">
-            <h2>📢 Announcements</h2>
-            
+            <h2>Announcements</h2>
+
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">Update</div>
-                        <h3 class="announcement-title">🛡️ Improved Cloakings</h3>
+                        <div class="announcement-badge">Status</div>
+                        <h3 class="announcement-title">Housekeeping update</h3>
                     </div>
-                    <span class="announcement-date">Recently</span>
+                    <span class="announcement-date">February 2026</span>
                 </div>
                 <p class="announcement-content">
-                    We've improved our cloaking technology to provide better protection and access. Enjoy a more reliable experience!
+                    Request reliability has been improved and oversized submissions are now limited so the board stays readable for everyone.
                 </p>
             </div>
 
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">New</div>
-                        <h3 class="announcement-title">🎮 Games Added</h3>
+                        <div class="announcement-badge">Community</div>
+                        <h3 class="announcement-title">Community forums are now live</h3>
                     </div>
-                    <span class="announcement-date">Recently</span>
+                    <span class="announcement-date">February 2026</span>
                 </div>
                 <p class="announcement-content">
-                    <strong style="color: var(--blue-700); font-size: 1.1rem;">New games available:</strong><br><br>
-                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">🎯 <strong>OVO++</strong> - Enhanced platformer experience</span><br>
-                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">🍪 <strong>Cookie Clicker</strong> - Addictive idle clicker</span><br>
-                    <span style="display: inline-block; margin: 0.3rem 0; padding-left: 1rem;">⚔️ <strong>12 Mini Battles</strong> - Exciting mini challenges</span><br><br>
-                    <span style="color: var(--blue-700); font-weight: 600;">Check them out below! 👇</span>
+                    You can now post new game requests, bug reports, and complaints in the forums page so updates are easier to track.
                 </p>
             </div>
         </div>
@@ -1196,6 +1234,9 @@
             <button onclick="scrollToGlobalRequests()" class="btn" style="margin-left: 1rem; background:#f0fff4; color:#1e7e34;">
                 View Global Requests
             </button>
+            <a href="forums.html" class="btn" style="margin-left: 1rem; background:#e8f2ff; color:#0456a6;">
+                Community Forums
+            </a>
         </div>
 
         <!-- ⭐ TOP REQUESTED GAMES-->

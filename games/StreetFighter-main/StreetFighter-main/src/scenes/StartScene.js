@@ -1,4 +1,4 @@
-import { SCENE_WIDTH } from '../constants/Stage.js';
+import { SCENE_WIDTH } from '../constants/stage.js';
 import { LOGO_FLASH_DELAY } from '../constants/battle.js';
 import { BattleScene } from './BattleScene.js';
 

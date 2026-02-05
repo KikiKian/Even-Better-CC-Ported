@@ -5,7 +5,7 @@ import {
 	STAGE_MID_POINT,
 	STAGE_PADDING,
 	STAGE_WIDTH,
-} from '../../constants/Stage.js';
+} from '../../constants/stage.js';
 import {
 	FighterAttackType,
 	FIGHTER_START_DISTANCE,

@@ -2,7 +2,7 @@ import {
 	SCENE_WIDTH,
 	STAGE_MID_POINT,
 	STAGE_PADDING,
-} from '../constants/Stage.js';
+} from '../constants/stage.js';
 import {
 	FighterAttackBaseData,
 	FighterAttackStrength,
