@@ -1,0 +1,41 @@
+===========
+
+===========
+
+- Add more maps
+- Implement escape rope
+- Gym leaders shouldn't auto encounter, you need to talk to them
+- battle sounds
+- Add transition from viridian forrest gate north to route 2 north side
+- Populate all signs, from the lorem ipsums
+- Rename consumable to usable
+- Add support for moves that aren't attacks (Buffs and debuffs, healing moves like leech seed)
+- Add animation to pokemon row while pokemon is active
+- Show grass in front of the player when in grass
+- Should we evolve before we learn moves? I think there are some pokemon that only learn the move after evolving?
+- Add Pokemon Stats to PokemonList
+- Battle music starts slowly, trim start (maybe trim all songs)
+- Make sure you can't catch trainers pokemon "The trainer blocked the BALL! Don't be a thief!"
+- Simplify the `Character` useEffect
+- Change the movement handler to not have a hard coded movement speed there
+- Implement rare candy
+- Make music a seamless infinite loop
+- Pallet town colors don't mate Route 1
+- Trainers should walk towards player before encounter
+- Make RPCs walk
+- Don't show number for non-countable items
+- Add Option Menu
+- Add ability to talk to trainers after having beaten them
+- Animate water
+- Abstract all the maths stuff out into a separate folder for easier contributions
+- Animate flowers
+- Implement Map
+- Give enemy attack when switching pokemon, using item, and catch attempt
+- If you skip a level (with a double level up) then you miss that levels move learn
+- Add a probability for running away
+- Add Pokedex Menu
+- Add Poke Center animation when healing
+- Update route 22 music
+- Rename all walk-sprite and portrait assets to be the correct name of the sprites
+- Add all the npcs in these areas
+- Implement town map in NPC houses
