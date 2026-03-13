@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3;url=https://even-better-cc-ported.vercel.app/">
+    <title>We've moved!</title>
+    <link rel="icon" type="image/x-icon" href="https://issaquah.instructure.com/favicon.ico">
+    <style>
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #111;
+        }
+        .box {
+            text-align: center;
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            max-width: 420px;
+        }
+        h1 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+        p { color: #555; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        a {
+            display: inline-block;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+        }
+        a:hover { background: #333; }
+        .note { font-size: 0.85rem; color: #aaa; margin-top: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>We've moved!</h1>
+        <p>This site has migrated to a new home. You'll be redirected in <span id="t">3</span> seconds.</p>
+        <a href="https://even-better-cc-ported.vercel.app/">Go now &rarr;</a>
+        <div class="note">Redirecting to even-better-cc-ported.vercel.app</div>
+    </div>
+    <script>
+        let s = 3;
+        const el = document.getElementById('t');
+        const iv = setInterval(() => {
+            s--;
+            el.textContent = s;
+            if (s <= 0) {
+                clearInterval(iv);
+                location.href = 'https://even-better-cc-ported.vercel.app/';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
