@@ -8,43 +8,69 @@
     <link rel="icon" type="image/x-icon" href="https://issaquah.instructure.com/favicon.ico">
     <style>
         body {
-            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-            background: #f5f5f5;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg, #e8e8e8 0%, #f5f5f5 40%, #ffffff 100%);
+            color: #111111;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            color: #111;
+            padding: 2rem;
+            box-sizing: border-box;
         }
         .box {
             text-align: center;
-            background: #fff;
-            border-radius: 12px;
-            padding: 2.5rem 3rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            max-width: 420px;
+            max-width: 480px;
+            width: 100%;
         }
-        h1 { font-size: 1.4rem; margin-bottom: 0.75rem; }
-        p { color: #555; margin-bottom: 1.5rem; font-size: 0.95rem; }
-        a {
+        .badge {
             display: inline-block;
-            background: #111;
+            background: linear-gradient(90deg, #555555, #111111);
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+        h1 {
+            margin: 0 0 0.75rem 0;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            line-height: 1;
+            color: #111111;
+            letter-spacing: -0.02em;
+        }
+        p {
+            color: #444444;
+            font-size: 1.05rem;
+            margin: 0 0 1.75rem 0;
+            line-height: 1.5;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(125deg, #1a1a1a, #444444 46%, #666666);
             color: #fff;
             text-decoration: none;
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
+            padding: 0.7rem 1.6rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 14px 34px rgba(0,0,0,0.2);
+            transition: opacity 0.15s;
         }
-        a:hover { background: #333; }
-        .note { font-size: 0.85rem; color: #aaa; margin-top: 1.2rem; }
+        .btn:hover { opacity: 0.85; }
+        .note { font-size: 0.85rem; color: #999; margin-top: 1.25rem; }
     </style>
 </head>
 <body>
     <div class="box">
+        <div class="badge">Site Migration</div>
         <h1>We've moved!</h1>
-        <p>This site has migrated to a new home. You'll be redirected in <span id="t">3</span> seconds.</p>
-        <a href="https://even-better-cc-ported.vercel.app/">Go now &rarr;</a>
-        <div class="note">Redirecting to even-better-cc-ported.vercel.app</div>
+        <p>This site has migrated to a new home.<br>Redirecting in <span id="t">3</span> seconds&hellip;</p>
+        <a class="btn" href="https://even-better-cc-ported.vercel.app/">Go now &rarr;</a>
+        <div class="note">even-better-cc-ported.vercel.app</div>
     </div>
     <script>
         let s = 3;
