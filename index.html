@@ -1071,6 +1071,46 @@
 </head>
 <body>
 
+    <!-- Intro Cutscene Overlay -->
+    <div id="cutsceneOverlay" style="
+        position:fixed;top:0;left:0;width:100%;height:100%;
+        background:#000;z-index:99999;
+        display:none;align-items:center;justify-content:center;
+        transition:opacity 0.8s ease;
+    ">
+        <video id="cutsceneVideo" src="intro.mp4"
+            muted playsinline
+            style="width:100%;height:100%;object-fit:cover;">
+        </video>
+        <button onclick="skipCutscene()" style="
+            position:absolute;bottom:2rem;right:2rem;
+            background:rgba(255,255,255,0.15);color:#fff;
+            border:1px solid rgba(255,255,255,0.4);
+            padding:0.5rem 1.2rem;border-radius:8px;
+            font-size:0.9rem;cursor:pointer;
+            backdrop-filter:blur(4px);
+        ">Skip</button>
+    </div>
+    <script>
+        function playCutscene() {
+            var overlay = document.getElementById('cutsceneOverlay');
+            var video = document.getElementById('cutsceneVideo');
+            overlay.style.display = 'flex';
+            overlay.style.opacity = '1';
+            video.play();
+            function endCutscene() {
+                overlay.style.opacity = '0';
+                setTimeout(function(){ overlay.style.display = 'none'; }, 800);
+            }
+            video.addEventListener('ended', endCutscene);
+            window.skipCutscene = endCutscene;
+        }
+        // If ToS already accepted, play cutscene immediately
+        if (localStorage.getItem("tosAccepted") === "true") {
+            document.addEventListener("DOMContentLoaded", playCutscene);
+        }
+    </script>
+
     <!-- ToS Overlay -->
     <div id="tosOverlay" class="tos-overlay">
         <div class="tos-box">
@@ -1131,19 +1171,19 @@
     </div>
 
     <script>
-        // ToS gate — checks sessionStorage so it only shows once per session
+        // ToS gate — checks localStorage so it persists across sessions
         (function() {
-            if (sessionStorage.getItem("tosAccepted") === "true") {
+            if (localStorage.getItem("tosAccepted") === "true") {
                 document.getElementById("tosOverlay").classList.add("hidden");
             }
         })();
 
         function acceptTos() {
-            sessionStorage.setItem("tosAccepted", "true");
+            localStorage.setItem("tosAccepted", "true");
             const overlay = document.getElementById("tosOverlay");
             overlay.style.opacity = "0";
             overlay.style.transition = "opacity 0.4s ease";
-            setTimeout(() => overlay.classList.add("hidden"), 400);
+            setTimeout(() => { overlay.classList.add("hidden"); playCutscene(); }, 400);
         }
 
         function declineTos() {
@@ -1987,7 +2027,56 @@
                     <a href="games/pokemon-js-main/build/index.html" class="btn-play">Play Now</a>
                 </div>
 
-            </div>        
+                <div class="game-card">
+                    <div class="game-icon">ER</div>
+                    <h3>Escape Road</h3>
+                    <p>Race through traffic and escape from police in this thrilling driving game. Dodge cars and survive as long as you can!</p>
+                    <a href="games/escape-road/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">CS</div>
+                    <h3>CSGO Clicker</h3>
+                    <p>Open cases, collect skins, and build your CS:GO inventory in this addictive idle clicker game!</p>
+                    <a href="games/csgo-clicker/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">48</div>
+                    <h3>2048</h3>
+                    <p>Slide tiles and combine matching numbers to reach the elusive 2048 tile in this classic puzzle game!</p>
+                    <a href="games/2048/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">FB</div>
+                    <h3>Flappy Bird</h3>
+                    <p>Tap to fly through pipes in this notoriously difficult one-button arcade game. How far can you get?</p>
+                    <a href="games/flappy-bird/flappybird.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🐍</div>
+                    <h3>Snake</h3>
+                    <p>Guide your snake to eat food and grow — but don't hit the walls or yourself! Features a 5-second rewind and highscores.</p>
+                    <a href="games/snake/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">CR</div>
+                    <h3>Crossy Road</h3>
+                    <p>Hop across roads, rivers, and train tracks without getting squashed in this endless arcade hopper!</p>
+                    <a href="games/crossy-road/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">GS</div>
+                    <h3>Getaway Shootout</h3>
+                    <p>Race to the getaway vehicle using only two buttons in this wild physics-based multiplayer brawler!</p>
+                    <a href="games/getaway-shootout/index.html" class="btn-play">Play Now</a>
+                </div>
+
+            </div>
         </div>
 
         <!-- Global requests section -->
