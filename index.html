@@ -8,16 +8,16 @@
 <link rel="icon" type="image/x-icon" href="https://issaquah.instructure.com/favicon.ico">
 
     <style>        :root{
-            --blue-700: #0456a6;
-            --blue-400: #5fb0ff;
-            --accent: #cfe9ff;
+            --blue-700: #111111;
+            --blue-400: #555555;
+            --accent: #e0e0e0;
             --bg: #ffffff;
         }
         html,body{height:100%;margin:0;padding:0;}
         body{
             font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            background: linear-gradient(180deg,var(--accent) 0%, #f7fbff 40%, var(--bg) 100%);
-            color: var(--blue-700);
+            background: linear-gradient(180deg,#e8e8e8 0%, #f5f5f5 40%, #ffffff 100%);
+            color: #111111;
             padding:2rem;
             overflow-x: hidden;
         }
@@ -38,13 +38,13 @@
         }
         p.lead{
             margin:0 0 1.25rem 0;
-            color: #1464a8;
+            color: #444444;
             opacity:0.9;
             font-size:1.05rem;
         }
         .badge{
             display:inline-block;
-            background: linear-gradient(90deg,var(--blue-400),var(--blue-700));
+            background: linear-gradient(90deg,#555555,#111111);
             color: #fff;
             padding:0.35rem 0.75rem;
             border-radius:999px;
@@ -58,7 +58,7 @@
             max-width: 900px;
             border-radius: 18px;
             padding: 1.25rem 1.4rem;
-            background: linear-gradient(125deg, #0f6ec9, #2d90e9 46%, #62b6ff);
+            background: linear-gradient(125deg, #1a1a1a, #444444 46%, #666666);
             color: #fff;
             box-shadow: 0 14px 34px rgba(4,86,166,0.3);
             display: flex;
@@ -83,7 +83,7 @@
             align-items: center;
             justify-content: center;
             background: #ffffff;
-            color: #0456a6;
+            color: #111111;
             text-decoration: none;
             font-weight: 700;
             border-radius: 999px;
@@ -107,7 +107,7 @@
             align-items: center;
             text-decoration: none;
             color: #fff;
-            background: linear-gradient(135deg, #0f6ec9, #0456a6);
+            background: linear-gradient(135deg, #333333, #111111);
             border-radius: 999px;
             padding: 0.55rem 0.95rem;
             font-weight: 700;
@@ -124,27 +124,47 @@
             bottom: 1.1rem;
             z-index: 1200;
             text-decoration: none;
-            background: linear-gradient(135deg, #0456a6, #2f99f0);
+            background: linear-gradient(135deg, #111111, #444444);
             color: #fff;
             border-radius: 999px;
             padding: 0.82rem 1.1rem;
             font-weight: 700;
-            box-shadow: 0 12px 26px rgba(4,86,166,0.35);
+            box-shadow: 0 12px 26px rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.35);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .forums-float:hover{
             transform: translateY(-2px);
-            box-shadow: 0 16px 30px rgba(4,86,166,0.42);
+            box-shadow: 0 16px 30px rgba(0,0,0,0.45);
+        }
+        /* Proxy float button */
+        .proxy-float{
+            position: fixed;
+            right: 1.1rem;
+            bottom: 4.5rem;
+            z-index: 1200;
+            text-decoration: none;
+            background: linear-gradient(135deg, #333333, #666666);
+            color: #fff;
+            border-radius: 999px;
+            padding: 0.82rem 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 12px 26px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .proxy-float:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(0,0,0,0.42);
         }
         .download-section{
-            background: linear-gradient(135deg,var(--blue-700),var(--blue-400));
+            background: linear-gradient(135deg,#111111,#555555);
             color: #fff;
             padding: 2.5rem;
             border-radius: 16px;
             text-align: center;
             margin-bottom: 3rem;
-            box-shadow: 0 12px 40px rgba(5,86,166,0.25);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         }
         .download-section h2{
             margin: 0 0 0.75rem 0;
@@ -205,7 +225,7 @@
         .games-section h2{
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            color: var(--blue-700);
+            color: #111111;
         }
         .search-bar{
             margin-bottom: 2rem;
@@ -216,19 +236,19 @@
             max-width: 500px;
             padding: 1rem 1.5rem;
             font-size: 1rem;
-            border: 2px solid var(--blue-400);
+            border: 2px solid #888888;
             border-radius: 50px;
             outline: none;
             transition: all 0.3s ease;
             font-family: inherit;
         }
         .search-bar input:focus{
-            border-color: var(--blue-700);
-            box-shadow: 0 0 0 3px rgba(95,176,255,0.2);
+            border-color: #111111;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
         }
         .search-bar input::placeholder{
-            color: #1464a8;
-            opacity: 0.6;
+            color: #555555;
+            opacity: 0.7;
         }
         .games-grid{
             display: grid;
@@ -240,40 +260,45 @@
             background: var(--bg);
             border-radius: 14px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(4,86,166,0.08);
-            border: 1px solid rgba(5,86,166,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.08);
             transition: all 0.3s ease;
             text-align: center;
         }
         .game-card:hover{
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(4,86,166,0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
         .game-card h3{
             margin: 0 0 0.75rem 0;
-            color: var(--blue-700);
+            color: #111111;
             font-size: 1.8rem;
         }
         .game-card p{
             margin: 0 0 1.5rem 0;
-            color: #1464a8;
+            color: #444444;
             opacity: 0.85;
             line-height: 1.6;
         }
         .game-icon{
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            background: linear-gradient(135deg,#555555,#111111);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
             margin: 0 auto 1.5rem auto;
-            box-shadow: 0 6px 20px rgba(5,86,166,0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        /* Dark icon variant for proxy card */
+        .game-icon.proxy-icon{
+            background: linear-gradient(135deg, #222222, #666666);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .btn-play{
-            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            background: linear-gradient(135deg,#555555,#111111);
             color: #fff;
             padding: 0.75rem 2rem;
             border-radius: 8px;
@@ -282,11 +307,19 @@
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(5,86,166,0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
         .btn-play:hover{
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(5,86,166,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        /* Dark play button variant for proxy */
+        .btn-play.btn-proxy{
+            background: linear-gradient(135deg, #222222, #555555);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        .btn-play.btn-proxy:hover{
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
         /* Global request cards */
@@ -303,14 +336,14 @@
             background: var(--bg);
             border-radius: 12px;
             padding: 1.25rem 1.5rem;
-            box-shadow: 0 8px 24px rgba(4,86,166,0.08);
-            border: 1px solid rgba(5,86,166,0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.08);
             text-align: left;
         }
         .request-card-title{
             margin: 0 0 0.25rem 0;
             font-weight: 700;
-            color: var(--blue-700);
+            color: #111111;
             font-size: 1.1rem;
             overflow-wrap: anywhere;
             word-break: break-word;
@@ -325,7 +358,7 @@
         .request-card-reason{
             margin: 0 0 0.75rem 0;
             font-size: 0.95rem;
-            color: #1464a8;
+            color: #444444;
             line-height: 1.45;
             white-space: pre-wrap;
             overflow-wrap: anywhere;
@@ -345,17 +378,17 @@
             padding:0.25rem 0.7rem;
             font-size:0.85rem;
             cursor:pointer;
-            background:rgba(4,86,166,0.08);
-            color:var(--blue-700);
+            background:rgba(0,0,0,0.08);
+            color:#111111;
             display:inline-flex;
             align-items:center;
             gap:0.25rem;
         }
         .like-button:hover{
-            background:rgba(4,86,166,0.18);
+            background:rgba(0,0,0,0.18);
         }
         .like-button.liked{
-            background:rgba(4,86,166,0.3);
+            background:rgba(0,0,0,0.3);
             cursor:default;
             opacity:0.8;
         }
@@ -379,36 +412,36 @@
         .leaderboard-title{
             margin:0;
             font-size:2rem;
-            color:var(--blue-700);
+            color:#111111;
         }
         .leaderboard-subtitle{
             margin:0.25rem 0 0 0;
             font-size:0.95rem;
-            color:#1464a8;
+            color:#444444;
             opacity:0.9;
         }
         .leaderboard-badge{
             padding:0.35rem 0.9rem;
             border-radius:999px;
-            background:rgba(4,86,166,0.08);
+            background:rgba(0,0,0,0.08);
             font-size:0.85rem;
             font-weight:600;
-            color:var(--blue-700);
+            color:#111111;
             white-space:nowrap;
         }
         .leaderboard-table-wrapper{
             border-radius:14px;
             overflow:hidden;
-            box-shadow:0 10px 30px rgba(4,86,166,0.1);
+            box-shadow:0 10px 30px rgba(0,0,0,0.1);
             background:var(--bg);
-            border:1px solid rgba(4,86,166,0.08);
+            border:1px solid rgba(0,0,0,0.08);
         }
         .leaderboard-table{
             width:100%;
             border-collapse:collapse;
         }
         .leaderboard-table thead{
-            background:linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            background:linear-gradient(135deg,#555555,#111111);
             color:#fff;
         }
         .leaderboard-table th,
@@ -435,31 +468,276 @@
         }
 
         @media (prefers-color-scheme: dark){
-            body{background:linear-gradient(180deg,#05233a 0%, #071833 40%);}
-            .game-card{background:#041423; color:#cfefff; box-shadow: none; border:1px solid rgba(95,176,255,0.06)}
-            .game-card h3{color:#cfefff;}
-            .game-card p{color:#5fb0ff;}
-            h1{color:#cfefff;}
-            p.lead{color:#5fb0ff;}
-            .games-section h2{color:#cfefff;}
-            .request-card{background:#041423; color:#cfefff; border:1px solid rgba(95,176,255,0.06);}
-            .request-card-title{color:#cfefff;}
-            .request-card-reason{color:#5fb0ff;}
+            body{background:linear-gradient(180deg,#0a0a0a 0%, #111111 40%);}
+            .game-card{background:#1a1a1a; color:#f0f0f0; box-shadow: none; border:1px solid rgba(255,255,255,0.06)}
+            .game-card h3{color:#f0f0f0;}
+            .game-card p{color:#aaaaaa;}
+            h1{color:#f0f0f0;}
+            p.lead{color:#aaaaaa;}
+            .games-section h2{color:#f0f0f0;}
+            .request-card{background:#1a1a1a; color:#f0f0f0; border:1px solid rgba(255,255,255,0.06);}
+            .request-card-title{color:#f0f0f0;}
+            .request-card-reason{color:#aaaaaa;}
             .leaderboard-table-wrapper{
-                background:#041423;
-                border:1px solid rgba(95,176,255,0.06);
+                background:#1a1a1a;
+                border:1px solid rgba(255,255,255,0.06);
             }
             .leaderboard-table thead{
-                background:linear-gradient(135deg,#0b4273,#166fb5);
+                background:linear-gradient(135deg,#333333,#555555);
             }
-            .leaderboard-title{color:#cfefff;}
-            .leaderboard-subtitle{color:#5fb0ff;}
+            .leaderboard-title{color:#f0f0f0;}
+            .leaderboard-subtitle{color:#aaaaaa;}
             .leaderboard-badge{
-                background:rgba(95,176,255,0.1);
-                color:#cfefff;
+                background:rgba(255,255,255,0.1);
+                color:#f0f0f0;
             }
         }
 
+        /* ToS overlay */
+        .tos-overlay{
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .tos-overlay.hidden{ display: none; }
+        .tos-box{
+            background: #fff;
+            border-radius: 18px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .tos-header{
+            padding: 1.75rem 2rem 1rem 2rem;
+            border-bottom: 2px solid #eee;
+        }
+        .tos-header h2{
+            margin: 0 0 0.25rem 0;
+            font-size: 1.8rem;
+            color: #111;
+        }
+        .tos-header p{ margin: 0; color: #555; font-size: 0.95rem; }
+        .tos-body{
+            padding: 1.25rem 2rem;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.7;
+        }
+        .tos-body h3{ color: #111; font-size: 1.05rem; margin: 1.25rem 0 0.4rem 0; }
+        .tos-body h3:first-child{ margin-top: 0; }
+        .tos-body ul{ margin: 0.25rem 0 0.75rem 1.25rem; padding: 0; }
+        .tos-body ul li{ margin-bottom: 0.3rem; }
+        .tos-rule-red{
+            background: linear-gradient(135deg, #2a0000, #1a0000);
+            border-left: 4px solid #ff0000;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ffaaaa;
+            margin: 0.75rem 0;
+        }
+        .tos-rule-red strong{ color: #ff4444; }
+        .tos-footer{
+            padding: 1.25rem 2rem;
+            border-top: 2px solid #eee;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .tos-checkbox-row{
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            color: #111;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .tos-checkbox-row input[type="checkbox"]{ width: 18px; height: 18px; cursor: pointer; accent-color: #111; }
+        .tos-accept-btn{
+            width: 100%;
+            background: linear-gradient(135deg, #111111, #444444);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            font-family: inherit;
+        }
+        .tos-accept-btn:disabled{ opacity: 0.4; cursor: not-allowed; }
+        .tos-accept-btn:not(:disabled):hover{ transform: translateY(-2px); }
+        .tos-decline-btn{
+            width: 100%;
+            background: none;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .tos-decline-btn:hover{ border-color: #888; color: #111; }
+        @media (prefers-color-scheme: dark){
+            .tos-box{ background: #111; }
+            .tos-header{ border-bottom-color: #222; }
+            .tos-header h2{ color: #f0f0f0; }
+            .tos-header p{ color: #aaa; }
+            .tos-body{ color: #ccc; }
+            .tos-body h3{ color: #f0f0f0; }
+            .tos-footer{ border-top-color: #222; }
+            .tos-checkbox-row{ color: #f0f0f0; }
+            .tos-decline-btn{ border-color: #444; color: #aaa; }
+        }
+
+        /* Slur warning banner */
+        .slur-banner{
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: linear-gradient(135deg, #aa0000, #ff0000);
+            color: #fff;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+            box-shadow: 0 6px 30px rgba(255,0,0,0.5);
+            animation: slideDown 0.3s ease;
+            letter-spacing: 0.01em;
+            border-bottom: 3px solid #ff4444;
+        }
+        .slur-banner.visible{ display: block; }
+        .slur-banner-close{
+            margin-left: 1.5rem;
+            background: rgba(255,255,255,0.25);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: #fff;
+            font-weight: 800;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .slur-banner-close:hover{ background: rgba(255,255,255,0.4); }
+
+        /* Fingerprint badge on request cards */
+        .fingerprint-badge{
+            display: inline-block;
+            font-size: 0.85rem;
+            background: linear-gradient(135deg, #cc0000, #ff3333);
+            color: #fff;
+            border-radius: 6px;
+            padding: 0.3rem 0.7rem;
+            margin-top: 0.5rem;
+            font-family: monospace;
+            font-weight: 700;
+            word-break: break-all;
+            box-shadow: 0 2px 8px rgba(200,0,0,0.3);
+        }
+
+        /* Premium modal */
+        .premium-modal{
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+        .premium-modal-content{
+            background: #fff;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+            text-align: center;
+        }
+        .premium-icon{
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+        .premium-modal-content h2{
+            margin: 0 0 0.5rem 0;
+            color: #111111;
+            font-size: 1.6rem;
+        }
+        .premium-modal-content p{
+            color: #555555;
+            margin: 0 0 1.25rem 0;
+            line-height: 1.6;
+        }
+        .premium-input{
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #888888;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .premium-input:focus{
+            outline: none;
+            border-color: #111111;
+        }
+        .premium-submit{
+            width: 100%;
+            background: linear-gradient(135deg, #111111, #555555);
+            color: #fff;
+            padding: 0.85rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        .premium-submit:hover{ transform: translateY(-2px); }
+        .premium-error{
+            color: #cc0000;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .premium-close{
+            margin-top: 0.75rem;
+            background: none;
+            border: none;
+            color: #888888;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .premium-close:hover{ color: #111111; }
+        @media (prefers-color-scheme: dark){
+            .premium-modal-content{ background: #1a1a1a; }
+            .premium-modal-content h2{ color: #f0f0f0; }
+            .premium-modal-content p{ color: #aaaaaa; }
+            .premium-input{ background: #111111; color: #f0f0f0; border-color: #444444; }
+        }
+        /* Request modal */
         .modal{
             display: none;
             position: fixed;
@@ -489,7 +767,7 @@
         }
         .modal-header h2{
             margin: 0;
-            color: var(--blue-700);
+            color: #111111;
         }
         .close-btn{
             font-size: 2rem;
@@ -509,13 +787,13 @@
         .form-group label{
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--blue-700);
+            color: #111111;
             font-weight: 600;
         }
         .form-group input, .form-group textarea{
             width: 100%;
             padding: 0.75rem;
-            border: 2px solid var(--blue-400);
+            border: 2px solid #888888;
             border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
@@ -523,7 +801,7 @@
         }
         .form-group input:focus, .form-group textarea:focus{
             outline: none;
-            border-color: var(--blue-700);
+            border-color: #111111;
         }
         .form-group textarea{
             resize: vertical;
@@ -533,12 +811,12 @@
             margin-top: 0.35rem;
             text-align: right;
             font-size: 0.8rem;
-            color: #1464a8;
+            color: #555555;
             opacity: 0.9;
         }
         .submit-btn{
             width: 100%;
-            background: linear-gradient(135deg,var(--blue-400),var(--blue-700));
+            background: linear-gradient(135deg,#555555,#111111);
             color: #fff;
             padding: 1rem;
             border: none;
@@ -577,20 +855,20 @@
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
-            color: var(--blue-700);
+            color: #111111;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
             font-family: inherit;
         }
         .tab-button:hover{
-            color: var(--blue-400);
-            background: rgba(95,176,255,0.1);
+            color: #555555;
+            background: rgba(0,0,0,0.05);
         }
         .tab-button.active{
-            color: var(--blue-700);
-            border-bottom-color: var(--blue-700);
-            background: rgba(4,86,166,0.05);
+            color: #111111;
+            border-bottom-color: #111111;
+            background: rgba(0,0,0,0.05);
         }
         .tab-content{
             display: none;
@@ -607,7 +885,7 @@
         .announcements-section > h2{
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: var(--blue-700);
+            color: #111111;
             text-align: center;
             position: relative;
             display: inline-block;
@@ -621,7 +899,7 @@
             transform: translateX(-50%);
             width: 60px;
             height: 4px;
-            background: linear-gradient(90deg, var(--blue-400), var(--blue-700));
+            background: linear-gradient(90deg, #555555, #111111);
             border-radius: 2px;
         }
         .announcement-card{
@@ -630,10 +908,10 @@
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 10px 40px rgba(4,86,166,0.12), 0 2px 8px rgba(4,86,166,0.08);
-            border: 1px solid rgba(5,86,166,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.1);
             border-left: 5px solid;
-            border-image: linear-gradient(135deg, var(--blue-400), var(--blue-700)) 1;
+            border-image: linear-gradient(135deg, #555555, #111111) 1;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -645,7 +923,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--blue-400), var(--blue-700), var(--blue-400));
+            background: linear-gradient(90deg, #555555, #111111, #555555);
             background-size: 200% 100%;
             animation: shimmer 3s infinite;
         }
@@ -655,8 +933,8 @@
         }
         .announcement-card:hover{
             transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 15px 50px rgba(4,86,166,0.2), 0 5px 15px rgba(4,86,166,0.15);
-            border-color: rgba(5,86,166,0.2);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.2);
         }
         .announcement-header{
             display: flex;
@@ -668,18 +946,18 @@
         .announcement-title{
             margin: 0;
             font-size: 1.5rem;
-            color: var(--blue-700);
+            color: #111111;
             font-weight: 700;
             letter-spacing: -0.02em;
             line-height: 1.3;
         }
         .announcement-date{
             font-size: 0.9rem;
-            color: #1464a8;
+            color: #444444;
             opacity: 0.8;
             white-space: nowrap;
             padding: 0.4rem 0.8rem;
-            background: rgba(95,176,255,0.1);
+            background: rgba(0,0,0,0.06);
             border-radius: 20px;
             font-weight: 500;
             display: flex;
@@ -691,7 +969,7 @@
             font-size: 0.85rem;
         }
         .announcement-content{
-            color: #1464a8;
+            color: #444444;
             line-height: 1.8;
             margin: 0;
             font-size: 1.05rem;
@@ -700,35 +978,35 @@
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            background: linear-gradient(135deg, var(--blue-400), var(--blue-700));
+            background: linear-gradient(135deg, #555555, #111111);
             color: #fff;
             padding: 0.5rem 1.2rem;
             border-radius: 25px;
             font-size: 0.8rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
-            box-shadow: 0 4px 15px rgba(4,86,166,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             text-transform: uppercase;
             letter-spacing: 0.8px;
             transition: all 0.3s ease;
         }
         .announcement-badge:hover{
             transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(4,86,166,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .announcement-card:nth-child(2) .announcement-badge{
-            background: linear-gradient(135deg, #28a745, #20c997);
-            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+            background: linear-gradient(135deg, #333333, #666666);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .announcement-card:nth-child(2) .announcement-badge:hover{
-            box-shadow: 0 6px 20px rgba(40,167,69,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .announcement-card:nth-child(3) .announcement-badge{
-            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+            background: linear-gradient(135deg, #222222, #555555);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .announcement-card:nth-child(3) .announcement-badge:hover{
-            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         @media (max-width: 760px){
             .forums-access{
@@ -740,54 +1018,158 @@
                 padding: 0.72rem 0.95rem;
                 font-size: 0.92rem;
             }
+            .proxy-float{
+                right: 0.75rem;
+                bottom: 4.2rem;
+                padding: 0.72rem 0.95rem;
+                font-size: 0.92rem;
+            }
         }
 
         @media (prefers-color-scheme: dark){
             .tab-button{
-                color: #cfefff;
+                color: #f0f0f0;
             }
             .tab-button:hover{
-                color: #5fb0ff;
-                background: rgba(95,176,255,0.15);
+                color: #aaaaaa;
+                background: rgba(255,255,255,0.08);
             }
             .tab-button.active{
-                color: #cfefff;
-                border-bottom-color: #5fb0ff;
-                background: rgba(95,176,255,0.1);
+                color: #f0f0f0;
+                border-bottom-color: #aaaaaa;
+                background: rgba(255,255,255,0.06);
             }
             .announcement-card{
-                background: linear-gradient(135deg, rgba(4,20,35,0.95) 0%, rgba(4,20,35,0.85) 100%);
-                border: 1px solid rgba(95,176,255,0.15);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(95,176,255,0.1);
+                background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.85) 100%);
+                border: 1px solid rgba(255,255,255,0.1);
+                box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(255,255,255,0.05);
             }
             .announcement-card:hover{
-                box-shadow: 0 15px 50px rgba(0,0,0,0.4), 0 5px 15px rgba(95,176,255,0.2);
+                box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 5px 15px rgba(255,255,255,0.08);
             }
             .announcement-title{
-                color: #cfefff;
+                color: #f0f0f0;
             }
             .announcement-content{
-                color: #5fb0ff;
+                color: #aaaaaa;
             }
             .announcement-date{
-                background: rgba(95,176,255,0.15);
-                color: #5fb0ff;
+                background: rgba(255,255,255,0.1);
+                color: #aaaaaa;
             }
             .announcements-section > h2{
-                color: #cfefff;
+                color: #f0f0f0;
             }
             .forums-access{
-                background: linear-gradient(125deg, #0b4273, #0f5e9f 46%, #1872b9);
+                background: linear-gradient(125deg, #1a1a1a, #333333 46%, #444444);
             }
             .announcement-link{
-                background: linear-gradient(135deg, #0f5e9f, #0b4273);
+                background: linear-gradient(135deg, #333333, #111111);
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- ToS Overlay -->
+    <div id="tosOverlay" class="tos-overlay">
+        <div class="tos-box">
+            <div class="tos-header">
+                <h2>📋 Terms of Service</h2>
+                <p>You must agree to the following before entering the site.</p>
+            </div>
+            <div class="tos-body">
+                <h3>1. Acceptable Use</h3>
+                <ul>
+                    <li>This site is for entertainment purposes only.</li>
+                    <li>You agree to use this site respectfully and responsibly.</li>
+                    <li>You must not attempt to exploit, hack, or disrupt the site.</li>
+                </ul>
+
+                <h3>2. Game Requests</h3>
+                <ul>
+                    <li>Game requests must be genuine and respectful.</li>
+                    <li>Spam, joke requests, and repeated duplicate submissions are not allowed.</li>
+                    <li>Requests are not guaranteed to be fulfilled.</li>
+                </ul>
+
+                <div class="tos-rule-red">
+                    <strong>3. Zero Tolerance for Hate Speech</strong><br>
+                    Submitting slurs, hate speech, or any form of discriminatory language is <strong>strictly prohibited</strong>. Violations are automatically detected, your device fingerprint is logged, and repeat offenders will be permanently flagged. This includes attempts to bypass the filter using numbers, symbols, or spacing tricks.
+                </div>
+
+                <h3>4. Privacy</h3>
+                <ul>
+                    <li>A device fingerprint is collected with every game request submission for moderation purposes.</li>
+                    <li>No personal data is sold or shared with third parties.</li>
+                    <li>Firebase is used to store requests and moderation logs.</li>
+                </ul>
+
+                <h3>5. Premium Access</h3>
+                <ul>
+                    <li>The web proxy is a premium feature requiring a password from the site owner.</li>
+                    <li>Sharing the premium password with others is not allowed.</li>
+                    <li>Access may be revoked at any time.</li>
+                </ul>
+
+                <h3>6. Disclaimer</h3>
+                <ul>
+                    <li>Games are hosted for educational and entertainment purposes.</li>
+                    <li>The site owner is not responsible for content accessed via the proxy.</li>
+                    <li>These terms may be updated at any time without notice.</li>
+                </ul>
+            </div>
+            <div class="tos-footer">
+                <label class="tos-checkbox-row">
+                    <input type="checkbox" id="tosCheckbox" onchange="document.getElementById('tosAcceptBtn').disabled = !this.checked;">
+                    I have read and agree to the Terms of Service
+                </label>
+                <button class="tos-accept-btn" id="tosAcceptBtn" disabled onclick="acceptTos()">Enter Site</button>
+                <button class="tos-decline-btn" onclick="declineTos()">Decline — Leave Site</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ToS gate — checks sessionStorage so it only shows once per session
+        (function() {
+            if (sessionStorage.getItem("tosAccepted") === "true") {
+                document.getElementById("tosOverlay").classList.add("hidden");
+            }
+        })();
+
+        function acceptTos() {
+            sessionStorage.setItem("tosAccepted", "true");
+            const overlay = document.getElementById("tosOverlay");
+            overlay.style.opacity = "0";
+            overlay.style.transition = "opacity 0.4s ease";
+            setTimeout(() => overlay.classList.add("hidden"), 400);
+        }
+
+        function declineTos() {
+            window.location.href = "about:blank";
+        }
+    </script>
+
     <script src="firebase-config.js"></script>
+
+    <!-- Slur warning banner -->
+    <div id="slurBanner" class="slur-banner">
+        🚫 <strong>Warning:</strong> To whoever just tried submitting hate speech — we see you. Your device has been fingerprinted and logged. Don't try it again.
+        <button class="slur-banner-close" onclick="hideSlurBanner()">Dismiss</button>
+    </div>
+
+    <script>
+        // Global banner functions — must be outside module scope
+        function showSlurBanner() {
+            const banner = document.getElementById("slurBanner");
+            if (banner) banner.classList.add("visible");
+        }
+        function hideSlurBanner() {
+            const banner = document.getElementById("slurBanner");
+            if (banner) banner.classList.remove("visible");
+        }
+    </script>
 
     <!-- Firebase + Firestore (GLOBAL requests + likes + leaderboard) -->
     <script type="module">
@@ -814,6 +1196,7 @@
             increment,
             getDoc,
             setDoc,
+            deleteDoc,
             where
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
@@ -840,6 +1223,64 @@
                 .replace(/\s+/g, " ")
                 .trim();
         }
+
+        // ── Fingerprinting ────────────────────────────────────────────
+        async function getFingerprint() {
+            const components = [
+                navigator.userAgent,
+                navigator.language,
+                screen.width + "x" + screen.height,
+                screen.colorDepth,
+                new Date().getTimezoneOffset(),
+                navigator.hardwareConcurrency || 0,
+                navigator.platform || "",
+                Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+            ].join("|");
+            const msgBuffer = new TextEncoder().encode(components);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("").slice(0, 16);
+        }
+
+        // ── Slur / profanity filter ───────────────────────────────────
+        const BLOCKED_PATTERNS = [
+            /n+[\W_]*i+[\W_]*g+[\W_]*[gae]+[\W_]*[re]+/gi,
+            /f+[\W_]*a+[\W_]*g+/gi,
+            /c+[\W_]*h+[\W_]*i+[\W_]*n+[\W_]*k/gi,
+            /s+[\W_]*p+[\W_]*i+[\W_]*c/gi,
+            /k+[\W_]*i+[\W_]*k+[\W_]*e/gi,
+            /r+[\W_]*e+[\W_]*t+[\W_]*a+[\W_]*r+[\W_]*d/gi,
+            /d+[\W_]*y+[\W_]*k+[\W_]*e/gi,
+            /t+[\W_]*r+[\W_]*a+[\W_]*n+[\W_]*n+[\W_]*y/gi,
+            /c+[\W_]*u+[\W_]*n+[\W_]*t/gi,
+            /w+[\W_]*e+[\W_]*t+[\W_]*b+[\W_]*a+[\W_]*c+[\W_]*k/gi,
+            /g+[\W_]*o+[\W_]*o+[\W_]*k/gi,
+            /s+[\W_]*a+[\W_]*n+[\W_]*d+[\W_]*n/gi,
+            /\bj+[\W_]*e+[\W_]*w+[\W_]*s?\b/gi,
+            /\bc+[\W_]*o+[\W_]*o+[\W_]*n+[\W_]*s?\b/gi,
+            /\bm+[\W_]*o+[\W_]*n+[\W_]*g+[\W_]*o+[\W_]*l+[\W_]*o+[\W_]*i+[\W_]*d/gi,
+        ];
+
+        function stripObfuscation(text) {
+            return text
+                .toLowerCase()
+                .replace(/[0@]/g, "o")
+                .replace(/[1!|]/g, "i")
+                .replace(/3/g, "e")
+                .replace(/4/g, "a")
+                .replace(/5/g, "s")
+                .replace(/8/g, "b")
+                .replace(/\$/g, "s")
+                .replace(/\+/g, "t")
+                .replace(/[^a-z\s]/g, "");
+        }
+
+        function containsSlur(text) {
+            const cleaned = stripObfuscation(text);
+            return BLOCKED_PATTERNS.some(p => { p.lastIndex = 0; return p.test(cleaned); });
+        }
+
+        // ── Slur banner — defined globally above module ───────────────
 
         function truncateText(value, limit) {
             if (value.length <= limit) return value;
@@ -871,7 +1312,6 @@
                     }
                     updateProfileUI();
                 } else {
-                    // Don't auto-sign in anonymously - require login
                     updateProfileUI();
                 }
             });
@@ -895,14 +1335,12 @@
                     lastLogin: serverTimestamp()
                 });
             } else {
-                // Update last login
                 await updateDoc(profileRef, {
                     lastLogin: serverTimestamp()
                 });
             }
         }
 
-        // Update Profile UI
         function updateProfileUI() {
             const profileBtn = document.getElementById('profileBtn');
             if (profileBtn) {
@@ -914,52 +1352,33 @@
             }
         }
 
-        // Login Functions
         window.signUp = async function(email, password, username) {
-            if (!auth) {
-                alert("Authentication is currently unavailable.");
-                return;
-            }
+            if (!auth) { alert("Authentication is currently unavailable."); return; }
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                if (username) {
-                    await updateAuthProfile(userCredential.user, { displayName: username });
-                }
+                if (username) { await updateAuthProfile(userCredential.user, { displayName: username }); }
                 await initializeUserProfile(userCredential.user);
                 closeLoginModal();
                 alert('Account created successfully!');
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
+            } catch (error) { alert('Error: ' + error.message); }
         };
 
         window.signIn = async function(email, password) {
-            if (!auth) {
-                alert("Authentication is currently unavailable.");
-                return;
-            }
+            if (!auth) { alert("Authentication is currently unavailable."); return; }
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 closeLoginModal();
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
+            } catch (error) { alert('Error: ' + error.message); }
         };
 
         window.signOutUser = async function() {
-            if (!auth) {
-                alert("Authentication is currently unavailable.");
-                return;
-            }
+            if (!auth) { alert("Authentication is currently unavailable."); return; }
             try {
                 await signOut(auth);
                 alert('Signed out successfully');
-            } catch (error) {
-                alert('Error signing out: ' + error.message);
-            }
+            } catch (error) { alert('Error signing out: ' + error.message); }
         };
 
-        // Get Global Profile
         window.getGlobalProfile = async function(uid) {
             if (!profilesCol) return null;
             const profileRef = doc(profilesCol, uid);
@@ -967,39 +1386,29 @@
             return profileSnap.exists() ? profileSnap.data() : null;
         };
 
-        // Get All Profiles (for leaderboard)
         window.getAllProfiles = async function() {
             if (!profilesCol) return [];
             const q = query(profilesCol, orderBy("gamesPlayed", "desc"));
             const snapshot = await getDocs(q);
             const profiles = [];
-            snapshot.forEach(doc => {
-                profiles.push({ id: doc.id, ...doc.data() });
-            });
+            snapshot.forEach(doc => { profiles.push({ id: doc.id, ...doc.data() }); });
             return profiles;
         };
 
-        // Track Game Play
         window.trackGamePlay = async function(gameName, category) {
             if (!currentUser || !profilesCol) return;
             const uid = currentUser.uid;
             const profileRef = doc(profilesCol, uid);
             const profileSnap = await getDoc(profileRef);
-            
             if (profileSnap.exists()) {
                 const data = profileSnap.data();
                 const gamesPlayed = (data.gamesPlayed || 0) + 1;
                 const favoriteGenres = data.favoriteGenres || {};
                 favoriteGenres[category] = (favoriteGenres[category] || 0) + 1;
-                
-                await updateDoc(profileRef, {
-                    gamesPlayed: gamesPlayed,
-                    favoriteGenres: favoriteGenres
-                });
+                await updateDoc(profileRef, { gamesPlayed, favoriteGenres });
             }
         };
 
-        // Get User Stats
         window.getUserStats = async function() {
             if (!currentUser || !profilesCol) return null;
             const profileRef = doc(profilesCol, currentUser.uid);
@@ -1007,28 +1416,13 @@
             return profileSnap.exists() ? profileSnap.data() : null;
         };
 
-        // Rating Functions
         window.submitRating = async function(gameName, rating, review) {
-            if (!ratingsCol) {
-                alert("Ratings are currently unavailable.");
-                return;
-            }
-            if (!currentUser) {
-                alert("Please sign in to rate games");
-                return;
-            }
+            if (!ratingsCol) { alert("Ratings are currently unavailable."); return; }
+            if (!currentUser) { alert("Please sign in to rate games"); return; }
             try {
-                await addDoc(ratingsCol, {
-                    gameName: gameName,
-                    userId: currentUser.uid,
-                    rating: rating,
-                    review: review || "",
-                    createdAt: serverTimestamp()
-                });
+                await addDoc(ratingsCol, { gameName, userId: currentUser.uid, rating, review: review || "", createdAt: serverTimestamp() });
                 alert("Rating submitted!");
-            } catch (err) {
-                console.error("Error submitting rating:", err);
-            }
+            } catch (err) { console.error("Error submitting rating:", err); }
         };
 
         window.getGameRatings = async function(gameName) {
@@ -1036,355 +1430,238 @@
             const q = query(ratingsCol, where("gameName", "==", gameName));
             const snapshot = await getDocs(q);
             const ratings = [];
-            snapshot.forEach(doc => {
-                ratings.push(doc.data());
-            });
+            snapshot.forEach(doc => { ratings.push(doc.data()); });
             return ratings;
         };
 
-        function getLikedIds() {
+        // ── Like system (Firestore-based, one like per user per request) ───
+        async function getUserId() {
+            if (!auth) return null;
+            if (currentUser) return currentUser.uid;
             try {
-                const raw = localStorage.getItem("likedRequestIds");
-                if (!raw) return new Set();
-                const arr = JSON.parse(raw);
-                if (!Array.isArray(arr)) return new Set();
-                return new Set(arr);
-            } catch (e) {
-                console.error("Error reading likedRequestIds:", e);
-                return new Set();
-            }
+                const cred = await signInAnonymously(auth);
+                return cred.user.uid;
+            } catch (e) { console.error("Could not get user id:", e); return null; }
         }
 
-        function saveLikedIds(set) {
+        async function hasLiked(requestId, uid) {
+            if (!db || !uid) return false;
             try {
-                const arr = Array.from(set);
-                localStorage.setItem("likedRequestIds", JSON.stringify(arr));
-            } catch (e) {
-                console.error("Error saving likedRequestIds:", e);
-            }
+                const likeRef = doc(db, "gameRequests", requestId, "likedBy", uid);
+                const snap = await getDoc(likeRef);
+                return snap.exists();
+            } catch (e) { return false; }
         }
 
+        async function toggleLike(requestId, likeBtn, countSpan) {
+            const uid = await getUserId();
+            if (!uid) { alert("Could not authenticate. Try refreshing."); return; }
+            likeBtn.disabled = true;
+            try {
+                const likeRef = doc(db, "gameRequests", requestId, "likedBy", uid);
+                const requestRef = doc(db, "gameRequests", requestId);
+                const already = await hasLiked(requestId, uid);
+                if (already) {
+                    await deleteDoc(likeRef);
+                    await updateDoc(requestRef, { likes: increment(-1) });
+                    countSpan.textContent = Math.max(0, parseInt(countSpan.textContent) - 1);
+                    likeBtn.innerHTML = "👍 Like";
+                    likeBtn.classList.remove("liked");
+                } else {
+                    await setDoc(likeRef, { uid, likedAt: serverTimestamp() });
+                    await updateDoc(requestRef, { likes: increment(1) });
+                    countSpan.textContent = parseInt(countSpan.textContent) + 1;
+                    likeBtn.innerHTML = "👍 Liked";
+                    likeBtn.classList.add("liked");
+                }
+            } catch (e) {
+                console.error("Like error:", e);
+                alert("Could not process like. Please try again.");
+            } finally { likeBtn.disabled = false; }
+        }
+
+        // ── Local fallback ────────────────────────────────────────────
         function getLocalRequests() {
             try {
                 const raw = localStorage.getItem(LOCAL_REQUESTS_KEY);
                 if (!raw) return [];
                 const parsed = JSON.parse(raw);
-                if (!Array.isArray(parsed)) return [];
-                return parsed;
-            } catch (e) {
-                console.error("Error reading local requests:", e);
-                return [];
-            }
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) { return []; }
         }
 
         function saveLocalRequest(entry) {
             const existing = getLocalRequests();
             existing.push(entry);
-            try {
-                localStorage.setItem(LOCAL_REQUESTS_KEY, JSON.stringify(existing));
-            } catch (e) {
-                console.error("Error saving local request:", e);
-            }
+            try { localStorage.setItem(LOCAL_REQUESTS_KEY, JSON.stringify(existing)); }
+            catch (e) { console.error("Error saving local request:", e); }
         }
 
         function renderLocalRequests(container) {
             const localRequests = getLocalRequests().slice().reverse();
             container.innerHTML = "";
-
             const info = document.createElement("p");
             info.textContent = "Cloud requests are blocked by Firebase permissions. Showing local requests only.";
-            info.style.opacity = "0.85";
-            info.style.fontSize = "0.95rem";
+            info.style.opacity = "0.85"; info.style.fontSize = "0.95rem";
             container.appendChild(info);
-
             if (!localRequests.length) {
                 const p = document.createElement("p");
-                p.textContent = "No local requests yet.";
-                p.style.opacity = "0.8";
-                p.style.fontSize = "0.95rem";
-                container.appendChild(p);
-                buildLeaderboard([]);
-                return;
+                p.textContent = "No local requests yet."; p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
+                container.appendChild(p); buildLeaderboard([]); return;
             }
-
             localRequests.forEach((entry) => {
-                const card = document.createElement("div");
-                card.className = "request-card";
-
-                const titleEl = document.createElement("p");
-                titleEl.className = "request-card-title";
-                titleEl.textContent = entry.game || "(Unknown game)";
-
-                const metaEl = document.createElement("p");
-                metaEl.className = "request-card-meta";
-                metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local draft"}`;
-
-                const reasonEl = document.createElement("p");
-                reasonEl.className = "request-card-reason";
-                reasonEl.textContent = entry.reason || "No reason provided.";
-
-                const noteEl = document.createElement("p");
-                noteEl.className = "request-card-meta";
-                noteEl.textContent = "Stored locally on this device (Firebase permissions issue).";
-
-                card.appendChild(titleEl);
-                card.appendChild(metaEl);
-                card.appendChild(reasonEl);
-                card.appendChild(noteEl);
+                const card = document.createElement("div"); card.className = "request-card";
+                const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = entry.game || "(Unknown game)";
+                const metaEl = document.createElement("p"); metaEl.className = "request-card-meta"; metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local draft"}`;
+                const reasonEl = document.createElement("p"); reasonEl.className = "request-card-reason"; reasonEl.textContent = entry.reason || "No reason provided.";
+                card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl);
                 container.appendChild(card);
             });
-
-            buildLeaderboard(localRequests.map((r) => ({
-                game: r.game || "(Unknown game)",
-                likes: 0
-            })));
+            buildLeaderboard(localRequests.map((r) => ({ game: r.game || "(Unknown game)", likes: 0 })));
         }
 
+        // ── Leaderboard ───────────────────────────────────────────────
         function buildLeaderboard(requests) {
             const tbody = document.getElementById("leaderboardBody");
             if (!tbody) return;
             tbody.innerHTML = "";
-
             if (!requests.length) {
                 const row = document.createElement("tr");
                 const cell = document.createElement("td");
-                cell.colSpan = 3;
-                cell.textContent = "No requests yet.";
-                cell.style.opacity = "0.8";
-                row.appendChild(cell);
-                tbody.appendChild(row);
-                return;
+                cell.colSpan = 3; cell.textContent = "No requests yet."; cell.style.opacity = "0.8";
+                row.appendChild(cell); tbody.appendChild(row); return;
             }
-
             const byGame = {};
             requests.forEach(r => {
                 const game = (r.game || "(Unknown game)").trim();
-                if (!byGame[game]) {
-                    byGame[game] = { game, count: 0, likes: 0 };
-                }
+                if (!byGame[game]) { byGame[game] = { game, count: 0, likes: 0 }; }
                 byGame[game].count += 1;
                 byGame[game].likes += r.likes || 0;
             });
-
             const list = Object.values(byGame);
-            list.sort((a, b) => {
-                if (b.likes !== a.likes) return b.likes - a.likes;
-                return b.count - a.count;
-            });
-
-            const top = list.slice(0, 10);
-
-            top.forEach((item, index) => {
+            list.sort((a, b) => b.likes !== a.likes ? b.likes - a.likes : b.count - a.count);
+            list.slice(0, 10).forEach((item, index) => {
                 const tr = document.createElement("tr");
-
-                const rankTd = document.createElement("td");
-                rankTd.textContent = index + 1;
-
-                const gameTd = document.createElement("td");
-                gameTd.textContent = item.game;
-
-                const statsTd = document.createElement("td");
-                statsTd.textContent = `${item.likes} like${item.likes === 1 ? "" : "s"} • ${item.count} request${item.count === 1 ? "" : "s"}`;
-
-                tr.appendChild(rankTd);
-                tr.appendChild(gameTd);
-                tr.appendChild(statsTd);
-
+                const rankTd = document.createElement("td"); rankTd.textContent = index + 1;
+                const gameTd = document.createElement("td"); gameTd.textContent = item.game;
+                const statsTd = document.createElement("td"); statsTd.textContent = `${item.likes} like${item.likes === 1 ? "" : "s"} • ${item.count} request${item.count === 1 ? "" : "s"}`;
+                tr.appendChild(rankTd); tr.appendChild(gameTd); tr.appendChild(statsTd);
                 tbody.appendChild(tr);
             });
         }
 
+        // ── Load requests ─────────────────────────────────────────────
         async function loadRequests() {
             const container = document.getElementById("requestsGrid");
             if (!container) return;
-            if (!requestsCol) {
-                container.innerHTML = "Requests are temporarily unavailable.";
-                buildLeaderboard([]);
-                return;
-            }
-
-            container.innerHTML = "Loading requests...";
-
-            const likedIds = getLikedIds();
+            if (!requestsCol) { container.innerHTML = "Requests are temporarily unavailable."; buildLeaderboard([]); return; }
+            container.innerHTML = "<p style='opacity:0.7'>Loading requests...</p>";
+            const uid = await getUserId();
             const allRequests = [];
-
             try {
                 const q = query(requestsCol, orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
-
                 if (snapshot.empty) {
                     container.innerHTML = "";
                     const p = document.createElement("p");
-                    p.textContent = "No game requests yet. Be the first to request one!";
-                    p.style.opacity = "0.8";
-                    p.style.fontSize = "0.95rem";
-                    container.appendChild(p);
-                    buildLeaderboard([]);
-                    return;
+                    p.textContent = "No game requests yet. Be the first!";
+                    p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
+                    container.appendChild(p); buildLeaderboard([]); return;
                 }
-
                 container.innerHTML = "";
+                // Pre-fetch which requests this user has liked
+                const likedSet = new Set();
+                if (uid) {
+                    await Promise.all(snapshot.docs.map(async (docSnap) => {
+                        const liked = await hasLiked(docSnap.id, uid);
+                        if (liked) likedSet.add(docSnap.id);
+                    }));
+                }
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data();
                     const id = docSnap.id;
-
                     const game = truncateText(normalizeRequestText(data.game || "(Unknown game)"), REQUEST_LIMITS.game);
                     const name = truncateText(normalizeRequestText(data.name || "Anonymous"), REQUEST_LIMITS.name);
                     const reason = truncateText(normalizeRequestText(data.reason || "No reason provided."), REQUEST_LIMITS.reason);
-                    const likes = data.likes || 0;
-
+                    const likes = Math.max(0, data.likes || 0);
                     let dateText = "";
-                    if (data.createdAt && data.createdAt.toDate) {
-                        const d = data.createdAt.toDate();
-                        dateText = d.toLocaleString();
-                    }
-
-                    allRequests.push({
-                        id,
-                        game,
-                        name,
-                        reason,
-                        likes,
-                        createdAt: data.createdAt || null
-                    });
-
-                    const card = document.createElement("div");
-                    card.className = "request-card";
-
-                    const titleEl = document.createElement("p");
-                    titleEl.className = "request-card-title";
-                    titleEl.textContent = game;
-
-                    const metaEl = document.createElement("p");
-                    metaEl.className = "request-card-meta";
-                    metaEl.textContent = dateText
-                        ? `Requested by ${name} � ${dateText}`
-                        : `Requested by ${name}`;
-
-                    const reasonEl = document.createElement("p");
-                    reasonEl.className = "request-card-reason";
-                    reasonEl.textContent = reason;
-
-                    const likeRow = document.createElement("div");
-                    likeRow.className = "like-row";
-
-                    const likeBtn = document.createElement("button");
-                    likeBtn.className = "like-button";
-                    likeBtn.innerHTML = "?? Like";
-
-                    const countSpan = document.createElement("span");
-                    countSpan.className = "like-count";
-                    countSpan.textContent = likes;
-
-                    if (likedIds.has(id)) {
-                        likeBtn.classList.add("liked");
-                        likeBtn.innerHTML = "?? Liked";
-                    }
-
-                    likeBtn.addEventListener("click", async () => {
-                        const likedAgain = getLikedIds();
-                        if (likedAgain.has(id)) return;
-
-                        const doLike = async () => {
-                            const ref = doc(db, "gameRequests", id);
-                            await updateDoc(ref, { likes: increment(1) });
-                            likedAgain.add(id);
-                            saveLikedIds(likedAgain);
-                            await loadRequests();
-                        };
-
-                        try {
-                            await doLike();
-                        } catch (e) {
-                            if (e?.code === "permission-denied") {
-                                const authed = await ensureCommunityAuth();
-                                if (authed) {
-                                    try {
-                                        await doLike();
-                                        return;
-                                    } catch (retryErr) {
-                                        console.error("Retry like failed:", retryErr);
-                                    }
-                                }
-                            }
-                            console.error("Error liking request:", e);
-                            alert("Could not like this request. Check Firestore rules for gameRequests.");
-                        }
-                    });
-
-                    likeRow.appendChild(likeBtn);
-                    likeRow.appendChild(countSpan);
-
-                    card.appendChild(titleEl);
-                    card.appendChild(metaEl);
-                    card.appendChild(reasonEl);
-                    card.appendChild(likeRow);
-
+                    if (data.createdAt?.toDate) { dateText = data.createdAt.toDate().toLocaleString(); }
+                    allRequests.push({ id, game, name, reason, likes });
+                    const card = document.createElement("div"); card.className = "request-card";
+                    const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = game;
+                    const metaEl = document.createElement("p"); metaEl.className = "request-card-meta";
+                    metaEl.textContent = dateText ? `Requested by ${name} • ${dateText}` : `Requested by ${name}`;
+                    const reasonEl = document.createElement("p"); reasonEl.className = "request-card-reason"; reasonEl.textContent = reason;
+                    const likeRow = document.createElement("div"); likeRow.className = "like-row";
+                    const likeBtn = document.createElement("button"); likeBtn.className = "like-button";
+                    const countSpan = document.createElement("span"); countSpan.className = "like-count"; countSpan.textContent = likes;
+                    const alreadyLiked = likedSet.has(id);
+                    likeBtn.innerHTML = alreadyLiked ? "👍 Liked" : "👍 Like";
+                    if (alreadyLiked) likeBtn.classList.add("liked");
+                    likeBtn.addEventListener("click", () => toggleLike(id, likeBtn, countSpan));
+                    likeRow.appendChild(likeBtn); likeRow.appendChild(countSpan);
+                    // Show fingerprint badge
+                    const fpBadge = document.createElement("span");
+                    fpBadge.className = "fingerprint-badge";
+                    fpBadge.textContent = "🔍 ID: " + (data.fingerprint || "unknown");
+                    card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl); card.appendChild(fpBadge); card.appendChild(likeRow);
                     container.appendChild(card);
                 });
-
                 buildLeaderboard(allRequests);
             } catch (err) {
                 if (err?.code === "permission-denied") {
-                    const authed = await ensureCommunityAuth();
+                    const authed = await getUserId();
                     if (authed) return loadRequests();
-                    renderLocalRequests(container);
-                    if (lastCommunityAuthError) {
-                        const authHint = document.createElement("p");
-                        authHint.style.opacity = "0.8";
-                        authHint.style.fontSize = "0.9rem";
-                        authHint.textContent = `Auth detail: ${lastCommunityAuthError.code || "unknown"} - ${lastCommunityAuthError.message || "Unknown auth error"}`;
-                        container.appendChild(authHint);
-                    }
-                    return;
+                    renderLocalRequests(container); return;
                 }
                 console.error("Error loading requests:", err);
-                container.innerHTML = "Error loading requests.";
-                const hint = document.createElement("p");
-                hint.style.opacity = "0.8";
-                hint.style.fontSize = "0.9rem";
-                hint.textContent = `Details: ${err?.message || "Unknown error"}`;
-                container.appendChild(hint);
+                container.innerHTML = `<p style='opacity:0.7'>Error loading requests: ${err?.message || "Unknown error"}</p>`;
                 buildLeaderboard([]);
             }
         }
 
-        // Expose submitRequest globally so the form's onsubmit can call it
         window.submitRequest = async function(event) {
             event.preventDefault();
-            if (!requestsCol) {
-                alert("Requests are temporarily unavailable.");
-                return;
-            }
-
+            if (!requestsCol) { alert("Requests are temporarily unavailable."); return; }
             const form = event.target;
             const gameName = truncateText(normalizeRequestText(document.getElementById('gameName').value), REQUEST_LIMITS.game);
             const rawName = normalizeRequestText(document.getElementById('yourName').value);
             const yourName = truncateText(rawName || 'Anonymous', REQUEST_LIMITS.name);
             const reason = truncateText(normalizeRequestText(document.getElementById('reason').value), REQUEST_LIMITS.reason);
+            if (!gameName) { alert("Please enter a game name."); return; }
 
-            if (!gameName) {
-                alert("Please enter a game name.");
+            // Check for slurs/hate speech
+            if (containsSlur(gameName) || containsSlur(yourName) || containsSlur(reason)) {
+                showSlurBanner();
+                alert("🚫 Your submission was blocked for containing prohibited language.\n\nDon't try it again. Your device has been flagged.");
+                // Log the violation to Firebase
+                try {
+                    const fp = await getFingerprint();
+                    await addDoc(collection(db, "violations"), {
+                        fingerprint: fp,
+                        attempted: { game: gameName, name: yourName, reason },
+                        createdAt: serverTimestamp()
+                    });
+                } catch(e) { console.error("Could not log violation:", e); }
                 return;
             }
 
+            const fp = await getFingerprint();
             const writeRequest = async () => {
                 await addDoc(requestsCol, {
                     game: gameName,
                     name: yourName,
-                    reason: reason,
+                    reason,
                     likes: 0,
+                    fingerprint: fp,
                     createdAt: serverTimestamp()
                 });
             };
-
             try {
                 await writeRequest();
                 alert(`You have submitted the form.\n\nGame: "${gameName}"`);
                 form.reset();
-                if (typeof window.closeRequestModal === "function") {
-                    window.closeRequestModal();
-                }
+                if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
                 loadRequests();
             } catch (err) {
                 if (err?.code === "permission-denied") {
@@ -1394,31 +1671,14 @@
                             await writeRequest();
                             alert(`You have submitted the form.\n\nGame: "${gameName}"`);
                             form.reset();
-                            if (typeof window.closeRequestModal === "function") {
-                                window.closeRequestModal();
-                            }
-                            loadRequests();
-                            return;
-                        } catch (retryErr) {
-                            console.error("Retry save request failed:", retryErr);
-                        }
+                            if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
+                            loadRequests(); return;
+                        } catch (retryErr) { console.error("Retry save request failed:", retryErr); }
                     }
-                    saveLocalRequest({
-                        game: gameName,
-                        name: yourName,
-                        reason: reason,
-                        dateText: new Date().toLocaleString()
-                    });
-                    const authDetail = lastCommunityAuthError
-                        ? `\nAuth detail: ${lastCommunityAuthError.code || "unknown"} - ${lastCommunityAuthError.message || "Unknown auth error"}`
-                        : "";
-                    alert(`Firebase blocked this request, so it was saved locally on your device.${authDetail}\n\nLikely fixes: enable Anonymous Auth and add this site domain in Firebase Auth > Settings > Authorized domains.`);
+                    saveLocalRequest({ game: gameName, name: yourName, reason, dateText: new Date().toLocaleString() });
                     form.reset();
-                    if (typeof window.closeRequestModal === "function") {
-                        window.closeRequestModal();
-                    }
-                    loadRequests();
-                    return;
+                    if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
+                    loadRequests(); return;
                 }
                 console.error("Error saving request:", err);
                 alert(`There was a problem submitting your request.\n\n${err?.message || "Unknown error"}`);
@@ -1447,59 +1707,58 @@
         <div class="announcements-section" style="margin-bottom: 3rem;">
             <h2>Announcements</h2>
 
-            <div class="announcement-card">
+            <div class="announcement-card" style="background: linear-gradient(135deg, #2a0000, #1a0000); border-image: linear-gradient(135deg, #ff0000, #aa0000) 1; box-shadow: 0 10px 40px rgba(255,0,0,0.25);">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">Status</div>
-                        <h3 class="announcement-title">Housekeeping update</h3>
+                        <div class="announcement-badge" style="background: linear-gradient(135deg, #ff0000, #aa0000); box-shadow: 0 4px 15px rgba(255,0,0,0.4);">⚠️ Warning</div>
+                        <h3 class="announcement-title" style="color: #ff4444; font-size: 1.7rem;">To whoever sent slurs — we see you</h3>
                     </div>
-                    <span class="announcement-date">February 2026</span>
+                    <span class="announcement-date" style="background: rgba(255,0,0,0.2); color: #ff8888;">March 2026</span>
                 </div>
-                <p class="announcement-content">
-                    Request reliability has been improved and oversized submissions are now limited so the board stays readable for everyone.
+                <p class="announcement-content" style="color: #ffaaaa; font-size: 1.05rem;">
+                    Every game request now logs a <strong style="color:#ff4444;">device fingerprint</strong> — a unique identifier tied to your browser and hardware. If you submitted hate speech, your ID is already in our database. Slurs are blocked automatically and violations are recorded. <strong style="color:#ff4444;">Don't try it again.</strong>
+                    <br><br>
+                    As a part of the <strong style="color:#ff4444;">Anti Securly League</strong>, we do not condone this behaviour. This site was built to give people freedom — not to be a platform for hate. Act accordingly.
                 </p>
             </div>
 
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">New Games</div>
-                        <h3 class="announcement-title">Fresh games just added</h3>
+                        <div class="announcement-badge">Migration</div>
+                        <h3 class="announcement-title">We've moved to even-better-cc.vercel.app</h3>
                     </div>
-                    <span class="announcement-date">February 2026</span>
+                    <span class="announcement-date">March 2026</span>
                 </div>
                 <p class="announcement-content">
-                    New additions now available on the homepage include Slope and Pokemon JS. Jump in from the Available Games section and try them out.
+                    The site has officially migrated to <strong>even-better-cc.vercel.app</strong>. Please update your bookmarks. The old link will no longer be maintained.
                 </p>
             </div>
 
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">Fixed Games</div>
-                        <h3 class="announcement-title">Recent game fixes and stability updates</h3>
+                        <div class="announcement-badge">Moderation</div>
+                        <h3 class="announcement-title">Request board wiped — slur policy now enforced</h3>
                     </div>
-                    <span class="announcement-date">February 2026</span>
+                    <span class="announcement-date">March 2026</span>
                 </div>
                 <p class="announcement-content">
-                    Street Fighter path/case issues were corrected for better cross-platform loading, and request/board reliability was improved across the site.
+                    The global game requests board was wiped due to users submitting hate speech and racial slurs. Automatic filtering is now in place — any submission containing prohibited language will be blocked. Keep it respectful or you won't be heard.
                 </p>
             </div>
 
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
-                        <div class="announcement-badge">Community</div>
-                        <h3 class="announcement-title">Community forums are now live</h3>
+                        <div class="announcement-badge">New</div>
+                        <h3 class="announcement-title">Interstellar proxy is now live</h3>
                     </div>
-                    <span class="announcement-date">February 2026</span>
+                    <span class="announcement-date">March 2026</span>
                 </div>
                 <p class="announcement-content">
-                    You can now post new game requests, bug reports, and complaints in the forums page so updates are easier to track.
+                    A fully working web proxy powered by Interstellar has been added to the site. Browse freely directly from the games page.
                 </p>
-                <div class="announcement-actions">
-                    <a href="forums.html" class="announcement-link">Open Community Forums</a>
-                </div>
             </div>
         </div>
 
@@ -1521,14 +1780,14 @@
             </div>
         </div>
 
-        <div class="download-section" style="background: linear-gradient(135deg,#28a745,#20c997); margin-bottom: 3rem;">
+        <div class="download-section" style="background: linear-gradient(135deg,#222222,#555555); margin-bottom: 3rem;">
             <h2>Request a Game</h2>
             <p>Don't see your favorite game? Let us know what you'd like to see!</p>
             <button onclick="openRequestModal()" class="btn">Request Game</button>
-            <button onclick="scrollToGlobalRequests()" class="btn" style="margin-left: 1rem; background:#f0fff4; color:#1e7e34;">
+            <button onclick="scrollToGlobalRequests()" class="btn" style="margin-left: 1rem; background:#f0f0f0; color:#111111;">
                 View Global Requests
             </button>
-            <a href="forums.html" class="btn" style="margin-left: 1rem; background:#e8f2ff; color:#0456a6;">
+            <a href="forums.html" class="btn" style="margin-left: 1rem; background:#e8e8e8; color:#111111;">
                 Community Forums
             </a>
         </div>
@@ -1565,6 +1824,15 @@
                 <input type="text" id="gameSearch" placeholder="🔍 Search for games..." onkeyup="searchGames()">
             </div>
             <div class="games-grid">
+
+                <!-- ✅ INTERSTELLAR CARD — premium locked -->
+                <div class="game-card">
+                    <div class="game-icon proxy-icon">🚀</div>
+                    <h3>Interstellar <span style="font-size:1rem;">👑</span></h3>
+                    <p>A powerful web proxy to bypass filters. <strong>Premium feature</strong> — ask the owner for access.</p>
+                    <button onclick="openPremiumModal()" class="btn-play btn-proxy">🔒 Unlock Proxy</button>
+                </div>
+
                 <div class="game-card">
                     <div class="game-icon">O</div>
                     <h3>OVO</h3>
@@ -1647,8 +1915,6 @@
                     <h3>Lunar Lander</h3>
                     <p>Land your spacecraft safely on the moon in this classic arcade-style physics game!</p>
                     <a href="games/lunar-lander-master/lunar-lander-master/index.html" class="btn-play">Play Now</a>
-
-
                 </div>
 
                 <div class="game-card">
@@ -1656,74 +1922,74 @@
                     <h3>Run 3</h3>
                     <p>Run through space tunnels and avoid falling in this endless runner game!</p>
                     <a href="games/run3/run3-main/" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">T</div>
                     <h3>Tetris</h3>
                     <p></p>
                     <a href="games/tetris/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">SM</div>
                     <h3>Super Mario 64</h3>
                     <p>An odyssey through the Mushroom Kingdom in 3D!</p>
                     <a href="games/sm64-main/sm64-main/index.html" class="btn-play">Play Now</a>
-            </div>
-
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">SF</div>
                     <h3>Street Fighter (works when games downloaded, fixing)</h3>
                     <p>A game where you can fight against opponents using various characters and moves.</p>
                     <a href="games/StreetFighter-main/StreetFighter-main/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">DH</div>
                     <h3>Drift Hunters</h3>
                     <p>A game where you can drift and race cars in various environments.</p>
                     <a href="games/dh/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
         
                 <div class="game-card">
                     <div class="game-icon">3t</div>
                     <h3>Three.js Tetris</h3>
                     <p>A 3D Tetris game.</p>
                     <a href="games/threejs-tetris-react-main/" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">1v1</div>
                     <h3>1v1.LOL</h3>
                     <p>A fast-paced building and shooting game where you compete against other players in real-time.</p>
                     <a href="games/1v1lol/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">DM</div>
                     <h3>Drive Mad</h3>
                     <p>A game where you go over obstacles and race against time.</p>
                     <a href="games/dm/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">SL</div>
                     <h3>Slope</h3>
                     <p>Roll down a fast neon track, dodge obstacles, and survive as long as you can in this reflex-based runner.</p>
                     <a href="games/slope/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
                 <div class="game-card">
                     <div class="game-icon">PK</div>
                     <h3>Pokemon JS</h3>
                     <p>A fan-made browser remake of classic Pokemon Red/Blue style gameplay with battles, maps, and progression.</p>
                     <a href="games/pokemon-js-main/build/index.html" class="btn-play">Play Now</a>
-            </div>
+                </div>
 
+            </div>        
+        </div>
 
-        </div>        
         <!-- Global requests section -->
         <div class="requests-section" id="globalRequests">
             <h2>Global Game Requests</h2>
@@ -1764,48 +2030,29 @@
         </div>
     </div>
 
+    <!-- Floating buttons -->
+    <a class="proxy-float" href="#" onclick="openPremiumModal(); return false;">🔒 Proxy</a>
     <a class="forums-float" href="forums.html">Community Forums</a>
     
     <script>
         function switchTab(tabName, buttonElement) {
-            // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active class from all tab buttons
+            tabContents.forEach(content => { content.classList.remove('active'); });
             const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected tab content
+            tabButtons.forEach(btn => { btn.classList.remove('active'); });
             const selectedTab = document.getElementById(tabName + 'Tab');
-            if (selectedTab) {
-                selectedTab.classList.add('active');
-            }
-
-            // Add active class to clicked button
-            if (buttonElement) {
-                buttonElement.classList.add('active');
-            }
+            if (selectedTab) { selectedTab.classList.add('active'); }
+            if (buttonElement) { buttonElement.classList.add('active'); }
         }
 
         function searchGames() {
             const input = document.getElementById('gameSearch');
             const filter = input.value.toLowerCase();
             const gameCards = document.querySelectorAll('.game-card');
-            
             gameCards.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const description = card.querySelector('p').textContent.toLowerCase();
-                
-                if (title.includes(filter) || description.includes(filter)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (title.includes(filter) || description.includes(filter)) ? '' : 'none';
             });
         }
 
@@ -1820,39 +2067,26 @@
 
         function scrollToGlobalRequests() {
             const section = document.getElementById('globalRequests');
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
+            if (section) { section.scrollIntoView({ behavior: 'smooth' }); }
         }
 
         window.onclick = function(event) {
             const modal = document.getElementById('requestModal');
-            if (event.target == modal) {
-                closeRequestModal();
-            }
+            if (event.target == modal) { closeRequestModal(); }
         }
 
         function bindCounter(inputId, counterId) {
             const input = document.getElementById(inputId);
             const counter = document.getElementById(counterId);
             if (!input || !counter) return;
-
             const max = Number(input.getAttribute('maxlength')) || 0;
-            const update = () => {
-                counter.textContent = `${input.value.length}/${max}`;
-            };
-
+            const update = () => { counter.textContent = `${input.value.length}/${max}`; };
             input.addEventListener('input', update);
             update();
         }
 
         function updateAllCounters() {
-            const pairs = [
-                ['gameName', 'gameNameCount'],
-                ['yourName', 'yourNameCount'],
-                ['reason', 'reasonCount']
-            ];
-            pairs.forEach(([inputId, counterId]) => {
+            [['gameName','gameNameCount'],['yourName','yourNameCount'],['reason','reasonCount']].forEach(([inputId, counterId]) => {
                 const input = document.getElementById(inputId);
                 const counter = document.getElementById(counterId);
                 if (!input || !counter) return;
@@ -1865,6 +2099,75 @@
             bindCounter('gameName', 'gameNameCount');
             bindCounter('yourName', 'yourNameCount');
             bindCounter('reason', 'reasonCount');
+        });
+    </script>
+    <!-- Premium Proxy Modal -->
+    <div id="premiumModal" class="premium-modal">
+        <div class="premium-modal-content">
+            <div class="premium-icon">👑</div>
+            <h2>Premium Access</h2>
+            <p>The web proxy is a premium feature. To get access, ask the site owner for a password.</p>
+            <input type="password" id="premiumPassword" class="premium-input" placeholder="Enter premium password...">
+            <div id="premiumError" class="premium-error">❌ Incorrect password. Ask the owner for access.</div>
+            <button class="premium-submit" onclick="checkPremiumPassword()">Unlock</button>
+            <br>
+            <button class="premium-close" onclick="closePremiumModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // SHA-256 hash of the premium password
+        const PREMIUM_HASH = "6f9994cc050ba6017ca4b972464b2e70742f827bc6aca7d5e8043af28bcbf117";
+        const PROXY_URL = "https://interstellar-roan-pi.vercel.app/";
+        const PREMIUM_KEY = "premiumUnlocked";
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+
+        function openPremiumModal() {
+            // If already unlocked, go straight to proxy
+            if (sessionStorage.getItem(PREMIUM_KEY) === "true") {
+                window.open(PROXY_URL, "_blank");
+                return;
+            }
+            document.getElementById("premiumModal").style.display = "block";
+            document.getElementById("premiumPassword").value = "";
+            document.getElementById("premiumError").style.display = "none";
+            setTimeout(() => document.getElementById("premiumPassword").focus(), 100);
+        }
+
+        function closePremiumModal() {
+            document.getElementById("premiumModal").style.display = "none";
+        }
+
+        async function checkPremiumPassword() {
+            const input = document.getElementById("premiumPassword").value;
+            const hashed = await sha256(input);
+            if (hashed === PREMIUM_HASH) {
+                sessionStorage.setItem(PREMIUM_KEY, "true");
+                closePremiumModal();
+                window.open(PROXY_URL, "_blank");
+            } else {
+                document.getElementById("premiumError").style.display = "block";
+                document.getElementById("premiumPassword").value = "";
+                document.getElementById("premiumPassword").focus();
+            }
+        }
+
+        // Allow pressing Enter to submit
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("premiumPassword").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") checkPremiumPassword();
+            });
+        });
+
+        // Close modal on background click
+        document.getElementById("premiumModal").addEventListener("click", (e) => {
+            if (e.target === document.getElementById("premiumModal")) closePremiumModal();
         });
     </script>
 </body>
