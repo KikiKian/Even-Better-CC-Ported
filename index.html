@@ -412,36 +412,36 @@
         .leaderboard-title{
             margin:0;
             font-size:2rem;
-            color:#111111;
+            color:#ffffff;
         }
         .leaderboard-subtitle{
             margin:0.25rem 0 0 0;
             font-size:0.95rem;
-            color:#444444;
+            color:#cccccc;
             opacity:0.9;
         }
         .leaderboard-badge{
             padding:0.35rem 0.9rem;
             border-radius:999px;
-            background:rgba(0,0,0,0.08);
+            background:rgba(255,255,255,0.12);
             font-size:0.85rem;
             font-weight:600;
-            color:#111111;
+            color:#ffffff;
             white-space:nowrap;
         }
         .leaderboard-table-wrapper{
             border-radius:14px;
             overflow:hidden;
-            box-shadow:0 10px 30px rgba(0,0,0,0.1);
-            background:var(--bg);
-            border:1px solid rgba(0,0,0,0.08);
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
+            background:#1a1a1a;
+            border:1px solid rgba(255,255,255,0.08);
         }
         .leaderboard-table{
             width:100%;
             border-collapse:collapse;
         }
         .leaderboard-table thead{
-            background:linear-gradient(135deg,#555555,#111111);
+            background:linear-gradient(135deg,#333333,#111111);
             color:#fff;
         }
         .leaderboard-table th,
@@ -449,6 +449,7 @@
             padding:0.75rem 1rem;
             text-align:left;
             font-size:0.95rem;
+            color:#ffffff;
         }
         .leaderboard-table th:first-child,
         .leaderboard-table td:first-child{
@@ -1097,7 +1098,10 @@
             var video = document.getElementById('cutsceneVideo');
             overlay.style.display = 'flex';
             overlay.style.opacity = '1';
-            video.play();
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() { endCutscene(); });
+            }
             function endCutscene() {
                 overlay.style.opacity = '0';
                 setTimeout(function(){ overlay.style.display = 'none'; }, 800);
@@ -1549,12 +1553,37 @@
                 p.textContent = "No local requests yet."; p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
                 container.appendChild(p); buildLeaderboard([]); return;
             }
-            localRequests.forEach((entry) => {
+            localRequests.forEach((entry, idx) => {
                 const card = document.createElement("div"); card.className = "request-card";
                 const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = entry.game || "(Unknown game)";
                 const metaEl = document.createElement("p"); metaEl.className = "request-card-meta"; metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local draft"}`;
                 const reasonEl = document.createElement("p"); reasonEl.className = "request-card-reason"; reasonEl.textContent = entry.reason || "No reason provided.";
-                card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl);
+                // Local like button (stored in localStorage)
+                const likeRow = document.createElement("div"); likeRow.className = "like-row";
+                const likeBtn = document.createElement("button"); likeBtn.className = "like-button";
+                const countSpan = document.createElement("span"); countSpan.className = "like-count";
+                const likeKey = "localLike_" + idx;
+                const liked = localStorage.getItem(likeKey) === "1";
+                let likeCount = parseInt(localStorage.getItem(likeKey + "_count") || "0");
+                countSpan.textContent = likeCount;
+                likeBtn.innerHTML = liked ? "👍 Liked" : "👍 Like";
+                if (liked) likeBtn.classList.add("liked");
+                likeBtn.addEventListener("click", () => {
+                    const isLiked = localStorage.getItem(likeKey) === "1";
+                    if (isLiked) {
+                        localStorage.removeItem(likeKey);
+                        likeCount = Math.max(0, likeCount - 1);
+                        likeBtn.innerHTML = "👍 Like"; likeBtn.classList.remove("liked");
+                    } else {
+                        localStorage.setItem(likeKey, "1");
+                        likeCount++;
+                        likeBtn.innerHTML = "👍 Liked"; likeBtn.classList.add("liked");
+                    }
+                    localStorage.setItem(likeKey + "_count", likeCount);
+                    countSpan.textContent = likeCount;
+                });
+                likeRow.appendChild(likeBtn); likeRow.appendChild(countSpan);
+                card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl); card.appendChild(likeRow);
                 container.appendChild(card);
             });
             buildLeaderboard(localRequests.map((r) => ({ game: r.game || "(Unknown game)", likes: 0 })));
@@ -1596,21 +1625,26 @@
             if (!container) return;
             if (!requestsCol) { container.innerHTML = "Requests are temporarily unavailable."; buildLeaderboard([]); return; }
             container.innerHTML = "<p style='opacity:0.7'>Loading requests...</p>";
-            const uid = await getUserId();
             const allRequests = [];
             try {
                 const q = query(requestsCol, orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
                 if (snapshot.empty) {
                     container.innerHTML = "";
-                    const p = document.createElement("p");
-                    p.textContent = "No game requests yet. Be the first!";
-                    p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
-                    container.appendChild(p); buildLeaderboard([]); return;
+                    const localRequests = getLocalRequests().slice().reverse();
+                    if (!localRequests.length) {
+                        const p = document.createElement("p");
+                        p.textContent = "No game requests yet. Be the first!";
+                        p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
+                        container.appendChild(p); buildLeaderboard([]); return;
+                    }
+                    // Firebase empty but we have local — show them
+                    renderLocalRequests(container); return;
                 }
                 container.innerHTML = "";
-                // Pre-fetch which requests this user has liked
+                // Only check liked state if user is already signed in
                 const likedSet = new Set();
+                const uid = currentUser ? currentUser.uid : null;
                 if (uid) {
                     await Promise.all(snapshot.docs.map(async (docSnap) => {
                         const liked = await hasLiked(docSnap.id, uid);
@@ -1647,11 +1681,54 @@
                     card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl); card.appendChild(fpBadge); card.appendChild(likeRow);
                     container.appendChild(card);
                 });
+
+                // Also append any locally saved requests (submitted when Firebase write was denied)
+                const localRequests = getLocalRequests().slice().reverse();
+                if (localRequests.length) {
+                    const localLabel = document.createElement("p");
+                    localLabel.style.cssText = "opacity:0.6;font-size:0.85rem;margin-top:1rem;";
+                    localLabel.textContent = "— Local requests (saved on this device) —";
+                    container.appendChild(localLabel);
+                    localRequests.forEach((entry, idx) => {
+                        const game = entry.game || "(Unknown game)";
+                        allRequests.push({ game, likes: 0 });
+                        const card = document.createElement("div"); card.className = "request-card";
+                        const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = game;
+                        const metaEl = document.createElement("p"); metaEl.className = "request-card-meta";
+                        metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local"}`;
+                        const reasonEl = document.createElement("p"); reasonEl.className = "request-card-reason"; reasonEl.textContent = entry.reason || "No reason provided.";
+                        const likeRow = document.createElement("div"); likeRow.className = "like-row";
+                        const likeBtn = document.createElement("button"); likeBtn.className = "like-button";
+                        const countSpan = document.createElement("span"); countSpan.className = "like-count";
+                        const likeKey = "localLike_" + idx;
+                        const liked = localStorage.getItem(likeKey) === "1";
+                        let likeCount = parseInt(localStorage.getItem(likeKey + "_count") || "0");
+                        countSpan.textContent = likeCount;
+                        likeBtn.innerHTML = liked ? "👍 Liked" : "👍 Like";
+                        if (liked) likeBtn.classList.add("liked");
+                        likeBtn.addEventListener("click", () => {
+                            const isLiked = localStorage.getItem(likeKey) === "1";
+                            if (isLiked) {
+                                localStorage.removeItem(likeKey);
+                                likeCount = Math.max(0, likeCount - 1);
+                                likeBtn.innerHTML = "👍 Like"; likeBtn.classList.remove("liked");
+                            } else {
+                                localStorage.setItem(likeKey, "1");
+                                likeCount++;
+                                likeBtn.innerHTML = "👍 Liked"; likeBtn.classList.add("liked");
+                            }
+                            localStorage.setItem(likeKey + "_count", likeCount);
+                            countSpan.textContent = likeCount;
+                        });
+                        likeRow.appendChild(likeBtn); likeRow.appendChild(countSpan);
+                        card.appendChild(titleEl); card.appendChild(metaEl); card.appendChild(reasonEl); card.appendChild(likeRow);
+                        container.appendChild(card);
+                    });
+                }
+
                 buildLeaderboard(allRequests);
             } catch (err) {
                 if (err?.code === "permission-denied") {
-                    const authed = await getUserId();
-                    if (authed) return loadRequests();
                     renderLocalRequests(container); return;
                 }
                 console.error("Error loading requests:", err);
@@ -1705,17 +1782,9 @@
                 loadRequests();
             } catch (err) {
                 if (err?.code === "permission-denied") {
-                    const authed = await ensureCommunityAuth();
-                    if (authed) {
-                        try {
-                            await writeRequest();
-                            alert(`You have submitted the form.\n\nGame: "${gameName}"`);
-                            form.reset();
-                            if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
-                            loadRequests(); return;
-                        } catch (retryErr) { console.error("Retry save request failed:", retryErr); }
-                    }
+                    // Anonymous auth is disabled — save locally instead
                     saveLocalRequest({ game: gameName, name: yourName, reason, dateText: new Date().toLocaleString() });
+                    alert(`Request saved locally.\n\nGame: "${gameName}"`);
                     form.reset();
                     if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
                     loadRequests(); return;
@@ -1725,7 +1794,8 @@
             }
         };
 
-        window.addEventListener("DOMContentLoaded", loadRequests);
+        // Modules run after DOM is already parsed — just call loadRequests directly.
+        loadRequests();
     </script>
 
     <div class="container">
