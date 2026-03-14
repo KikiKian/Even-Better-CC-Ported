@@ -2275,59 +2275,115 @@
     </div>
 
     <script>
-        // SHA-256 hash of the premium password
-        const PREMIUM_HASH = "6f9994cc050ba6017ca4b972464b2e70742f827bc6aca7d5e8043af28bcbf117";
-        const PROXY_URL = "https://interstellar-roan-pi.vercel.app/";
-        const PREMIUM_KEY = "premiumUnlocked";
-
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        const PREMIUM_DATA = {
+          encrypted: "awzDiccHm1eKWd6lFCneYT00btnWYb3iqiHSB8ELS859mlgaIVgZYJ3Xp9GNkYcrJ1sBw38PGqs=",
+          iv: "4ptnBg8jTGnr7yvP"
+        };
+        
+        const PREMIUM_SESSION_KEY = "premiumUrl";
+        
+        function base64ToBuf(b64) {
+            return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
         }
-
+        
+        async function decryptLink(password) {
+            const enc = new TextEncoder();
+            const dec = new TextDecoder();
+        
+            const keyMaterial = await crypto.subtle.importKey(
+                "raw",
+                enc.encode(password),
+                { name: "PBKDF2" },
+                false,
+                ["deriveKey"]
+            );
+        
+            const key = await crypto.subtle.deriveKey(
+                {
+                    name: "PBKDF2",
+                    salt: enc.encode("premium-link"),
+                    iterations: 120000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                { name: "AES-GCM", length: 256 },
+                false,
+                ["decrypt"]
+            );
+        
+            const decrypted = await crypto.subtle.decrypt(
+                {
+                    name: "AES-GCM",
+                    iv: base64ToBuf(PREMIUM_DATA.iv)
+                },
+                key,
+                base64ToBuf(PREMIUM_DATA.encrypted)
+            );
+        
+            return dec.decode(decrypted);
+        }
+        
         function openPremiumModal() {
-            // If already unlocked, go straight to proxy
-            if (sessionStorage.getItem(PREMIUM_KEY) === "true") {
-                window.open(PROXY_URL, "_blank");
+        
+            if (sessionStorage.getItem(PREMIUM_SESSION_KEY)) {
+                window.open(sessionStorage.getItem(PREMIUM_SESSION_KEY), "_blank");
                 return;
             }
+        
             document.getElementById("premiumModal").style.display = "block";
             document.getElementById("premiumPassword").value = "";
             document.getElementById("premiumError").style.display = "none";
-            setTimeout(() => document.getElementById("premiumPassword").focus(), 100);
+        
+            setTimeout(() => {
+                document.getElementById("premiumPassword").focus();
+            }, 100);
         }
-
+        
         function closePremiumModal() {
             document.getElementById("premiumModal").style.display = "none";
         }
-
+        
         async function checkPremiumPassword() {
+        
             const input = document.getElementById("premiumPassword").value;
-            const hashed = await sha256(input);
-            if (hashed === PREMIUM_HASH) {
-                sessionStorage.setItem(PREMIUM_KEY, "true");
+        
+            try {
+        
+                const link = await decryptLink(input);
+        
+                sessionStorage.setItem(PREMIUM_SESSION_KEY, link);
+        
                 closePremiumModal();
-                window.open(PROXY_URL, "_blank");
-            } else {
+        
+                window.open(link, "_blank");
+        
+            } catch (err) {
+        
                 document.getElementById("premiumError").style.display = "block";
+        
                 document.getElementById("premiumPassword").value = "";
+        
                 document.getElementById("premiumPassword").focus();
             }
         }
-
-        // Allow pressing Enter to submit
+        
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("premiumPassword").addEventListener("keydown", (e) => {
-                if (e.key === "Enter") checkPremiumPassword();
-            });
+        
+            document
+                .getElementById("premiumPassword")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") checkPremiumPassword();
+                });
+        
+            document
+                .getElementById("premiumModal")
+                .addEventListener("click", (e) => {
+                    if (e.target === document.getElementById("premiumModal"))
+                        closePremiumModal();
+                });
+        
         });
-
-        // Close modal on background click
-        document.getElementById("premiumModal").addEventListener("click", (e) => {
-            if (e.target === document.getElementById("premiumModal")) closePremiumModal();
-        });
-    </script>
+        
+        </script>
 </body>
 </html>
