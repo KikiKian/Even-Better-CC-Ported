@@ -6,7 +6,6 @@
     <title>Community Forums</title>
     <style>
         * { box-sizing: border-box; }
-
         html, body { margin: 0; padding: 0; }
 
         body {
@@ -17,11 +16,9 @@
             padding: 2rem;
         }
 
-        .shell {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .shell { max-width: 1200px; margin: 0 auto; }
 
+        /* Hero */
         .hero {
             border: 1px solid #d8d8d8;
             border-radius: 20px;
@@ -30,7 +27,6 @@
             padding: 1.25rem 1.5rem;
             margin-bottom: 1rem;
         }
-
         .hero-top {
             display: flex;
             justify-content: space-between;
@@ -39,233 +35,149 @@
             align-items: center;
             margin-bottom: 0.9rem;
         }
+        .tagline { margin:0; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.08em; color:#555; font-weight:600; }
+        .title { margin:0.2rem 0 0 0; font-size:clamp(1.85rem,3.8vw,3rem); line-height:1; color:#111; letter-spacing:-0.02em; }
+        .hero-copy { margin:0.5rem 0 0 0; color:#444; max-width:68ch; line-height:1.55; }
+        .hero-actions { display:flex; gap:0.55rem; flex-wrap:wrap; }
+        .hero-stats { display:flex; gap:0.55rem; flex-wrap:wrap; }
+        .chip { border-radius:999px; padding:0.33rem 0.75rem; font-size:0.8rem; font-weight:600; color:#fff; background:linear-gradient(90deg,#555,#111); border:none; }
 
-        .tagline {
-            margin: 0;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #555555;
-            font-weight: 600;
-        }
-
-        .title {
-            margin: 0.2rem 0 0 0;
-            font-size: clamp(1.85rem, 3.8vw, 3rem);
-            line-height: 1;
-            color: #111111;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-copy {
-            margin: 0.5rem 0 0 0;
-            color: #444444;
-            max-width: 68ch;
-            line-height: 1.55;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 0.55rem;
-            flex-wrap: wrap;
-        }
-
+        /* Buttons */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            padding: 0.62rem 1.1rem;
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: transform 0.18s ease, box-shadow 0.2s ease;
+            display:inline-flex; align-items:center; justify-content:center;
+            border-radius:12px; border:1px solid transparent;
+            padding:0.62rem 1.1rem; text-decoration:none; font-weight:700;
+            cursor:pointer; font-family:inherit; font-size:0.95rem;
+            transition:transform 0.18s ease, box-shadow 0.2s ease;
         }
+        .btn:hover { transform:translateY(-2px); }
+        .btn-primary { color:#fff; background:linear-gradient(135deg,#555,#111); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+        .btn-ghost { color:#111; background:#f0f0f0; border-color:#ccc; }
 
-        .btn:hover { transform: translateY(-2px); }
-
-        .btn-primary {
-            color: #fff;
-            background: linear-gradient(135deg, #555555, #111111);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-ghost {
-            color: #111111;
-            background: #f0f0f0;
-            border-color: #cccccc;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 0.55rem;
-            flex-wrap: wrap;
-        }
-
-        .chip {
-            border-radius: 999px;
-            padding: 0.33rem 0.75rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(90deg, #555555, #111111);
-            border: none;
-        }
-
+        /* Layout */
         .layout {
             display: grid;
             grid-template-columns: 360px 1fr;
             gap: 1rem;
             align-items: start;
         }
+        .left-col { display:flex; flex-direction:column; gap:1rem; }
 
+        /* Panels */
         .panel {
-            background: #ffffff;
-            border: 1px solid #d8d8d8;
+            background:#fff;
+            border:1px solid #d8d8d8;
+            border-radius:18px;
+            box-shadow:0 8px 24px rgba(0,0,0,0.07);
+            padding:1rem 1.1rem;
+        }
+        .panel h2 { margin:0; font-size:1.2rem; color:#111; letter-spacing:-0.01em; }
+        .subtitle { margin:0.5rem 0 0.9rem 0; color:#555; font-size:0.95rem; }
+
+        /* Form fields */
+        .field { margin-bottom:0.8rem; }
+        .field label { display:block; margin-bottom:0.32rem; font-size:0.88rem; font-weight:700; color:#111; }
+        .field input, .field textarea, .field select {
+            width:100%; border:2px solid #d0d0d0; background:#f9f9f9;
+            border-radius:10px; padding:0.62rem 0.68rem; font:inherit; color:#111;
+            transition:border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            outline:none; border-color:#111; box-shadow:0 0 0 3px rgba(0,0,0,0.1);
+        }
+        .field textarea { min-height:120px; resize:vertical; }
+        .counter { margin-top:0.25rem; text-align:right; font-size:0.76rem; color:#888; }
+
+        /* Leaderboard panel */
+        .leaderboard-panel {
+            background: linear-gradient(135deg, #0d1b2a, #1b2838);
+            border: 1px solid rgba(79,70,229,0.3);
             border-radius: 18px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            box-shadow: 0 8px 30px rgba(79,70,229,0.15);
             padding: 1rem 1.1rem;
+            color: #fff;
         }
-
-        .panel h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #111111;
-            letter-spacing: -0.01em;
+        .leaderboard-panel h2 { margin:0; font-size:1.2rem; color:#a5b4fc; }
+        .leaderboard-panel .subtitle { color:#c7d2fe; margin:0.4rem 0 0.9rem 0; font-size:0.88rem; }
+        .lb-row {
+            display:flex; align-items:center; gap:0.6rem;
+            background:rgba(255,255,255,0.06);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px; padding:0.6rem 0.75rem;
+            margin-bottom:0.5rem; transition:background 0.15s;
         }
-
-        .subtitle {
-            margin: 0.5rem 0 0.9rem 0;
-            color: #555555;
-            font-size: 0.95rem;
+        .lb-row:hover { background:rgba(255,255,255,0.1); }
+        .lb-rank {
+            font-size:1.1rem; font-weight:900; min-width:28px;
+            color:#fbbf24; text-align:center;
         }
+        .lb-rank.silver { color:#94a3b8; }
+        .lb-rank.bronze { color:#d97706; }
+        .lb-rank.other { color:#6b7280; font-size:0.95rem; }
+        .lb-info { flex:1; min-width:0; }
+        .lb-game { font-weight:700; font-size:0.95rem; color:#f0f0f0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .lb-by { font-size:0.75rem; color:#94a3b8; }
+        .lb-likes { font-size:0.85rem; font-weight:700; color:#a5b4fc; white-space:nowrap; }
+        .lb-empty { color:#6b7280; font-size:0.88rem; text-align:center; padding:1rem 0; }
+        .lb-badge { display:inline-block; border-radius:999px; padding:0.2rem 0.6rem; font-size:0.7rem; font-weight:700; background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; margin-bottom:0.6rem; }
 
-        .field { margin-bottom: 0.8rem; }
-
-        .field label {
-            display: block;
-            margin-bottom: 0.32rem;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: #111111;
-        }
-
-        .field input,
-        .field textarea,
-        .field select {
-            width: 100%;
-            border: 2px solid #d0d0d0;
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 0.62rem 0.68rem;
-            font: inherit;
-            color: #111111;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .field input:focus,
-        .field textarea:focus,
-        .field select:focus {
-            outline: none;
-            border-color: #111111;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
-        }
-
-        .field textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .counter {
-            margin-top: 0.25rem;
-            text-align: right;
-            font-size: 0.76rem;
-            color: #888888;
-        }
-
+        /* Feed */
         .feed-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 0.8rem;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 0.7rem;
+            display:flex; justify-content:space-between; gap:0.8rem;
+            align-items:center; flex-wrap:wrap; margin-bottom:0.7rem;
         }
-
-        .status {
-            margin: 0;
-            font-size: 0.88rem;
-            color: #555555;
-        }
-
+        .status { margin:0; font-size:0.88rem; color:#555; }
         .search {
-            width: 100%;
-            max-width: 260px;
-            border: 2px solid #d0d0d0;
-            background: #f9f9f9;
-            border-radius: 999px;
-            padding: 0.5rem 0.86rem;
-            font: inherit;
-            color: #111111;
+            width:100%; max-width:260px; border:2px solid #d0d0d0;
+            background:#f9f9f9; border-radius:999px; padding:0.5rem 0.86rem;
+            font:inherit; color:#111;
         }
+        .search:focus { outline:none; border-color:#111; box-shadow:0 0 0 3px rgba(0,0,0,0.1); }
 
-        .search:focus {
-            outline: none;
-            border-color: #111111;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+        /* Filter tabs */
+        .filter-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.75rem; }
+        .filter-tab {
+            border-radius:999px; padding:0.28rem 0.75rem; font-size:0.78rem; font-weight:700;
+            border:1.5px solid #d0d0d0; background:#f5f5f5; color:#555;
+            cursor:pointer; font-family:inherit; transition:all 0.15s;
         }
+        .filter-tab:hover { border-color:#888; color:#111; }
+        .filter-tab.active { background:#111; color:#fff; border-color:#111; }
 
-        .posts { display: grid; gap: 0.68rem; }
-
+        /* Posts */
+        .posts { display:grid; gap:0.68rem; }
         .post {
-            border: 1px solid #e0e0e0;
-            border-radius: 14px;
-            padding: 0.8rem;
-            background: linear-gradient(180deg, #ffffff, #f7f7f7);
+            border:1px solid #e0e0e0; border-radius:14px;
+            padding:0.8rem; background:linear-gradient(180deg,#fff,#f7f7f7);
         }
-
+        .post.is-request { border-color:rgba(79,70,229,0.25); background:linear-gradient(135deg, rgba(79,70,229,0.04), #ffffff); }
         .meta {
-            display: flex;
-            gap: 0.45rem;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 0.3rem;
-            color: #666666;
-            font-size: 0.8rem;
-            word-break: break-word;
+            display:flex; gap:0.45rem; align-items:center; flex-wrap:wrap;
+            margin-bottom:0.3rem; color:#666; font-size:0.8rem; word-break:break-word;
         }
-
-        .post h3 {
-            margin: 0.1rem 0 0.34rem 0;
-            color: #111111;
-            font-size: 1rem;
-            word-break: break-word;
-        }
-
-        .post p {
-            margin: 0;
-            color: #444444;
-            line-height: 1.48;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
+        .post h3 { margin:0.1rem 0 0.34rem 0; color:#111; font-size:1rem; word-break:break-word; }
+        .post p { margin:0; color:#444; line-height:1.48; white-space:pre-wrap; word-break:break-word; }
 
         .type-tag {
-            border-radius: 999px;
-            padding: 0.2rem 0.54rem;
-            font-size: 0.72rem;
-            font-weight: 600;
-            background: #eeeeee;
-            color: #333333;
-            border: 1px solid #cccccc;
+            border-radius:999px; padding:0.2rem 0.54rem; font-size:0.72rem; font-weight:600;
+            background:#eee; color:#333; border:1px solid #ccc;
         }
+        .type-tag.request { background:rgba(79,70,229,0.12); color:#4f46e5; border-color:rgba(79,70,229,0.3); }
 
-        @media (max-width: 920px) {
-            .layout { grid-template-columns: 1fr; }
+        /* Like button */
+        .post-footer { display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem; flex-wrap:wrap; gap:0.4rem; }
+        .like-btn {
+            display:inline-flex; align-items:center; gap:0.35rem;
+            border-radius:999px; border:1.5px solid #d0d0d0;
+            background:#f5f5f5; color:#555; padding:0.28rem 0.75rem;
+            font-size:0.82rem; font-weight:700; cursor:pointer;
+            font-family:inherit; transition:all 0.15s;
         }
+        .like-btn:hover { border-color:#4f46e5; color:#4f46e5; background:rgba(79,70,229,0.06); }
+        .like-btn.liked { background:rgba(79,70,229,0.12); color:#4f46e5; border-color:#4f46e5; }
+        .like-count { font-weight:900; }
+
+        @media (max-width: 920px) { .layout { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
@@ -276,57 +188,78 @@
                 <div>
                     <p class="tagline">Community Space</p>
                     <h1 class="title">Forums</h1>
-                    <p class="hero-copy">Post game requests, bug reports, and feedback in one place so issues are easier to track and discuss.</p>
+                    <p class="hero-copy">Post game requests, bug reports, and feedback. Like game requests to vote them up the leaderboard!</p>
                 </div>
                 <div class="hero-actions">
-                    <a href="index.html" class="btn btn-ghost">Back To Home</a>
-                    <a href="#newPost" class="btn btn-primary">Create New Post</a>
+                    <a href="index.html" class="btn btn-ghost">← Back To Home</a>
+                    <a href="#newPost" class="btn btn-primary">+ New Post</a>
                 </div>
             </div>
             <div class="hero-stats">
-                <span class="chip">Game Requests</span>
-                <span class="chip">Bug Reports</span>
-                <span class="chip">General Feedback</span>
+                <span class="chip">🎮 Game Requests</span>
+                <span class="chip">🐛 Bug Reports</span>
+                <span class="chip">💬 General Feedback</span>
             </div>
         </section>
 
         <section class="layout">
-            <section id="newPost" class="panel">
-                <h2>New Post</h2>
-                <p class="subtitle">Be specific in the details section so fixes and requests can be handled faster.</p>
-                <form id="forumForm">
-                    <div class="field">
-                        <label for="postType">Category</label>
-                        <select id="postType" required>
-                            <option value="New Game Request">New Game Request</option>
-                            <option value="Complaint">Complaint</option>
-                            <option value="Bug Report">Bug Report</option>
-                            <option value="General Feedback">General Feedback</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="postTitle">Title</label>
-                        <input id="postTitle" type="text" maxlength="80" required>
-                        <div id="titleCount" class="counter">0/80</div>
-                    </div>
-                    <div class="field">
-                        <label for="postName">Your Name (optional)</label>
-                        <input id="postName" type="text" maxlength="30" placeholder="Anonymous">
-                        <div id="nameCount" class="counter">0/30</div>
-                    </div>
-                    <div class="field">
-                        <label for="postBody">Details</label>
-                        <textarea id="postBody" maxlength="500" required></textarea>
-                        <div id="bodyCount" class="counter">0/500</div>
-                    </div>
-                    <button class="btn btn-primary" type="submit" style="width:100%;">Post To Forum</button>
-                </form>
-            </section>
+            <div class="left-col">
+                <!-- New Post Form -->
+                <section id="newPost" class="panel">
+                    <h2>New Post</h2>
+                    <p class="subtitle">Be specific so requests and bugs can be handled faster.</p>
+                    <form id="forumForm">
+                        <div class="field">
+                            <label for="postType">Category</label>
+                            <select id="postType" required>
+                                <option value="New Game Request">🎮 New Game Request</option>
+                                <option value="Bug Report">🐛 Bug Report</option>
+                                <option value="Complaint">😤 Complaint</option>
+                                <option value="General Feedback">💬 General Feedback</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="postTitle">Title</label>
+                            <input id="postTitle" type="text" maxlength="80" placeholder="e.g. Add Drift Boss" required>
+                            <div id="titleCount" class="counter">0/80</div>
+                        </div>
+                        <div class="field">
+                            <label for="postName">Your Name (optional)</label>
+                            <input id="postName" type="text" maxlength="30" placeholder="Anonymous">
+                            <div id="nameCount" class="counter">0/30</div>
+                        </div>
+                        <div class="field">
+                            <label for="postBody">Details</label>
+                            <textarea id="postBody" maxlength="500" required placeholder="Why do you want this game? Any details about bugs? etc."></textarea>
+                            <div id="bodyCount" class="counter">0/500</div>
+                        </div>
+                        <button class="btn btn-primary" type="submit" style="width:100%;">Post To Forum</button>
+                    </form>
+                </section>
 
+                <!-- Leaderboard -->
+                <section class="leaderboard-panel">
+                    <span class="lb-badge">🔥 Live Leaderboard</span>
+                    <h2>Top Requested Games</h2>
+                    <p class="subtitle">Ranked by 👍 likes from the community</p>
+                    <div id="leaderboard">
+                        <p class="lb-empty">No game requests yet — be the first!</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Posts Feed -->
             <section class="panel">
                 <div class="feed-top">
-                    <h2 style="margin:0;">Recent Posts</h2>
-                    <input id="searchPosts" class="search" type="search" placeholder="Search title/body...">
+                    <h2>Recent Posts</h2>
+                    <input id="searchPosts" class="search" type="search" placeholder="🔍 Search posts...">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="setFilter('all', this)">All</button>
+                    <button class="filter-tab" onclick="setFilter('New Game Request', this)">🎮 Requests</button>
+                    <button class="filter-tab" onclick="setFilter('Bug Report', this)">🐛 Bugs</button>
+                    <button class="filter-tab" onclick="setFilter('Complaint', this)">😤 Complaints</button>
+                    <button class="filter-tab" onclick="setFilter('General Feedback', this)">💬 Feedback</button>
                 </div>
                 <p id="forumStatus" class="status">Loading posts...</p>
                 <div id="posts" class="posts"></div>
@@ -336,66 +269,114 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp }
+            from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const LIMITS = { title: 80, name: 30, body: 500 };
         const LOCAL_KEY = "forumPostsLocal";
+        const LIKES_KEY = "forumLikes";
         const statusEl = document.getElementById("forumStatus");
-        const postsEl = document.getElementById("posts");
-        const form = document.getElementById("forumForm");
+        const postsEl  = document.getElementById("posts");
+        const lbEl     = document.getElementById("leaderboard");
+        const form     = document.getElementById("forumForm");
         const searchInput = document.getElementById("searchPosts");
 
-        let forumCol = null;
+        let forumCol   = null;
         let cachedPosts = [];
+        let activeFilter = "all";
 
+        // ── Firebase init ──
         const config = window.FIREBASE_CONFIG;
         if (config) {
-            const app = initializeApp(config);
-            const db = getFirestore(app);
-            forumCol = collection(db, "forumPosts");
+            try {
+                const app = initializeApp(config);
+                const db  = getFirestore(app);
+                forumCol  = collection(db, "forumPosts");
+            } catch(e) { console.warn("Firebase init failed:", e); }
         } else {
-            statusEl.textContent = "Firebase unavailable. Using local-only posts on this device.";
+            statusEl.textContent = "Firebase unavailable — using local storage.";
         }
 
-        function normalize(value) {
-            return String(value || "").replace(/[\u0000-\u001F\u007F]/g, "").replace(/\s+/g, " ").trim();
+        // ── Likes (localStorage, one per post per device) ──
+        function getLikes() {
+            try { return JSON.parse(localStorage.getItem(LIKES_KEY) || "{}"); } catch { return {}; }
+        }
+        function saveLikes(obj) { localStorage.setItem(LIKES_KEY, JSON.stringify(obj)); }
+        function getLikeCount(postId) { return getLikes()[postId]?.count || 0; }
+        function hasLiked(postId)     { return !!getLikes()[postId]?.liked; }
+        function toggleLike(postId) {
+            const all = getLikes();
+            const cur = all[postId] || { liked: false, count: 0 };
+            if (cur.liked) { cur.liked = false; cur.count = Math.max(0, cur.count - 1); }
+            else           { cur.liked = true;  cur.count = cur.count + 1; }
+            all[postId] = cur;
+            saveLikes(all);
+            return cur;
         }
 
-        function truncate(value, max) {
-            return value.length > max ? value.slice(0, max) : value;
-        }
-
-        function formatDate(value) {
-            if (!value) return "No date";
-            if (typeof value === "string") return value;
-            if (value.toDate) return value.toDate().toLocaleString();
+        // ── Helpers ──
+        function normalize(v) { return String(v||"").replace(/[\u0000-\u001F\u007F]/g,"").replace(/\s+/g," ").trim(); }
+        function truncate(v, max) { return v.length > max ? v.slice(0, max) : v; }
+        function formatDate(v) {
+            if (!v) return "No date";
+            if (typeof v === "string") return v;
+            if (v.toDate) return v.toDate().toLocaleString();
             return "No date";
         }
+        function readLocal() { try { return JSON.parse(localStorage.getItem(LOCAL_KEY)||"[]"); } catch { return []; } }
+        function saveLocal(posts) { localStorage.setItem(LOCAL_KEY, JSON.stringify(posts)); }
+        function makeId(post) { return post.id || `local_${post.title}_${post.createdAt}`; }
 
-        function readLocal() {
-            try {
-                return JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
-            } catch {
-                return [];
-            }
-        }
-
-        function saveLocal(posts) {
-            localStorage.setItem(LOCAL_KEY, JSON.stringify(posts));
-        }
-
-        function sortPosts(posts) {
-            return posts.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
-        }
+        // ── Filter ──
+        window.setFilter = function(filter, btn) {
+            activeFilter = filter;
+            document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderCurrentView();
+        };
 
         function getFilteredPosts() {
             const term = (searchInput.value || "").trim().toLowerCase();
-            if (!term) return cachedPosts;
-            return cachedPosts.filter((post) => {
-                const haystack = `${post.type || ""} ${post.title || ""} ${post.body || ""} ${post.name || ""}`.toLowerCase();
-                return haystack.includes(term);
+            return cachedPosts.filter(post => {
+                const matchFilter = activeFilter === "all" || post.type === activeFilter;
+                const matchSearch = !term || `${post.type||""} ${post.title||""} ${post.body||""} ${post.name||""}`.toLowerCase().includes(term);
+                return matchFilter && matchSearch;
             });
         }
+
+        // ── Render leaderboard ──
+        function renderLeaderboard() {
+            const requests = cachedPosts
+                .filter(p => p.type === "New Game Request")
+                .map(p => ({ ...p, _id: makeId(p), _likes: getLikeCount(makeId(p)) }))
+                .sort((a, b) => b._likes - a._likes)
+                .slice(0, 8);
+
+            if (!requests.length) {
+                lbEl.innerHTML = "<p class='lb-empty'>No game requests yet — be the first!</p>";
+                return;
+            }
+
+            lbEl.innerHTML = "";
+            requests.forEach((post, i) => {
+                const rankClass = i === 0 ? "" : i === 1 ? "silver" : i === 2 ? "bronze" : "other";
+                const rankEmoji = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i+1}`;
+                const row = document.createElement("div");
+                row.className = "lb-row";
+                row.innerHTML = `
+                    <div class="lb-rank ${rankClass}">${rankEmoji}</div>
+                    <div class="lb-info">
+                        <div class="lb-game">${escHtml(post.title)}</div>
+                        <div class="lb-by">by ${escHtml(post.name||"Anonymous")}</div>
+                    </div>
+                    <div class="lb-likes">👍 ${post._likes}</div>
+                `;
+                lbEl.appendChild(row);
+            });
+        }
+
+        // ── Render posts ──
+        function escHtml(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
         function renderPosts(list) {
             postsEl.innerHTML = "";
@@ -403,70 +384,91 @@
                 postsEl.innerHTML = "<p class='status'>No matching posts yet.</p>";
                 return;
             }
-
             list.forEach((post) => {
-                const item = document.createElement("article");
-                item.className = "post";
+                const pid = makeId(post);
+                const isRequest = post.type === "New Game Request";
+                const liked = hasLiked(pid);
+                const likeCount = getLikeCount(pid);
 
-                const meta = document.createElement("div");
-                meta.className = "meta";
+                const article = document.createElement("article");
+                article.className = "post" + (isRequest ? " is-request" : "");
+                article.dataset.pid = pid;
 
-                const tag = document.createElement("span");
-                tag.className = "type-tag";
-                tag.textContent = post.type || "General Feedback";
+                const tagClass = isRequest ? "type-tag request" : "type-tag";
+                article.innerHTML = `
+                    <div class="meta">
+                        <span class="${tagClass}">${escHtml(post.type||"General Feedback")}</span>
+                        <span>${escHtml(post.name||"Anonymous")} · ${escHtml(formatDate(post.createdAt))}</span>
+                    </div>
+                    <h3>${escHtml(post.title||"(No title)")}</h3>
+                    <p>${escHtml(post.body||"")}</p>
+                    <div class="post-footer">
+                        <button class="like-btn${liked?" liked":""}" data-pid="${escHtml(pid)}">
+                            👍 <span class="like-count">${likeCount}</span> Like${likeCount===1?"":"s"}
+                        </button>
+                    </div>
+                `;
+                postsEl.appendChild(article);
+            });
 
-                const byline = document.createElement("span");
-                byline.textContent = `${post.name || "Anonymous"} - ${formatDate(post.createdAt)}`;
-
-                meta.appendChild(tag);
-                meta.appendChild(byline);
-
-                const title = document.createElement("h3");
-                title.textContent = post.title || "(No title)";
-
-                const body = document.createElement("p");
-                body.textContent = post.body || "";
-
-                item.appendChild(meta);
-                item.appendChild(title);
-                item.appendChild(body);
-                postsEl.appendChild(item);
+            // Bind like buttons
+            postsEl.querySelectorAll(".like-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const pid = btn.dataset.pid;
+                    const result = toggleLike(pid);
+                    const countEl = btn.querySelector(".like-count");
+                    countEl.textContent = result.count;
+                    btn.lastChild.textContent = ` Like${result.count===1?"":"s"}`;
+                    if (result.liked) { btn.classList.add("liked"); }
+                    else              { btn.classList.remove("liked"); }
+                    // Also refresh leaderboard live
+                    renderLeaderboard();
+                });
             });
         }
 
         function renderCurrentView() {
             renderPosts(getFilteredPosts());
+            renderLeaderboard();
         }
 
+        // ── Load posts ──
         async function loadPosts() {
             if (!forumCol) {
-                cachedPosts = sortPosts(readLocal());
+                cachedPosts = readLocal().reverse();
+                statusEl.textContent = "Showing local posts (Firebase unavailable).";
                 renderCurrentView();
                 return;
             }
-
             try {
                 const snap = await getDocs(query(forumCol, orderBy("createdAt", "desc")));
                 const list = [];
-                snap.forEach((d) => list.push({ id: d.id, ...d.data() }));
-                cachedPosts = list;
-                statusEl.textContent = "Live community posts";
+                snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+                // Merge in any local posts not yet synced
+                const local = readLocal();
+                const merged = [...list, ...local.map(p => ({ ...p, _local: true }))];
+                cachedPosts = merged;
+                statusEl.textContent = `${list.length} post${list.length===1?"":"s"} — live`;
                 renderCurrentView();
             } catch (err) {
-                statusEl.textContent = `Firestore unavailable (${err?.message || "error"}). Showing local posts.`;
-                cachedPosts = sortPosts(readLocal());
+                statusEl.textContent = `Firestore unavailable — showing local posts.`;
+                cachedPosts = readLocal().reverse();
                 renderCurrentView();
             }
         }
 
+        // ── Submit ──
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
-            const type = document.getElementById("postType").value;
+            const type  = document.getElementById("postType").value;
             const title = truncate(normalize(document.getElementById("postTitle").value), LIMITS.title);
-            const name = truncate(normalize(document.getElementById("postName").value) || "Anonymous", LIMITS.name);
-            const body = truncate(normalize(document.getElementById("postBody").value), LIMITS.body);
-
+            const name  = truncate(normalize(document.getElementById("postName").value)||"Anonymous", LIMITS.name);
+            const body  = truncate(normalize(document.getElementById("postBody").value), LIMITS.body);
             if (!title || !body) return;
+
+            const submitBtn = form.querySelector("button[type=submit]");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Posting...";
 
             if (forumCol) {
                 try {
@@ -482,34 +484,31 @@
                 saveLocal(local);
             }
 
-            form.reset();
-            updateCounters();
+            form.reset(); updateCounters();
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Post To Forum";
             await loadPosts();
         });
 
+        // ── Counters ──
         function bindCounter(inputId, outId, max) {
             const input = document.getElementById(inputId);
-            const out = document.getElementById(outId);
-            const update = () => {
-                out.textContent = `${input.value.length}/${max}`;
-            };
-            input.addEventListener("input", update);
-            update();
+            const out   = document.getElementById(outId);
+            input.addEventListener("input", () => { out.textContent = `${input.value.length}/${max}`; });
         }
-
         function updateCounters() {
-            const title = document.getElementById("postTitle");
-            const name = document.getElementById("postName");
-            const body = document.getElementById("postBody");
-            document.getElementById("titleCount").textContent = `${title.value.length}/${LIMITS.title}`;
-            document.getElementById("nameCount").textContent = `${name.value.length}/${LIMITS.name}`;
-            document.getElementById("bodyCount").textContent = `${body.value.length}/${LIMITS.body}`;
+            ["postTitle","postName","postBody"].forEach(id => {
+                const el = document.getElementById(id);
+                const limit = id === "postTitle" ? LIMITS.title : id === "postName" ? LIMITS.name : LIMITS.body;
+                const outId = id === "postTitle" ? "titleCount" : id === "postName" ? "nameCount" : "bodyCount";
+                document.getElementById(outId).textContent = `${el.value.length}/${limit}`;
+            });
         }
-
+        bindCounter("postTitle","titleCount",LIMITS.title);
+        bindCounter("postName","nameCount",LIMITS.name);
+        bindCounter("postBody","bodyCount",LIMITS.body);
         searchInput.addEventListener("input", renderCurrentView);
-        bindCounter("postTitle", "titleCount", LIMITS.title);
-        bindCounter("postName", "nameCount", LIMITS.name);
-        bindCounter("postBody", "bodyCount", LIMITS.body);
+
         loadPosts();
     </script>
 </body>

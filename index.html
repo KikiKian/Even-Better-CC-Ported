@@ -494,6 +494,72 @@
             }
         }
 
+        /* Password gate overlay */
+        .pw-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0;
+        }
+        .pw-gate.hidden { display: none; }
+        .pw-box {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+        .pw-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .pw-box h2 { margin: 0 0 0.4rem 0; color: #f0f0f0; font-size: 1.5rem; letter-spacing: -0.02em; }
+        .pw-box p { margin: 0 0 1.5rem 0; color: #888; font-size: 0.9rem; line-height: 1.5; }
+        .pw-box p a { color: #a5b4fc; text-decoration: none; }
+        .pw-input {
+            width: 100%;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: #f0f0f0;
+            font-family: inherit;
+            text-align: center;
+            letter-spacing: 0.1em;
+            transition: border-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .pw-input:focus { outline: none; border-color: #4f46e5; }
+        .pw-input.shake {
+            animation: pwShake 0.4s ease;
+            border-color: #ef4444;
+        }
+        @keyframes pwShake {
+            0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
+        }
+        .pw-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.18s, box-shadow 0.18s;
+            box-shadow: 0 4px 20px rgba(79,70,229,0.35);
+        }
+        .pw-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,70,229,0.45); }
+        .pw-error { color: #ef4444; font-size: 0.85rem; margin-top: 0.6rem; min-height: 1.2em; }
+
         /* ToS overlay */
         .tos-overlay{
             position: fixed;
@@ -1115,6 +1181,18 @@
         }
     </script>
 
+    <!-- Password Gate (shows first, before ToS) -->
+    <div id="pwGate" class="pw-gate">
+        <div class="pw-box">
+            <div class="pw-icon">🔒</div>
+            <h2>Password Required</h2>
+            <p>This site is private. Enter the password to continue.<br>Don't have one? <strong style="color:#f0f0f0;">Ask the site owner.</strong></p>
+            <input type="password" id="pwInput" class="pw-input" placeholder="Enter password..." onkeydown="if(event.key==='Enter')checkPw()">
+            <button class="pw-submit" onclick="checkPw()">Enter Site</button>
+            <div id="pwError" class="pw-error"></div>
+        </div>
+    </div>
+
     <!-- ToS Overlay -->
     <div id="tosOverlay" class="tos-overlay">
         <div class="tos-box">
@@ -1173,6 +1251,39 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Password gate — shows before ToS, cached in localStorage
+        const PW_HASH = "6f9994cc050ba6017ca4b972464b2e70742f827bc6aca7d5e8043af28bcbf117";
+        const PW_KEY  = "siteUnlocked";
+
+        async function sha256pw(msg) {
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+        }
+
+        (function() {
+            if (localStorage.getItem(PW_KEY) === "true") {
+                document.getElementById("pwGate").classList.add("hidden");
+            }
+        })();
+
+        async function checkPw() {
+            const input = document.getElementById("pwInput");
+            const error = document.getElementById("pwError");
+            const hashed = await sha256pw(input.value);
+            if (hashed === PW_HASH) {
+                localStorage.setItem(PW_KEY, "true");
+                document.getElementById("pwGate").classList.add("hidden");
+                input.value = "";
+            } else {
+                error.textContent = "❌ Incorrect password.";
+                input.classList.add("shake");
+                input.value = "";
+                setTimeout(() => { input.classList.remove("shake"); error.textContent = ""; }, 1500);
+            }
+        }
+    </script>
 
     <script>
         // ToS gate — checks localStorage so it persists across sessions
@@ -1858,6 +1969,19 @@
                 </p>
             </div>
 
+            <div class="announcement-card" style="background: linear-gradient(135deg, #0d1b2a, #1b2838); border-image: linear-gradient(135deg, #4f46e5, #7c3aed) 1; box-shadow: 0 10px 40px rgba(79,70,229,0.2);">
+                <div class="announcement-header">
+                    <div>
+                        <div class="announcement-badge" style="background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 4px 15px rgba(79,70,229,0.4);">📢 Forums</div>
+                        <h3 class="announcement-title" style="color: #a5b4fc;">Game requests have moved to the Forums</h3>
+                    </div>
+                    <span class="announcement-date" style="background: rgba(79,70,229,0.2); color: #a5b4fc;">March 2026</span>
+                </div>
+                <p class="announcement-content" style="color: #c7d2fe;">
+                    The in-page game request form has been removed. All game requests are now handled in the <strong style="color:#a5b4fc;">Community Forums</strong> — head there to suggest games, vote on other people's requests, and discuss what gets added next. <a href="forums.html" style="color:#818cf8; text-decoration:underline;">Go to Forums →</a>
+                </p>
+            </div>
+
             <div class="announcement-card">
                 <div class="announcement-header">
                     <div>
@@ -1890,42 +2014,10 @@
             </div>
         </div>
 
-        <div class="download-section" style="background: linear-gradient(135deg,#222222,#555555); margin-bottom: 3rem;">
-            <h2>Request a Game</h2>
-            <p>Don't see your favorite game? Let us know what you'd like to see!</p>
-            <button onclick="openRequestModal()" class="btn">Request Game</button>
-            <button onclick="scrollToGlobalRequests()" class="btn" style="margin-left: 1rem; background:#f0f0f0; color:#111111;">
-                View Global Requests
-            </button>
-            <a href="forums.html" class="btn" style="margin-left: 1rem; background:#e8e8e8; color:#111111;">
-                Community Forums
-            </a>
-        </div>
-
-        <!-- ⭐ TOP REQUESTED GAMES-->
-        <div class="leaderboard-section" id="leaderboard">
-            <div class="leaderboard-header">
-                <div>
-                    <h2 class="leaderboard-title">Top Requested Games</h2>
-                </div>
-                <div class="leaderboard-badge">
-                    🔥 Live community leaderboard
-                </div>
-            </div>
-            <div class="leaderboard-table-wrapper">
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Game</th>
-                            <th>Stats</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboardBody">
-                        <!-- Filled by buildLeaderboard() -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="download-section" style="background: linear-gradient(135deg,#1a1a2e,#16213e); margin-bottom: 3rem;">
+            <h2>🎮 Want to Request a Game?</h2>
+            <p>Head over to the Community Forums to request games, vote on suggestions, and chat with other players. All game requests are now handled there!</p>
+            <a href="forums.html" class="btn" style="background: linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; border:none;">Go to Forums</a>
         </div>
 
         <div class="games-section">
@@ -1940,7 +2032,7 @@
                     <div class="game-icon proxy-icon">🚀</div>
                     <h3>Interstellar <span style="font-size:1rem;">👑</span></h3>
                     <p>A powerful web proxy to bypass filters. <strong>Premium feature</strong> — ask the owner for access.</p>
-                    <button onclick="openPremiumModal()" class="btn-play btn-proxy">🔒 Unlock Proxy</button>
+                    <a href="https://interstellar-roan-pi.vercel.app/" target="_blank" class="btn-play btn-proxy">🚀 Open Proxy</a>
                 </div>
 
                 <div class="game-card">
@@ -2146,51 +2238,55 @@
                     <a href="games/getaway-shootout/index.html" class="btn-play">Play Now</a>
                 </div>
 
+                <div class="game-card">
+                    <div class="game-icon">🦕</div>
+                    <h3>Dino Run</h3>
+                    <p>The iconic Chrome offline dinosaur runner — dodge cacti and pterodactyls and see how far you can go!</p>
+                    <a href="games/dino/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">👾</div>
+                    <h3>Pac-Man</h3>
+                    <p>The classic arcade maze game — eat all the dots, dodge the ghosts, and munch power pellets!</p>
+                    <a href="games/pacman/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">GD</div>
+                    <h3>Geometry Dash</h3>
+                    <p>Jump and fly your way through dangerous passages in this rhythm-based action platformer!</p>
+                    <a href="games/geometry-dash/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">W</div>
+                    <h3>Wordle</h3>
+                    <p>Guess the hidden 5-letter word in 6 tries — a new puzzle every day!</p>
+                    <a href="games/wordle/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🚀</div>
+                    <h3>Space Invaders</h3>
+                    <p>Defend Earth from waves of alien invaders in this classic HTML5 arcade shooter!</p>
+                    <a href="games/space-invaders/index.html" class="btn-play">Play Now</a>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🎱</div>
+                    <h3>Billiards</h3>
+                    <p>Classic 8-ball pool in your browser — line up your shots and sink all your balls before your opponent!</p>
+                    <a href="games/billiards/index.html" class="btn-play">Play Now</a>
+                </div>
+
             </div>
         </div>
 
-        <!-- Global requests section -->
-        <div class="requests-section" id="globalRequests">
-            <h2>Global Game Requests</h2>
-            <p class="lead" style="font-size:0.95rem; margin-bottom:1rem;">
-                These are game requests from everyone who has submitted through this website.
-            </p>
-            <div id="requestsGrid" class="requests-grid">
-                <!-- Filled by Firebase loadRequests() -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Game Request Modal -->
-    <div id="requestModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Request a Game</h2>
-                <button class="close-btn" onclick="closeRequestModal()">&times;</button>
-            </div>
-            <form onsubmit="submitRequest(event)">
-                <div class="form-group">
-                    <label for="gameName">Game Name *</label>
-                    <input type="text" id="gameName" placeholder="e.g., Slope, Cookie Clicker" maxlength="60" required>
-                    <div id="gameNameCount" class="char-counter">0/60</div>
-                </div>
-                <div class="form-group">
-                    <label for="yourName">Your Name (optional)</label>
-                    <input type="text" id="yourName" placeholder="Anonymous" maxlength="30">
-                    <div id="yourNameCount" class="char-counter">0/30</div>
-                </div>
-                <div class="form-group">
-                    <label for="reason">Why do you want this game? (optional)</label>
-                    <textarea id="reason" placeholder="Tell us why you'd like to see this game added..." maxlength="350"></textarea>
-                    <div id="reasonCount" class="char-counter">0/350</div>
-                </div>
-                <button type="submit" class="submit-btn">Submit Request</button>
-            </form>
-        </div>
     </div>
 
     <!-- Floating buttons -->
-    <a class="proxy-float" href="#" onclick="openPremiumModal(); return false;">🔒 Proxy</a>
+    <a class="proxy-float" href="https://interstellar-roan-pi.vercel.app/" target="_blank">🚀 Proxy</a>
     <a class="forums-float" href="forums.html">Community Forums</a>
     
     <script>
@@ -2258,75 +2354,6 @@
             bindCounter('gameName', 'gameNameCount');
             bindCounter('yourName', 'yourNameCount');
             bindCounter('reason', 'reasonCount');
-        });
-    </script>
-    <!-- Premium Proxy Modal -->
-    <div id="premiumModal" class="premium-modal">
-        <div class="premium-modal-content">
-            <div class="premium-icon">👑</div>
-            <h2>Premium Access</h2>
-            <p>The web proxy is a premium feature. To get access, ask the site owner for a password.</p>
-            <input type="password" id="premiumPassword" class="premium-input" placeholder="Enter premium password...">
-            <div id="premiumError" class="premium-error">❌ Incorrect password. Ask the owner for access.</div>
-            <button class="premium-submit" onclick="checkPremiumPassword()">Unlock</button>
-            <br>
-            <button class="premium-close" onclick="closePremiumModal()">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-        // SHA-256 hash of the premium password
-        const PREMIUM_HASH = "6f9994cc050ba6017ca4b972464b2e70742f827bc6aca7d5e8043af28bcbf117";
-        const PROXY_URL = "https://interstellar-roan-pi.vercel.app/";
-        const PREMIUM_KEY = "premiumUnlocked";
-
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-        }
-
-        function openPremiumModal() {
-            // If already unlocked, go straight to proxy
-            if (sessionStorage.getItem(PREMIUM_KEY) === "true") {
-                window.open(PROXY_URL, "_blank");
-                return;
-            }
-            document.getElementById("premiumModal").style.display = "block";
-            document.getElementById("premiumPassword").value = "";
-            document.getElementById("premiumError").style.display = "none";
-            setTimeout(() => document.getElementById("premiumPassword").focus(), 100);
-        }
-
-        function closePremiumModal() {
-            document.getElementById("premiumModal").style.display = "none";
-        }
-
-        async function checkPremiumPassword() {
-            const input = document.getElementById("premiumPassword").value;
-            const hashed = await sha256(input);
-            if (hashed === PREMIUM_HASH) {
-                sessionStorage.setItem(PREMIUM_KEY, "true");
-                closePremiumModal();
-                window.open(PROXY_URL, "_blank");
-            } else {
-                document.getElementById("premiumError").style.display = "block";
-                document.getElementById("premiumPassword").value = "";
-                document.getElementById("premiumPassword").focus();
-            }
-        }
-
-        // Allow pressing Enter to submit
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("premiumPassword").addEventListener("keydown", (e) => {
-                if (e.key === "Enter") checkPremiumPassword();
-            });
-        });
-
-        // Close modal on background click
-        document.getElementById("premiumModal").addEventListener("click", (e) => {
-            if (e.target === document.getElementById("premiumModal")) closePremiumModal();
         });
     </script>
 </body>
