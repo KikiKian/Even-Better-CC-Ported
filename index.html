@@ -500,29 +500,46 @@
             inset: 0;
             z-index: 999999;
             background: #0a0a0a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 0;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
         }
         .pw-gate.hidden { display: none; }
         .pw-box {
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #111111;
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 20px;
-            padding: 2.5rem 2rem;
-            width: 100%;
-            max-width: 380px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            padding: 2.5rem;
+            width: 360px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+        .pw-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1;
+        }
+        .pw-box h2 {
+            margin: 0 0 0.5rem 0;
+            color: #f0f0f0;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
             text-align: center;
         }
-        .pw-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-        .pw-box h2 { margin: 0 0 0.4rem 0; color: #f0f0f0; font-size: 1.5rem; letter-spacing: -0.02em; }
-        .pw-box p { margin: 0 0 1.5rem 0; color: #888; font-size: 0.9rem; line-height: 1.5; }
-        .pw-box p a { color: #a5b4fc; text-decoration: none; }
+        .pw-box p {
+            margin: 0 0 1.5rem 0;
+            color: #888;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            text-align: center;
+        }
         .pw-input {
+            display: block;
             width: 100%;
+            box-sizing: border-box;
             background: #1a1a1a;
             border: 2px solid #333;
             border-radius: 12px;
@@ -531,11 +548,10 @@
             color: #f0f0f0;
             font-family: inherit;
             text-align: center;
-            letter-spacing: 0.1em;
-            transition: border-color 0.2s;
             margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
         }
-        .pw-input:focus { outline: none; border-color: #4f46e5; }
+        .pw-input:focus { outline: none; border-color: #dc2626; }
         .pw-input.shake {
             animation: pwShake 0.4s ease;
             border-color: #ef4444;
@@ -544,8 +560,10 @@
             0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
         }
         .pw-submit {
+            display: block;
             width: 100%;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
             color: #fff;
             border: none;
             border-radius: 12px;
@@ -555,10 +573,17 @@
             font-family: inherit;
             cursor: pointer;
             transition: transform 0.18s, box-shadow 0.18s;
-            box-shadow: 0 4px 20px rgba(79,70,229,0.35);
+            box-shadow: 0 4px 20px rgba(220,38,38,0.35);
         }
-        .pw-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,70,229,0.45); }
-        .pw-error { color: #ef4444; font-size: 0.85rem; margin-top: 0.6rem; min-height: 1.2em; }
+        .pw-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(220,38,38,0.5); }
+        .pw-error {
+            color: #ef4444;
+            font-size: 0.83rem;
+            margin-top: 0.6rem;
+            min-height: 1.2em;
+            text-align: center;
+            width: 100%;
+        }
 
         /* ToS overlay */
         .tos-overlay{
@@ -1170,13 +1195,19 @@
             }
             function endCutscene() {
                 overlay.style.opacity = '0';
-                setTimeout(function(){ overlay.style.display = 'none'; }, 800);
+                setTimeout(function(){
+                    overlay.style.display = 'none';
+                    // Show ToS if not yet accepted
+                    if (localStorage.getItem("tosAccepted") !== "true") {
+                        document.getElementById("tosOverlay").classList.remove("hidden");
+                    }
+                }, 800);
             }
-            video.addEventListener('ended', endCutscene);
+            video.addEventListener('ended', endCutscene, { once: true });
             window.skipCutscene = endCutscene;
         }
-        // If ToS already accepted, play cutscene immediately
-        if (localStorage.getItem("tosAccepted") === "true") {
+        // If password already entered, play cutscene on load (ToS check happens after)
+        if (localStorage.getItem("siteUnlocked") === "true") {
             document.addEventListener("DOMContentLoaded", playCutscene);
         }
     </script>
@@ -1186,7 +1217,7 @@
         <div class="pw-box">
             <div class="pw-icon">🔒</div>
             <h2>Password Required</h2>
-            <p>This site is private. Enter the password to continue.<br>Don't have one? <strong style="color:#f0f0f0;">Ask the site owner.</strong></p>
+            <p>This site is private.<br>Don't have a password? <strong style="color:#f0f0f0;">Ask the site owner.</strong></p>
             <input type="password" id="pwInput" class="pw-input" placeholder="Enter password..." onkeydown="if(event.key==='Enter')checkPw()">
             <button class="pw-submit" onclick="checkPw()">Enter Site</button>
             <div id="pwError" class="pw-error"></div>
@@ -1276,6 +1307,7 @@
                 localStorage.setItem(PW_KEY, "true");
                 document.getElementById("pwGate").classList.add("hidden");
                 input.value = "";
+                playCutscene();
             } else {
                 error.textContent = "❌ Incorrect password.";
                 input.classList.add("shake");
@@ -1286,11 +1318,9 @@
     </script>
 
     <script>
-        // ToS gate — checks localStorage so it persists across sessions
+        // ToS gate — always starts hidden; shown after intro if not yet accepted
         (function() {
-            if (localStorage.getItem("tosAccepted") === "true") {
-                document.getElementById("tosOverlay").classList.add("hidden");
-            }
+            document.getElementById("tosOverlay").classList.add("hidden");
         })();
 
         function acceptTos() {
@@ -1298,7 +1328,7 @@
             const overlay = document.getElementById("tosOverlay");
             overlay.style.opacity = "0";
             overlay.style.transition = "opacity 0.4s ease";
-            setTimeout(() => { overlay.classList.add("hidden"); playCutscene(); }, 400);
+            setTimeout(() => { overlay.classList.add("hidden"); }, 400);
         }
 
         function declineTos() {

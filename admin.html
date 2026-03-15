@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #f0f0f0;
+            min-height: 100vh;
+        }
+
+        /* ── Password Gate ── */
+        #adminGate {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
+        }
+        #adminGate.hidden { display: none; }
+        .gate-box {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+        }
+        .gate-icon { font-size: 2.5rem; margin-bottom: 0.75rem; line-height: 1; }
+        .gate-box h2 { font-size: 1.5rem; color: #f0f0f0; margin-bottom: 0.4rem; letter-spacing: -0.02em; text-align: center; }
+        .gate-box p { font-size: 0.88rem; color: #888; text-align: center; margin-bottom: 1.5rem; line-height: 1.5; }
+        .gate-input {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            color: #f0f0f0;
+            font-family: inherit;
+            text-align: center;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .gate-input:focus { outline: none; border-color: #ef4444; }
+        .gate-input.shake { animation: shake 0.4s ease; border-color: #ef4444; }
+        @keyframes shake {
+            0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
+        }
+        .gate-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(239,68,68,0.35);
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .gate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(239,68,68,0.5); }
+        .gate-error { color: #ef4444; font-size: 0.83rem; margin-top: 0.6rem; min-height: 1.2em; text-align: center; width: 100%; }
+
+        /* ── Admin Panel Layout ── */
+        #adminPanel { display: none; padding: 2rem; max-width: 1300px; margin: 0 auto; }
+        #adminPanel.visible { display: block; }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .admin-header h1 { font-size: 1.8rem; letter-spacing: -0.03em; color: #f0f0f0; }
+        .admin-header p { color: #666; font-size: 0.85rem; margin-top: 0.2rem; }
+        .back-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #aaa;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .back-btn:hover { border-color: #666; color: #f0f0f0; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0.4rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .tab {
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            border: 1.5px solid #333;
+            background: #111;
+            color: #888;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .tab:hover { border-color: #555; color: #f0f0f0; }
+        .tab.active { background: #ef4444; border-color: #ef4444; color: #fff; }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            min-width: 140px;
+            flex: 1;
+        }
+        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+        .stat-value { font-size: 1.8rem; font-weight: 900; color: #f0f0f0; line-height: 1; }
+        .stat-value.red { color: #ef4444; }
+        .stat-value.yellow { color: #fbbf24; }
+        .stat-value.green { color: #34d399; }
+
+        /* Section header */
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .section-head h2 { font-size: 1.1rem; color: #f0f0f0; }
+        .search-input {
+            background: #1a1a1a;
+            border: 1.5px solid #333;
+            border-radius: 999px;
+            padding: 0.45rem 1rem;
+            color: #f0f0f0;
+            font-family: inherit;
+            font-size: 0.85rem;
+            width: 220px;
+            transition: border-color 0.15s;
+        }
+        .search-input:focus { outline: none; border-color: #ef4444; }
+
+        /* Table */
+        .table-wrap {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: rgba(255,255,255,0.04); }
+        th {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #666;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        td {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: #ccc;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            word-break: break-all;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .badge {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 0.18rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .badge-red { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-yellow { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        .badge-green { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+        .badge-blue { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+
+        .fp-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.78rem;
+            color: #fbbf24;
+            background: rgba(251,191,36,0.08);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .loading { color: #555; font-size: 0.9rem; padding: 2rem; text-align: center; }
+        .empty { color: #444; font-size: 0.88rem; padding: 2rem; text-align: center; }
+
+        .tab-section { display: none; }
+        .tab-section.active { display: block; }
+
+        /* Fingerprint detail expand */
+        .fp-row { cursor: pointer; }
+        .fp-detail {
+            background: rgba(255,255,255,0.02);
+            padding: 0.75rem 1rem;
+            font-size: 0.82rem;
+            color: #888;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: none;
+        }
+        .fp-detail.open { display: table-row; }
+        .fp-detail td { color: #aaa; }
+
+        @media (max-width: 700px) {
+            #adminPanel { padding: 1rem; }
+            .search-input { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <script src="firebase-config.js"></script>
+
+    <!-- Admin Password Gate -->
+    <div id="adminGate">
+        <div class="gate-box">
+            <div class="gate-icon">🛡️</div>
+            <h2>Admin Access</h2>
+            <p>This page is restricted.<br>Enter the admin password to continue.</p>
+            <input type="password" id="adminPwInput" class="gate-input" placeholder="Admin password..." onkeydown="if(event.key==='Enter')checkAdminPw()">
+            <button class="gate-btn" onclick="checkAdminPw()">Enter Admin Panel</button>
+            <div id="adminPwError" class="gate-error"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel">
+        <div class="admin-header">
+            <div>
+                <h1>🛡️ Admin Panel</h1>
+                <p id="adminSubtitle">Loading data...</p>
+            </div>
+            <a href="index.html" class="back-btn">← Back to Site</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Fingerprints</div>
+                <div class="stat-value yellow" id="statTotal">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Violations</div>
+                <div class="stat-value red" id="statViolations">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Forum Posts</div>
+                <div class="stat-value green" id="statPosts">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Game Requests</div>
+                <div class="stat-value" id="statRequests">—</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('fingerprints', this)">🔍 All Fingerprints</button>
+            <button class="tab" onclick="switchTab('violations', this)">🚨 Violations</button>
+            <button class="tab" onclick="switchTab('requests', this)">🎮 Game Requests</button>
+            <button class="tab" onclick="switchTab('forum', this)">💬 Forum Posts</button>
+        </div>
+
+        <!-- Fingerprints Tab -->
+        <div id="tab-fingerprints" class="tab-section active">
+            <div class="section-head">
+                <h2>All Recorded Fingerprints</h2>
+                <input class="search-input" type="search" placeholder="🔍 Search fingerprint / name..." id="fpSearch" oninput="filterTable('fpTable', this.value)">
+            </div>
+            <div class="table-wrap">
+                <table id="fpTable">
+                    <thead>
+                        <tr>
+                            <th>Fingerprint ID</th>
+                            <th>Name</th>
+                            <th>Source</th>
+                            <th>Content</th>
+                            <th>Date</th>
+                            <th>Flag</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fpBody"><tr><td colspan="6" class="loading">Loading fingerprints...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Violations Tab -->
+        <div id="tab-violations" class="tab-section">
+            <div class="section-head">
+                <h2>Slur / Hate Speech Violations</h2>
+                <input class="search-input" type="search" placeholder="🔍 Search..." id="vSearch" oninput="filterTable('vTable', this.value)">
+            </div>
+            <div class="table-wrap">
+                <table id="vTable">
+                    <thead>
+                        <tr>
+                            <th>Fingerprint ID</th>
+                            <th>Attempted Game</th>
+                            <th>Attempted Name</th>
+                            <th>Attempted Reason</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vBody"><tr><td colspan="5" class="loading">Loading violations...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Game Requests Tab -->
+        <div id="tab-requests" class="tab-section">
+            <div class="section-head">
+                <h2>Game Requests</h2>
+                <input class="search-input" type="search" placeholder="🔍 Search..." id="rSearch" oninput="filterTable('rTable', this.value)">
+            </div>
+            <div class="table-wrap">
+                <table id="rTable">
+                    <thead>
+                        <tr>
+                            <th>Fingerprint ID</th>
+                            <th>Game</th>
+                            <th>Name</th>
+                            <th>Reason</th>
+                            <th>Likes</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rBody"><tr><td colspan="6" class="loading">Loading requests...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Forum Posts Tab -->
+        <div id="tab-forum" class="tab-section">
+            <div class="section-head">
+                <h2>Forum Posts</h2>
+                <input class="search-input" type="search" placeholder="🔍 Search..." id="fSearch" oninput="filterTable('fTable', this.value)">
+            </div>
+            <div class="table-wrap">
+                <table id="fTable">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Title</th>
+                            <th>Name</th>
+                            <th>Body</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fBody"><tr><td colspan="5" class="loading">Loading posts...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_HASH = "653c3f6048ba7610631e0f45753bf76fc0e2fb292f887ba89437ea826bc5b7ec";
+        const ADMIN_KEY  = "adminUnlocked";
+
+        async function sha256(msg) {
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+        }
+
+        async function checkAdminPw() {
+            const input = document.getElementById("adminPwInput");
+            const error = document.getElementById("adminPwError");
+            const hashed = await sha256(input.value);
+            if (hashed === ADMIN_HASH) {
+                document.getElementById("adminGate").classList.add("hidden");
+                document.getElementById("adminPanel").classList.add("visible");
+                input.value = "";
+                loadAllData();
+            } else {
+                error.textContent = "❌ Incorrect password.";
+                input.classList.add("shake");
+                input.value = "";
+                setTimeout(() => { input.classList.remove("shake"); error.textContent = ""; }, 1500);
+            }
+        }
+
+        function switchTab(name, btn) {
+            document.querySelectorAll(".tab-section").forEach(s => s.classList.remove("active"));
+            document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+            document.getElementById("tab-" + name).classList.add("active");
+            btn.classList.add("active");
+        }
+
+        function filterTable(tableId, term) {
+            const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+            const t = term.toLowerCase();
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(t) ? "" : "none";
+            });
+        }
+
+        function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+        function fmtDate(v) {
+            if (!v) return "—";
+            if (v.toDate) return v.toDate().toLocaleString();
+            if (typeof v === "string") return v;
+            return "—";
+        }
+        function fpBadge(fp) {
+            return fp ? `<span class="fp-code">${esc(fp.slice(0,16))}…</span>` : `<span style="color:#444">none</span>`;
+        }
+
+        async function loadAllData() {
+            const config = window.FIREBASE_CONFIG;
+            if (!config) {
+                document.getElementById("adminSubtitle").textContent = "Firebase unavailable — cannot load data.";
+                return;
+            }
+
+            // Dynamic import Firebase
+            const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js");
+            const { getFirestore, collection, getDocs, query, orderBy } = await import("https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js");
+
+            const app = getApps().find(a => a.name === "admin") || initializeApp(config, "admin");
+            const db  = getFirestore(app);
+
+            let allFp = [];
+
+            // ── Load Violations ──
+            try {
+                const snap = await getDocs(query(collection(db, "violations"), orderBy("createdAt", "desc")));
+                const rows = [];
+                snap.forEach(d => {
+                    const data = d.data();
+                    const fp = data.fingerprint || "";
+                    allFp.push({ fp, source: "violation", name: data.attempted?.name || "—", content: `${data.attempted?.game || ""} — ${data.attempted?.reason || ""}`, date: fmtDate(data.createdAt), flag: "violation" });
+                    rows.push(`<tr>
+                        <td>${fpBadge(fp)}</td>
+                        <td>${esc(data.attempted?.game)}</td>
+                        <td>${esc(data.attempted?.name)}</td>
+                        <td>${esc(data.attempted?.reason)}</td>
+                        <td>${fmtDate(data.createdAt)}</td>
+                    </tr>`);
+                });
+                document.getElementById("vBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">No violations found.</td></tr>`;
+                document.getElementById("statViolations").textContent = rows.length;
+            } catch(e) {
+                document.getElementById("vBody").innerHTML = `<tr><td colspan="5" class="empty">Error: ${esc(e.message)}</td></tr>`;
+                document.getElementById("statViolations").textContent = "ERR";
+            }
+
+            // ── Load Game Requests ──
+            try {
+                const snap = await getDocs(query(collection(db, "gameRequests"), orderBy("createdAt", "desc")));
+                const rows = [];
+                snap.forEach(d => {
+                    const data = d.data();
+                    const fp = data.fingerprint || "";
+                    allFp.push({ fp, source: "request", name: data.name || "Anonymous", content: data.game || "—", date: fmtDate(data.createdAt), flag: "none" });
+                    rows.push(`<tr>
+                        <td>${fpBadge(fp)}</td>
+                        <td>${esc(data.game)}</td>
+                        <td>${esc(data.name)}</td>
+                        <td>${esc(data.reason)}</td>
+                        <td>${data.likes || 0}</td>
+                        <td>${fmtDate(data.createdAt)}</td>
+                    </tr>`);
+                });
+                document.getElementById("rBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="6" class="empty">No game requests found.</td></tr>`;
+                document.getElementById("statRequests").textContent = rows.length;
+            } catch(e) {
+                document.getElementById("rBody").innerHTML = `<tr><td colspan="6" class="empty">Error: ${esc(e.message)}</td></tr>`;
+                document.getElementById("statRequests").textContent = "ERR";
+            }
+
+            // ── Load Forum Posts ──
+            try {
+                const snap = await getDocs(query(collection(db, "forumPosts"), orderBy("createdAt", "desc")));
+                const rows = [];
+                snap.forEach(d => {
+                    const data = d.data();
+                    rows.push(`<tr>
+                        <td><span class="badge badge-blue">${esc(data.type)}</span></td>
+                        <td>${esc(data.title)}</td>
+                        <td>${esc(data.name)}</td>
+                        <td>${esc(data.body)}</td>
+                        <td>${fmtDate(data.createdAt)}</td>
+                    </tr>`);
+                });
+                document.getElementById("fBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">No forum posts found.</td></tr>`;
+                document.getElementById("statPosts").textContent = rows.length;
+            } catch(e) {
+                document.getElementById("fBody").innerHTML = `<tr><td colspan="5" class="empty">Error: ${esc(e.message)}</td></tr>`;
+                document.getElementById("statPosts").textContent = "ERR";
+            }
+
+            // ── Build Fingerprints Tab ──
+            // Deduplicate + group by fingerprint
+            const fpMap = {};
+            allFp.forEach(entry => {
+                const key = entry.fp || "unknown";
+                if (!fpMap[key]) fpMap[key] = { fp: key, entries: [] };
+                fpMap[key].entries.push(entry);
+            });
+
+            const fpRows = [];
+            Object.values(fpMap).forEach(group => {
+                const hasViolation = group.entries.some(e => e.flag === "violation");
+                const flagBadge = hasViolation
+                    ? `<span class="badge badge-red">🚨 Violation</span>`
+                    : `<span class="badge badge-green">✅ Clean</span>`;
+                group.entries.forEach((e, i) => {
+                    const sourceBadge = e.source === "violation"
+                        ? `<span class="badge badge-red">Violation</span>`
+                        : `<span class="badge badge-yellow">Request</span>`;
+                    fpRows.push(`<tr>
+                        <td>${i === 0 ? fpBadge(group.fp) : ""}</td>
+                        <td>${esc(e.name)}</td>
+                        <td>${sourceBadge}</td>
+                        <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(e.content)}</td>
+                        <td>${esc(e.date)}</td>
+                        <td>${i === 0 ? flagBadge : ""}</td>
+                    </tr>`);
+                });
+            });
+
+            document.getElementById("fpBody").innerHTML = fpRows.length ? fpRows.join("") : `<tr><td colspan="6" class="empty">No fingerprints recorded yet.</td></tr>`;
+            document.getElementById("statTotal").textContent = Object.keys(fpMap).length;
+            document.getElementById("adminSubtitle").textContent = `${Object.keys(fpMap).length} unique fingerprints across all collections`;
+        }
+
+    </script>
+</body>
+</html>
