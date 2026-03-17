@@ -15,227 +15,172 @@
 
         /* ── Password Gate ── */
         #adminGate {
-            position: fixed;
-            inset: 0;
-            background: #0a0a0a;
-            z-index: 9999;
-            display: grid;
-            place-items: center;
-            padding: 1rem;
+            position: fixed; inset: 0; background: #0a0a0a;
+            z-index: 9999; display: grid; place-items: center; padding: 1rem;
         }
         #adminGate.hidden { display: none; }
         .gate-box {
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 2.5rem;
-            width: 360px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
-            text-align: center;
+            background: #111; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 2.5rem; width: 360px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7); text-align: center;
         }
         .gate-icon { font-size: 2.5rem; margin-bottom: 0.75rem; line-height: 1; display: block; }
         .gate-box h2 { font-size: 1.5rem; color: #f0f0f0; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
         .gate-box p { font-size: 0.88rem; color: #888; margin-bottom: 1.5rem; line-height: 1.5; }
         .gate-input {
-            width: 100%;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            color: #f0f0f0;
-            font-family: inherit;
-            text-align: center;
-            margin-bottom: 0.75rem;
-            transition: border-color 0.2s;
-            display: block;
-            box-sizing: border-box;
+            width: 100%; background: #1a1a1a; border: 2px solid #333; border-radius: 12px;
+            padding: 0.75rem 1rem; font-size: 1rem; color: #f0f0f0; font-family: inherit;
+            text-align: center; margin-bottom: 0.75rem; transition: border-color 0.2s; display: block;
         }
         .gate-input:focus { outline: none; border-color: #ef4444; }
         .gate-input.shake { animation: shake 0.4s ease; border-color: #ef4444; }
         @keyframes shake {
-            0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
+            0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)}
+            40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
         }
         .gate-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
+            width: 100%; background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: #fff; border: none; border-radius: 12px; padding: 0.75rem 1rem;
+            font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer;
             box-shadow: 0 4px 20px rgba(239,68,68,0.35);
-            transition: transform 0.18s, box-shadow 0.18s;
-            display: block;
-            box-sizing: border-box;
+            transition: transform 0.18s, box-shadow 0.18s; display: block;
         }
         .gate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(239,68,68,0.5); }
+        .gate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .gate-error { color: #ef4444; font-size: 0.83rem; margin-top: 0.6rem; min-height: 1.2em; text-align: center; }
 
-        /* ── Admin Panel Layout ── */
-        #adminPanel { display: none; padding: 2rem; max-width: 1300px; margin: 0 auto; }
+        /* ── Admin Layout ── */
+        #adminPanel { display: none; padding: 2rem; max-width: 1400px; margin: 0 auto; }
         #adminPanel.visible { display: block; }
 
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+            padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .admin-header h1 { font-size: 1.8rem; letter-spacing: -0.03em; color: #f0f0f0; }
         .admin-header p { color: #666; font-size: 0.85rem; margin-top: 0.2rem; }
         .back-btn {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #aaa;
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            font-family: inherit;
-            font-size: 0.85rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: border-color 0.15s, color 0.15s;
+            background: #1a1a1a; border: 1px solid #333; color: #aaa; border-radius: 10px;
+            padding: 0.5rem 1rem; font-family: inherit; font-size: 0.85rem;
+            cursor: pointer; text-decoration: none; transition: border-color 0.15s, color 0.15s;
         }
         .back-btn:hover { border-color: #666; color: #f0f0f0; }
+
+        /* Stats */
+        .stats-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .stat-card {
+            background: #111; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px; padding: 1rem 1.25rem; min-width: 120px; flex: 1;
+        }
+        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+        .stat-value { font-size: 1.8rem; font-weight: 900; color: #f0f0f0; line-height: 1; }
+        .stat-value.red    { color: #ef4444; }
+        .stat-value.yellow { color: #fbbf24; }
+        .stat-value.green  { color: #34d399; }
+        .stat-value.purple { color: #a78bfa; }
 
         /* Tabs */
         .tabs { display: flex; gap: 0.4rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
         .tab {
-            padding: 0.5rem 1.1rem;
-            border-radius: 999px;
-            border: 1.5px solid #333;
-            background: #111;
-            color: #888;
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s;
+            padding: 0.5rem 1.1rem; border-radius: 999px; border: 1.5px solid #333;
+            background: #111; color: #888; font-family: inherit; font-size: 0.85rem;
+            font-weight: 600; cursor: pointer; transition: all 0.15s;
         }
         .tab:hover { border-color: #555; color: #f0f0f0; }
         .tab.active { background: #ef4444; border-color: #ef4444; color: #fff; }
 
-        /* Stats bar */
-        .stats-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .stat-card {
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 14px;
-            padding: 1rem 1.25rem;
-            min-width: 140px;
-            flex: 1;
-        }
-        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
-        .stat-value { font-size: 1.8rem; font-weight: 900; color: #f0f0f0; line-height: 1; }
-        .stat-value.red { color: #ef4444; }
-        .stat-value.yellow { color: #fbbf24; }
-        .stat-value.green { color: #34d399; }
-
-        /* Section header */
+        /* Section head */
         .section-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;
         }
         .section-head h2 { font-size: 1.1rem; color: #f0f0f0; }
         .search-input {
-            background: #1a1a1a;
-            border: 1.5px solid #333;
-            border-radius: 999px;
-            padding: 0.45rem 1rem;
-            color: #f0f0f0;
-            font-family: inherit;
-            font-size: 0.85rem;
-            width: 220px;
-            transition: border-color 0.15s;
+            background: #1a1a1a; border: 1.5px solid #333; border-radius: 999px;
+            padding: 0.45rem 1rem; color: #f0f0f0; font-family: inherit;
+            font-size: 0.85rem; width: 240px; transition: border-color 0.15s;
         }
         .search-input:focus { outline: none; border-color: #ef4444; }
 
         /* Table */
         .table-wrap {
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 2rem;
+            background: #111; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px; overflow: hidden; margin-bottom: 2rem; overflow-x: auto;
         }
-        table { width: 100%; border-collapse: collapse; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
         thead { background: rgba(255,255,255,0.04); }
         th {
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #666;
-            font-weight: 700;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0.75rem 1rem; text-align: left; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.06em; color: #666;
+            font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.06); white-space: nowrap;
         }
         td {
-            padding: 0.75rem 1rem;
-            font-size: 0.85rem;
-            color: #ccc;
+            padding: 0.75rem 1rem; font-size: 0.85rem; color: #ccc;
             border-bottom: 1px solid rgba(255,255,255,0.04);
-            vertical-align: top;
-            word-break: break-all;
+            vertical-align: middle; max-width: 240px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
+        td.wrap { white-space: normal; word-break: break-word; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: rgba(255,255,255,0.02); }
+        tr.banned-row td { opacity: 0.4; }
+        tr.banned-row { background: rgba(239,68,68,0.05); }
 
+        /* Badges */
         .badge {
-            display: inline-block;
-            border-radius: 999px;
-            padding: 0.18rem 0.6rem;
-            font-size: 0.72rem;
-            font-weight: 700;
+            display: inline-block; border-radius: 999px;
+            padding: 0.18rem 0.6rem; font-size: 0.72rem; font-weight: 700; white-space: nowrap;
         }
-        .badge-red { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-        .badge-yellow { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-        .badge-green { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
-        .badge-blue { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+        .badge-red    { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-yellow { background: rgba(251,191,36,0.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        .badge-green  { background: rgba(52,211,153,0.15);  color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+        .badge-blue   { background: rgba(99,102,241,0.15);  color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+        .badge-gray   { background: rgba(255,255,255,0.06); color: #888;    border: 1px solid rgba(255,255,255,0.1); }
 
         .fp-code {
-            font-family: 'Courier New', monospace;
-            font-size: 0.78rem;
-            color: #fbbf24;
-            background: rgba(251,191,36,0.08);
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
+            font-family: 'Courier New', monospace; font-size: 0.78rem;
+            color: #fbbf24; background: rgba(251,191,36,0.08);
+            padding: 0.15rem 0.4rem; border-radius: 4px; cursor: help;
         }
 
+        /* Ban button */
+        .ban-btn {
+            border: none; border-radius: 8px; padding: 0.32rem 0.75rem;
+            font-size: 0.78rem; font-weight: 700; cursor: pointer; font-family: inherit;
+            transition: all 0.15s; white-space: nowrap;
+        }
+        .ban-btn.do-ban {
+            background: rgba(239,68,68,0.15); color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.35);
+        }
+        .ban-btn.do-ban:hover { background: rgba(239,68,68,0.3); }
+        .ban-btn.do-unban {
+            background: rgba(52,211,153,0.12); color: #34d399;
+            border: 1px solid rgba(52,211,153,0.3);
+        }
+        .ban-btn.do-unban:hover { background: rgba(52,211,153,0.25); }
+        .ban-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
         .loading { color: #555; font-size: 0.9rem; padding: 2rem; text-align: center; }
-        .empty { color: #444; font-size: 0.88rem; padding: 2rem; text-align: center; }
+        .empty   { color: #444; font-size: 0.88rem; padding: 2rem; text-align: center; }
 
         .tab-section { display: none; }
         .tab-section.active { display: block; }
 
-        /* Fingerprint detail expand */
-        .fp-row { cursor: pointer; }
-        .fp-detail {
-            background: rgba(255,255,255,0.02);
-            padding: 0.75rem 1rem;
-            font-size: 0.82rem;
-            color: #888;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            display: none;
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1a1a; border: 1px solid #333; color: #f0f0f0;
+            padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5); opacity: 0; z-index: 9000;
+            transition: transform 0.3s ease, opacity 0.3s ease; white-space: nowrap;
+            pointer-events: none;
         }
-        .fp-detail.open { display: table-row; }
-        .fp-detail td { color: #aaa; }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        #toast.success { border-color: #34d399; color: #34d399; }
+        #toast.error   { border-color: #ef4444; color: #ef4444; }
 
         @media (max-width: 700px) {
             #adminPanel { padding: 1rem; }
@@ -244,320 +189,516 @@
     </style>
 </head>
 <body>
-    <!-- Admin Password Gate — first element so it renders before anything else -->
-    <div id="adminGate">
-        <div class="gate-box">
-            <div class="gate-icon">🛡️</div>
-            <h2>Admin Access</h2>
-            <p>This page is restricted.<br>Enter the admin password to continue.</p>
-            <input type="password" id="adminPwInput" class="gate-input" placeholder="Admin password..." onkeydown="if(event.key==='Enter')checkAdminPw()">
-            <button class="gate-btn" onclick="checkAdminPw()">Enter Admin Panel</button>
-            <div id="adminPwError" class="gate-error"></div>
+
+<!-- Password Gate -->
+<div id="adminGate">
+    <div class="gate-box">
+        <span class="gate-icon">🛡️</span>
+        <h2>Admin Access</h2>
+        <p>This page is restricted.<br>Enter the admin password to continue.</p>
+        <input type="password" id="adminPwInput" class="gate-input" placeholder="Admin password...">
+        <button id="gateBtn" class="gate-btn">Enter Admin Panel</button>
+        <div id="adminPwError" class="gate-error"></div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- firebase-config.js must set window.FIREBASE_CONFIG -->
+<script src="firebase-config.js"></script>
+
+<!-- Firebase compat SDKs — plain script tags, no modules needed -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- Admin Panel markup -->
+<div id="adminPanel">
+    <div class="admin-header">
+        <div>
+            <h1>🛡️ Admin Panel</h1>
+            <p id="adminSubtitle">Enter password to load data.</p>
         </div>
+        <a href="index.html" class="back-btn">← Back to Site</a>
     </div>
 
-    <script src="firebase-config.js"></script>
-
-    <!-- Admin Panel -->
-    <div id="adminPanel">
-        <div class="admin-header">
-            <div>
-                <h1>🛡️ Admin Panel</h1>
-                <p id="adminSubtitle">Loading data...</p>
-            </div>
-            <a href="index.html" class="back-btn">← Back to Site</a>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-bar">
-            <div class="stat-card">
-                <div class="stat-label">Total Fingerprints</div>
-                <div class="stat-value yellow" id="statTotal">—</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Violations</div>
-                <div class="stat-value red" id="statViolations">—</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Forum Posts</div>
-                <div class="stat-value green" id="statPosts">—</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Game Requests</div>
-                <div class="stat-value" id="statRequests">—</div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('fingerprints', this)">🔍 All Fingerprints</button>
-            <button class="tab" onclick="switchTab('violations', this)">🚨 Violations</button>
-            <button class="tab" onclick="switchTab('requests', this)">🎮 Game Requests</button>
-            <button class="tab" onclick="switchTab('forum', this)">💬 Forum Posts</button>
-        </div>
-
-        <!-- Fingerprints Tab -->
-        <div id="tab-fingerprints" class="tab-section active">
-            <div class="section-head">
-                <h2>All Recorded Fingerprints</h2>
-                <input class="search-input" type="search" placeholder="🔍 Search fingerprint / name..." id="fpSearch" oninput="filterTable('fpTable', this.value)">
-            </div>
-            <div class="table-wrap">
-                <table id="fpTable">
-                    <thead>
-                        <tr>
-                            <th>Fingerprint ID</th>
-                            <th>Name</th>
-                            <th>Source</th>
-                            <th>Content</th>
-                            <th>Date</th>
-                            <th>Flag</th>
-                        </tr>
-                    </thead>
-                    <tbody id="fpBody"><tr><td colspan="6" class="loading">Loading fingerprints...</td></tr></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Violations Tab -->
-        <div id="tab-violations" class="tab-section">
-            <div class="section-head">
-                <h2>Slur / Hate Speech Violations</h2>
-                <input class="search-input" type="search" placeholder="🔍 Search..." id="vSearch" oninput="filterTable('vTable', this.value)">
-            </div>
-            <div class="table-wrap">
-                <table id="vTable">
-                    <thead>
-                        <tr>
-                            <th>Fingerprint ID</th>
-                            <th>Attempted Game</th>
-                            <th>Attempted Name</th>
-                            <th>Attempted Reason</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vBody"><tr><td colspan="5" class="loading">Loading violations...</td></tr></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Game Requests Tab -->
-        <div id="tab-requests" class="tab-section">
-            <div class="section-head">
-                <h2>Game Requests</h2>
-                <input class="search-input" type="search" placeholder="🔍 Search..." id="rSearch" oninput="filterTable('rTable', this.value)">
-            </div>
-            <div class="table-wrap">
-                <table id="rTable">
-                    <thead>
-                        <tr>
-                            <th>Fingerprint ID</th>
-                            <th>Game</th>
-                            <th>Name</th>
-                            <th>Reason</th>
-                            <th>Likes</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rBody"><tr><td colspan="6" class="loading">Loading requests...</td></tr></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Forum Posts Tab -->
-        <div id="tab-forum" class="tab-section">
-            <div class="section-head">
-                <h2>Forum Posts</h2>
-                <input class="search-input" type="search" placeholder="🔍 Search..." id="fSearch" oninput="filterTable('fTable', this.value)">
-            </div>
-            <div class="table-wrap">
-                <table id="fTable">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Title</th>
-                            <th>Name</th>
-                            <th>Body</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="fBody"><tr><td colspan="5" class="loading">Loading posts...</td></tr></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="stats-bar">
+        <div class="stat-card"><div class="stat-label">Unique Fingerprints</div><div class="stat-value yellow" id="statTotal">—</div></div>
+        <div class="stat-card"><div class="stat-label">Banned</div><div class="stat-value red" id="statBanned">—</div></div>
+        <div class="stat-card"><div class="stat-label">Violations</div><div class="stat-value red" id="statViolations">—</div></div>
+        <div class="stat-card"><div class="stat-label">Forum Posts</div><div class="stat-value green" id="statPosts">—</div></div>
+        <div class="stat-card"><div class="stat-label">Game Requests</div><div class="stat-value purple" id="statRequests">—</div></div>
     </div>
 
-    <script>
-        const ADMIN_HASH = "653c3f6048ba7610631e0f45753bf76fc0e2fb292f887ba89437ea826bc5b7ec";
-        const ADMIN_KEY  = "adminUnlocked";
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('fingerprints',this)">🔍 All Fingerprints</button>
+        <button class="tab"        onclick="switchTab('violations',this)">🚨 Violations</button>
+        <button class="tab"        onclick="switchTab('requests',this)">🎮 Game Requests</button>
+        <button class="tab"        onclick="switchTab('forum',this)">💬 Forum Posts</button>
+        <button class="tab"        onclick="switchTab('replies',this)">🗨️ Replies</button>
+    </div>
 
-        async function sha256(msg) {
-            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
-            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
-        }
+    <!-- Fingerprints Tab -->
+    <div id="tab-fingerprints" class="tab-section active">
+        <div class="section-head">
+            <h2>All Recorded Fingerprints</h2>
+            <input class="search-input" type="search" placeholder="🔍 Search…" oninput="filterTable('fpTable',this.value)">
+        </div>
+        <div class="table-wrap"><table id="fpTable">
+            <thead><tr>
+                <th>Fingerprint ID</th><th>Names Used</th><th>Sources</th>
+                <th>Violations</th><th>Status</th><th>Action</th>
+            </tr></thead>
+            <tbody id="fpBody"><tr><td colspan="6" class="loading">Waiting for login…</td></tr></tbody>
+        </table></div>
+    </div>
 
-        async function checkAdminPw() {
-            const input = document.getElementById("adminPwInput");
-            const error = document.getElementById("adminPwError");
-            const hashed = await sha256(input.value);
-            if (hashed === ADMIN_HASH) {
-                document.getElementById("adminGate").classList.add("hidden");
-                document.getElementById("adminPanel").classList.add("visible");
-                input.value = "";
-                loadAllData();
-            } else {
-                error.textContent = "❌ Incorrect password.";
-                input.classList.add("shake");
-                input.value = "";
-                setTimeout(() => { input.classList.remove("shake"); error.textContent = ""; }, 1500);
-            }
-        }
+    <!-- Violations Tab -->
+    <div id="tab-violations" class="tab-section">
+        <div class="section-head">
+            <h2>Slur / Hate Speech Violations</h2>
+            <input class="search-input" type="search" placeholder="🔍 Search…" oninput="filterTable('vTable',this.value)">
+        </div>
+        <div class="table-wrap"><table id="vTable">
+            <thead><tr>
+                <th>Fingerprint</th><th>Source</th><th>Name</th>
+                <th>Attempted Content</th><th>Date</th><th>Action</th>
+            </tr></thead>
+            <tbody id="vBody"><tr><td colspan="6" class="loading">Waiting for login…</td></tr></tbody>
+        </table></div>
+    </div>
 
-        function switchTab(name, btn) {
-            document.querySelectorAll(".tab-section").forEach(s => s.classList.remove("active"));
-            document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-            document.getElementById("tab-" + name).classList.add("active");
-            btn.classList.add("active");
-        }
+    <!-- Game Requests Tab -->
+    <div id="tab-requests" class="tab-section">
+        <div class="section-head">
+            <h2>Game Requests</h2>
+            <input class="search-input" type="search" placeholder="🔍 Search…" oninput="filterTable('rTable',this.value)">
+        </div>
+        <div class="table-wrap"><table id="rTable">
+            <thead><tr>
+                <th>Fingerprint</th><th>Game</th><th>Name</th>
+                <th>Reason</th><th>Likes</th><th>Date</th><th>Action</th>
+            </tr></thead>
+            <tbody id="rBody"><tr><td colspan="7" class="loading">Waiting for login…</td></tr></tbody>
+        </table></div>
+    </div>
 
-        function filterTable(tableId, term) {
-            const rows = document.querySelectorAll(`#${tableId} tbody tr`);
-            const t = term.toLowerCase();
-            rows.forEach(row => {
-                row.style.display = row.textContent.toLowerCase().includes(t) ? "" : "none";
-            });
-        }
+    <!-- Forum Posts Tab -->
+    <div id="tab-forum" class="tab-section">
+        <div class="section-head">
+            <h2>Forum Posts</h2>
+            <input class="search-input" type="search" placeholder="🔍 Search…" oninput="filterTable('fTable',this.value)">
+        </div>
+        <div class="table-wrap"><table id="fTable">
+            <thead><tr>
+                <th>Fingerprint</th><th>Type</th><th>Title</th><th>Name</th>
+                <th>Body</th><th>Likes</th><th>Date</th><th>Action</th>
+            </tr></thead>
+            <tbody id="fBody"><tr><td colspan="8" class="loading">Waiting for login…</td></tr></tbody>
+        </table></div>
+    </div>
 
-        function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-        function fmtDate(v) {
-            if (!v) return "—";
-            if (v.toDate) return v.toDate().toLocaleString();
-            if (typeof v === "string") return v;
-            return "—";
-        }
-        function fpBadge(fp) {
-            return fp ? `<span class="fp-code">${esc(fp.slice(0,16))}…</span>` : `<span style="color:#444">none</span>`;
-        }
+    <!-- Replies Tab -->
+    <div id="tab-replies" class="tab-section">
+        <div class="section-head">
+            <h2>Forum Replies</h2>
+            <input class="search-input" type="search" placeholder="🔍 Search…" oninput="filterTable('repTable',this.value)">
+        </div>
+        <div class="table-wrap"><table id="repTable">
+            <thead><tr>
+                <th>Fingerprint</th><th>In Reply To</th><th>Name</th>
+                <th>Body</th><th>Date</th><th>Action</th>
+            </tr></thead>
+            <tbody id="repBody"><tr><td colspan="6" class="loading">Waiting for login…</td></tr></tbody>
+        </table></div>
+    </div>
+</div>
 
-        async function loadAllData() {
-            const config = window.FIREBASE_CONFIG;
+<script>
+    var ADMIN_HASH = "653c3f6048ba7610631e0f45753bf76fc0e2fb292f887ba89437ea826bc5b7ec";
+    var db = null;
+    var bannedFps = {};
+    var toastTimer = null;
+
+    // ── SHA-256 helper ───────────────────────────────────────────────────
+    async function sha256(msg) {
+        var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+        return Array.from(new Uint8Array(buf))
+            .map(function(b){ return b.toString(16).padStart(2, "0"); }).join("");
+    }
+
+    // ── Password gate ────────────────────────────────────────────────────
+    async function checkAdminPw() {
+        var input = document.getElementById("adminPwInput");
+        var error = document.getElementById("adminPwError");
+        var btn   = document.getElementById("gateBtn");
+        btn.disabled = true;
+        btn.textContent = "Checking…";
+        var hashed = await sha256(input.value);
+        if (hashed === ADMIN_HASH) {
+            // Init Firebase compat (already loaded via script tags above)
+            var config = window.FIREBASE_CONFIG;
             if (!config) {
-                document.getElementById("adminSubtitle").textContent = "Firebase unavailable — cannot load data.";
+                error.textContent = "⚠️ firebase-config.js not loaded.";
+                btn.disabled = false;
+                btn.textContent = "Enter Admin Panel";
                 return;
             }
+            if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+            }
+            db = firebase.firestore();
+            document.getElementById("adminGate").classList.add("hidden");
+            document.getElementById("adminPanel").classList.add("visible");
+            input.value = "";
+            loadAllData();
+        } else {
+            error.textContent = "❌ Incorrect password.";
+            input.classList.add("shake");
+            input.value = "";
+            btn.disabled = false;
+            btn.textContent = "Enter Admin Panel";
+            setTimeout(function(){
+                input.classList.remove("shake");
+                error.textContent = "";
+            }, 1500);
+        }
+    }
 
-            // Dynamic import Firebase
-            const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js");
-            const { getFirestore, collection, getDocs, query, orderBy } = await import("https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js");
+    document.getElementById("gateBtn").addEventListener("click", checkAdminPw);
+    document.getElementById("adminPwInput").addEventListener("keydown", function(e){
+        if (e.key === "Enter") checkAdminPw();
+    });
 
-            const app = getApps().find(a => a.name === "admin") || initializeApp(config, "admin");
-            const db  = getFirestore(app);
+    // ── Tabs / search ────────────────────────────────────────────────────
+    function switchTab(name, btn) {
+        document.querySelectorAll(".tab-section").forEach(function(s){ s.classList.remove("active"); });
+        document.querySelectorAll(".tab").forEach(function(b){ b.classList.remove("active"); });
+        document.getElementById("tab-" + name).classList.add("active");
+        btn.classList.add("active");
+    }
 
-            let allFp = [];
+    function filterTable(tableId, term) {
+        document.querySelectorAll("#" + tableId + " tbody tr").forEach(function(row){
+            row.style.display = row.textContent.toLowerCase().includes(term.toLowerCase()) ? "" : "none";
+        });
+    }
 
-            // ── Load Violations ──
-            try {
-                const snap = await getDocs(query(collection(db, "violations"), orderBy("createdAt", "desc")));
-                const rows = [];
-                snap.forEach(d => {
-                    const data = d.data();
-                    const fp = data.fingerprint || "";
-                    allFp.push({ fp, source: "violation", name: data.attempted?.name || "—", content: `${data.attempted?.game || ""} — ${data.attempted?.reason || ""}`, date: fmtDate(data.createdAt), flag: "violation" });
-                    rows.push(`<tr>
-                        <td>${fpBadge(fp)}</td>
-                        <td>${esc(data.attempted?.game)}</td>
-                        <td>${esc(data.attempted?.name)}</td>
-                        <td>${esc(data.attempted?.reason)}</td>
-                        <td>${fmtDate(data.createdAt)}</td>
-                    </tr>`);
+    // ── Helpers ──────────────────────────────────────────────────────────
+    function esc(s) {
+        return String(s || "")
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function fmtDate(v) {
+        if (!v) return "—";
+        if (v && typeof v.toDate === "function") return v.toDate().toLocaleString();
+        if (typeof v === "string") return v;
+        return "—";
+    }
+
+    function fpBadge(fp) {
+        if (!fp || fp === "unknown") return '<span style="color:#555">none</span>';
+        return '<span class="fp-code" title="' + esc(fp) + '">' + esc(fp.slice(0,12)) + '…</span>';
+    }
+
+    function makeBanBtn(fp, isBanned) {
+        if (!fp || fp === "unknown") return '<span style="color:#555;font-size:0.75rem">no fp</span>';
+        if (isBanned) {
+            return '<button class="ban-btn do-unban" data-fp="' + esc(fp) + '" data-banned="true">✅ Unban</button>';
+        }
+        return '<button class="ban-btn do-ban" data-fp="' + esc(fp) + '" data-banned="false">🔨 Ban</button>';
+    }
+
+    // ── Toast ─────────────────────────────────────────────────────────────
+    function showToast(msg, type) {
+        var t = document.getElementById("toast");
+        t.textContent = msg;
+        t.className = "show " + (type || "success");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function(){ t.className = ""; }, 3000);
+    }
+
+    // ── Ban / Unban (delegated, catches all buttons including after render) ──
+    document.addEventListener("click", async function(e) {
+        var btn = e.target.closest(".ban-btn");
+        if (!btn || !btn.dataset.fp) return;
+        var fp = btn.dataset.fp;
+        var currentlyBanned = btn.dataset.banned === "true";
+
+        if (!db) { showToast("Firebase not ready", "error"); return; }
+
+        // Disable all buttons for this fp while working
+        document.querySelectorAll('.ban-btn[data-fp="' + fp + '"]').forEach(function(b){ b.disabled = true; });
+
+        try {
+            var banRef = db.collection("bannedFingerprints").doc(fp);
+            if (currentlyBanned) {
+                await banRef.delete();
+                delete bannedFps[fp];
+                showToast("✅ Unbanned " + fp.slice(0,12) + "…", "success");
+            } else {
+                await banRef.set({
+                    fingerprint: fp,
+                    bannedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                document.getElementById("vBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">No violations found.</td></tr>`;
-                document.getElementById("statViolations").textContent = rows.length;
-            } catch(e) {
-                document.getElementById("vBody").innerHTML = `<tr><td colspan="5" class="empty">Error: ${esc(e.message)}</td></tr>`;
-                document.getElementById("statViolations").textContent = "ERR";
+                bannedFps[fp] = true;
+                showToast("🔨 Banned " + fp.slice(0,12) + "…", "success");
             }
 
-            // ── Load Game Requests ──
-            try {
-                const snap = await getDocs(query(collection(db, "gameRequests"), orderBy("createdAt", "desc")));
-                const rows = [];
-                snap.forEach(d => {
-                    const data = d.data();
-                    const fp = data.fingerprint || "";
-                    allFp.push({ fp, source: "request", name: data.name || "Anonymous", content: data.game || "—", date: fmtDate(data.createdAt), flag: "none" });
-                    rows.push(`<tr>
-                        <td>${fpBadge(fp)}</td>
-                        <td>${esc(data.game)}</td>
-                        <td>${esc(data.name)}</td>
-                        <td>${esc(data.reason)}</td>
-                        <td>${data.likes || 0}</td>
-                        <td>${fmtDate(data.createdAt)}</td>
-                    </tr>`);
-                });
-                document.getElementById("rBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="6" class="empty">No game requests found.</td></tr>`;
-                document.getElementById("statRequests").textContent = rows.length;
-            } catch(e) {
-                document.getElementById("rBody").innerHTML = `<tr><td colspan="6" class="empty">Error: ${esc(e.message)}</td></tr>`;
-                document.getElementById("statRequests").textContent = "ERR";
-            }
+            document.getElementById("statBanned").textContent = Object.keys(bannedFps).length;
+            var nowBanned = !!bannedFps[fp];
 
-            // ── Load Forum Posts ──
-            try {
-                const snap = await getDocs(query(collection(db, "forumPosts"), orderBy("createdAt", "desc")));
-                const rows = [];
-                snap.forEach(d => {
-                    const data = d.data();
-                    rows.push(`<tr>
-                        <td><span class="badge badge-blue">${esc(data.type)}</span></td>
-                        <td>${esc(data.title)}</td>
-                        <td>${esc(data.name)}</td>
-                        <td>${esc(data.body)}</td>
-                        <td>${fmtDate(data.createdAt)}</td>
-                    </tr>`);
-                });
-                document.getElementById("fBody").innerHTML = rows.length ? rows.join("") : `<tr><td colspan="5" class="empty">No forum posts found.</td></tr>`;
-                document.getElementById("statPosts").textContent = rows.length;
-            } catch(e) {
-                document.getElementById("fBody").innerHTML = `<tr><td colspan="5" class="empty">Error: ${esc(e.message)}</td></tr>`;
-                document.getElementById("statPosts").textContent = "ERR";
-            }
-
-            // ── Build Fingerprints Tab ──
-            // Deduplicate + group by fingerprint
-            const fpMap = {};
-            allFp.forEach(entry => {
-                const key = entry.fp || "unknown";
-                if (!fpMap[key]) fpMap[key] = { fp: key, entries: [] };
-                fpMap[key].entries.push(entry);
+            // Update all rows + buttons across every table for this fp
+            document.querySelectorAll('.ban-btn[data-fp="' + fp + '"]').forEach(function(b) {
+                var row = b.closest("tr");
+                if (row) {
+                    if (nowBanned) row.classList.add("banned-row");
+                    else           row.classList.remove("banned-row");
+                }
+                var newBtn = document.createElement("button");
+                newBtn.className      = nowBanned ? "ban-btn do-unban" : "ban-btn do-ban";
+                newBtn.dataset.fp     = fp;
+                newBtn.dataset.banned = nowBanned ? "true" : "false";
+                newBtn.textContent    = nowBanned ? "✅ Unban" : "🔨 Ban";
+                b.replaceWith(newBtn);
             });
 
-            const fpRows = [];
-            Object.values(fpMap).forEach(group => {
-                const hasViolation = group.entries.some(e => e.flag === "violation");
-                const flagBadge = hasViolation
-                    ? `<span class="badge badge-red">🚨 Violation</span>`
-                    : `<span class="badge badge-green">✅ Clean</span>`;
-                group.entries.forEach((e, i) => {
-                    const sourceBadge = e.source === "violation"
-                        ? `<span class="badge badge-red">Violation</span>`
-                        : `<span class="badge badge-yellow">Request</span>`;
-                    fpRows.push(`<tr>
-                        <td>${i === 0 ? fpBadge(group.fp) : ""}</td>
-                        <td>${esc(e.name)}</td>
-                        <td>${sourceBadge}</td>
-                        <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(e.content)}</td>
-                        <td>${esc(e.date)}</td>
-                        <td>${i === 0 ? flagBadge : ""}</td>
-                    </tr>`);
-                });
+            // Refresh the Status cell in the fingerprints tab for this fp
+            document.querySelectorAll("#fpBody tr").forEach(function(row) {
+                if (row.innerHTML.indexOf('data-fp="' + fp + '"') !== -1) {
+                    var cell = row.cells[4]; // Status column index
+                    if (cell) {
+                        cell.innerHTML = nowBanned
+                            ? '<span class="badge badge-red">🔨 Banned</span>'
+                            : '<span class="badge badge-green">✅ Clean</span>';
+                    }
+                }
             });
 
-            document.getElementById("fpBody").innerHTML = fpRows.length ? fpRows.join("") : `<tr><td colspan="6" class="empty">No fingerprints recorded yet.</td></tr>`;
-            document.getElementById("statTotal").textContent = Object.keys(fpMap).length;
-            document.getElementById("adminSubtitle").textContent = `${Object.keys(fpMap).length} unique fingerprints across all collections`;
+        } catch(err) {
+            showToast("Error: " + err.message, "error");
+            document.querySelectorAll('.ban-btn[data-fp="' + fp + '"]').forEach(function(b){ b.disabled = false; });
+        }
+    });
+
+    // ── Load all data ────────────────────────────────────────────────────
+    async function loadAllData() {
+        document.getElementById("adminSubtitle").textContent = "Loading data…";
+
+        // Fingerprint map: fp → { names[], sources[], violationCount }
+        var fpMap = {};
+        function recordFp(fp, name, source) {
+            var key = fp || "unknown";
+            if (!fpMap[key]) fpMap[key] = { fp: key, names: [], sources: [], violationCount: 0 };
+            if (name && fpMap[key].names.indexOf(name) === -1) fpMap[key].names.push(name);
+            if (fpMap[key].sources.indexOf(source) === -1) fpMap[key].sources.push(source);
         }
 
-    </script>
+        // ── Bans ──
+        try {
+            var banSnap = await db.collection("bannedFingerprints").get();
+            bannedFps = {};
+            banSnap.forEach(function(d){ bannedFps[d.id] = true; });
+            document.getElementById("statBanned").textContent = Object.keys(bannedFps).length;
+        } catch(e) {
+            console.warn("Bans:", e);
+            document.getElementById("statBanned").textContent = "ERR";
+        }
+
+        // ── Fingerprint Logs (dedicated collection — always written on submit) ──
+        // This ensures every device that ever posted shows up in admin even if
+        // the post itself failed to write to Firestore.
+        try {
+            var fpLogSnap = await db.collection("fingerprintLogs").get();
+            fpLogSnap.forEach(function(d) {
+                var data = d.data();
+                var fp   = data.fingerprint || d.id;
+                var name = data.lastName || "—";
+                var src  = data.source || "unknown";
+                recordFp(fp, name, src);
+            });
+        } catch(e) {
+            console.warn("fingerprintLogs:", e);
+        }
+
+        // ── Violations ──
+        var vRows = [];
+        try {
+            var vSnap = await db.collection("violations").orderBy("createdAt", "desc").get();
+            vSnap.forEach(function(d) {
+                var data = d.data();
+                var fp   = data.fingerprint || "unknown";
+                var name = (data.attempted && data.attempted.name) || "—";
+                recordFp(fp, name, "violation");
+                if (fpMap[fp]) fpMap[fp].violationCount++;
+                var content = [
+                    data.attempted && data.attempted.game,
+                    data.attempted && data.attempted.title,
+                    data.attempted && data.attempted.body,
+                    data.attempted && data.attempted.reason
+                ].filter(Boolean).join(" / ");
+                vRows.push({ fp: fp, source: data.source || "unknown", name: name, content: content, date: fmtDate(data.createdAt) });
+            });
+            document.getElementById("statViolations").textContent = vRows.length;
+        } catch(e) {
+            document.getElementById("vBody").innerHTML = '<tr><td colspan="6" class="empty">Error: ' + esc(e.message) + '</td></tr>';
+            document.getElementById("statViolations").textContent = "ERR";
+        }
+
+        // ── Game Requests ──
+        var rRows = [];
+        try {
+            var rSnap = await db.collection("gameRequests").orderBy("createdAt", "desc").get();
+            rSnap.forEach(function(d) {
+                var data = d.data();
+                var fp   = data.fingerprint || "unknown";
+                recordFp(fp, data.name, "gameRequest");
+                rRows.push({ fp: fp, game: data.game, name: data.name, reason: data.reason, likes: data.likes || 0, date: fmtDate(data.createdAt) });
+            });
+            document.getElementById("statRequests").textContent = rRows.length;
+        } catch(e) {
+            document.getElementById("rBody").innerHTML = '<tr><td colspan="7" class="empty">Error: ' + esc(e.message) + '</td></tr>';
+            document.getElementById("statRequests").textContent = "ERR";
+        }
+
+        // ── Forum Posts ──
+        var fRows = [];
+        var postTitles = {};
+        try {
+            var fSnap = await db.collection("forumPosts").orderBy("createdAt", "desc").get();
+            fSnap.forEach(function(d) {
+                var data = d.data();
+                var fp   = data.fingerprint || "unknown";
+                postTitles[d.id] = data.title || "(no title)";
+                recordFp(fp, data.name, "forumPost");
+                fRows.push({ fp: fp, type: data.type, title: data.title, name: data.name, body: data.body, likes: data.likes || 0, date: fmtDate(data.createdAt) });
+            });
+            document.getElementById("statPosts").textContent = fRows.length;
+        } catch(e) {
+            document.getElementById("fBody").innerHTML = '<tr><td colspan="8" class="empty">Error: ' + esc(e.message) + '</td></tr>';
+            document.getElementById("statPosts").textContent = "ERR";
+        }
+
+        // ── Forum Replies (fetched per-post, no collectionGroup index needed) ──
+        var repRows = [];
+        var postIds = Object.keys(postTitles);
+        for (var i = 0; i < postIds.length; i++) {
+            var pid = postIds[i];
+            try {
+                var repSnap = await db.collection("forumPosts").doc(pid).collection("replies").orderBy("createdAt", "asc").get();
+                repSnap.forEach(function(d) {
+                    var data = d.data();
+                    var fp   = data.fingerprint || "unknown";
+                    recordFp(fp, data.name, "forumReply");
+                    repRows.push({ fp: fp, parentTitle: postTitles[pid], name: data.name, body: data.body, date: fmtDate(data.createdAt) });
+                });
+            } catch(e) {
+                // individual post replies failing is non-fatal
+                console.warn("Replies for " + pid + ":", e.message);
+            }
+        }
+
+        // ── Render: Violations ──
+        document.getElementById("vBody").innerHTML = vRows.length
+            ? vRows.map(function(r) {
+                var banned = !!bannedFps[r.fp];
+                return '<tr class="' + (banned ? "banned-row" : "") + '">' +
+                    '<td>' + fpBadge(r.fp) + '</td>' +
+                    '<td><span class="badge badge-red">' + esc(r.source) + '</span></td>' +
+                    '<td>' + esc(r.name) + '</td>' +
+                    '<td class="wrap">' + esc(r.content) + '</td>' +
+                    '<td>' + esc(r.date) + '</td>' +
+                    '<td>' + makeBanBtn(r.fp, banned) + '</td>' +
+                '</tr>';
+              }).join("")
+            : '<tr><td colspan="6" class="empty">No violations. ✅</td></tr>';
+
+        // ── Render: Game Requests ──
+        document.getElementById("rBody").innerHTML = rRows.length
+            ? rRows.map(function(r) {
+                var banned = !!bannedFps[r.fp];
+                return '<tr class="' + (banned ? "banned-row" : "") + '">' +
+                    '<td>' + fpBadge(r.fp) + '</td>' +
+                    '<td>' + esc(r.game) + '</td>' +
+                    '<td>' + esc(r.name) + '</td>' +
+                    '<td class="wrap">' + esc(r.reason) + '</td>' +
+                    '<td>' + r.likes + '</td>' +
+                    '<td>' + esc(r.date) + '</td>' +
+                    '<td>' + makeBanBtn(r.fp, banned) + '</td>' +
+                '</tr>';
+              }).join("")
+            : '<tr><td colspan="7" class="empty">No game requests.</td></tr>';
+
+        // ── Render: Forum Posts ──
+        var typeColors = { "New Game Request":"badge-blue","Bug Report":"badge-yellow","Complaint":"badge-red","General Feedback":"badge-green" };
+        document.getElementById("fBody").innerHTML = fRows.length
+            ? fRows.map(function(r) {
+                var banned  = !!bannedFps[r.fp];
+                var typeCls = typeColors[r.type] || "badge-gray";
+                return '<tr class="' + (banned ? "banned-row" : "") + '">' +
+                    '<td>' + fpBadge(r.fp) + '</td>' +
+                    '<td><span class="badge ' + typeCls + '">' + esc(r.type) + '</span></td>' +
+                    '<td>' + esc(r.title) + '</td>' +
+                    '<td>' + esc(r.name) + '</td>' +
+                    '<td class="wrap">' + esc(r.body) + '</td>' +
+                    '<td>' + r.likes + '</td>' +
+                    '<td>' + esc(r.date) + '</td>' +
+                    '<td>' + makeBanBtn(r.fp, banned) + '</td>' +
+                '</tr>';
+              }).join("")
+            : '<tr><td colspan="8" class="empty">No forum posts.</td></tr>';
+
+        // ── Render: Replies ──
+        document.getElementById("repBody").innerHTML = repRows.length
+            ? repRows.map(function(r) {
+                var banned = !!bannedFps[r.fp];
+                return '<tr class="' + (banned ? "banned-row" : "") + '">' +
+                    '<td>' + fpBadge(r.fp) + '</td>' +
+                    '<td class="wrap">' + esc(r.parentTitle) + '</td>' +
+                    '<td>' + esc(r.name) + '</td>' +
+                    '<td class="wrap">' + esc(r.body) + '</td>' +
+                    '<td>' + esc(r.date) + '</td>' +
+                    '<td>' + makeBanBtn(r.fp, banned) + '</td>' +
+                '</tr>';
+              }).join("")
+            : '<tr><td colspan="6" class="empty">No replies found.</td></tr>';
+
+        // ── Render: Fingerprints summary ──
+        var fpEntries = Object.values(fpMap).sort(function(a, b) {
+            return b.violationCount - a.violationCount || b.names.length - a.names.length;
+        });
+        document.getElementById("fpBody").innerHTML = fpEntries.length
+            ? fpEntries.map(function(g) {
+                var banned  = !!bannedFps[g.fp];
+                var hasViol = g.violationCount > 0;
+                var statusBadge = banned
+                    ? '<span class="badge badge-red">🔨 Banned</span>'
+                    : hasViol
+                        ? '<span class="badge badge-yellow">⚠️ Flagged</span>'
+                        : '<span class="badge badge-green">✅ Clean</span>';
+                var names   = g.names.slice(0, 3).join(", ") || "—";
+                var sources = g.sources.map(function(s){ return '<span class="badge badge-gray">' + esc(s) + '</span>'; }).join(" ");
+                var violCell = hasViol
+                    ? '<span class="badge badge-red">' + g.violationCount + '</span>'
+                    : '<span style="color:#444">0</span>';
+                return '<tr class="' + (banned ? "banned-row" : "") + '">' +
+                    '<td>' + fpBadge(g.fp) + '</td>' +
+                    '<td class="wrap">' + esc(names) + '</td>' +
+                    '<td>' + sources + '</td>' +
+                    '<td style="text-align:center">' + violCell + '</td>' +
+                    '<td>' + statusBadge + '</td>' +
+                    '<td>' + makeBanBtn(g.fp, banned) + '</td>' +
+                '</tr>';
+              }).join("")
+            : '<tr><td colspan="6" class="empty">No fingerprints recorded yet.</td></tr>';
+
+        document.getElementById("statTotal").textContent = fpEntries.length;
+        document.getElementById("adminSubtitle").textContent =
+            fpEntries.length + " unique fingerprints · " +
+            Object.keys(bannedFps).length + " banned · " +
+            vRows.length + " violations";
+    }
+</script>
 </body>
 </html>
