@@ -107,10 +107,7 @@
             margin-bottom:0.5rem; transition:background 0.15s;
         }
         .lb-row:hover { background:rgba(255,255,255,0.1); }
-        .lb-rank {
-            font-size:1.1rem; font-weight:900; min-width:28px;
-            color:#fbbf24; text-align:center;
-        }
+        .lb-rank { font-size:1.1rem; font-weight:900; min-width:28px; color:#fbbf24; text-align:center; }
         .lb-rank.silver { color:#94a3b8; }
         .lb-rank.bronze { color:#d97706; }
         .lb-rank.other { color:#6b7280; font-size:0.95rem; }
@@ -164,7 +161,7 @@
         }
         .type-tag.request { background:rgba(79,70,229,0.12); color:#4f46e5; border-color:rgba(79,70,229,0.3); }
 
-        /* Like button */
+        /* Like + footer */
         .post-footer { display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem; flex-wrap:wrap; gap:0.4rem; }
         .like-btn {
             display:inline-flex; align-items:center; gap:0.35rem;
@@ -175,13 +172,124 @@
         }
         .like-btn:hover { border-color:#4f46e5; color:#4f46e5; background:rgba(79,70,229,0.06); }
         .like-btn.liked { background:rgba(79,70,229,0.12); color:#4f46e5; border-color:#4f46e5; }
+        .like-btn:disabled { opacity:0.6; cursor:not-allowed; }
         .like-count { font-weight:900; }
 
+        .reply-toggle-btn {
+            display:inline-flex; align-items:center; gap:0.3rem;
+            border-radius:999px; border:1.5px solid #d0d0d0;
+            background:#f5f5f5; color:#555; padding:0.28rem 0.75rem;
+            font-size:0.82rem; font-weight:700; cursor:pointer;
+            font-family:inherit; transition:all 0.15s;
+        }
+        .reply-toggle-btn:hover { border-color:#111; color:#111; background:#eee; }
+
+        /* Replies section */
+        .replies-section {
+            margin-top: 0.75rem;
+            border-top: 1px solid #e8e8e8;
+            padding-top: 0.75rem;
+            display: none;
+        }
+        .replies-section.open { display: block; }
+        .replies-list { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:0.75rem; }
+        .reply-item {
+            background: #f4f4f4;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 0.6rem 0.75rem;
+        }
+        .reply-meta { font-size: 0.75rem; color: #777; margin-bottom: 0.2rem; }
+        .reply-body { font-size: 0.9rem; color: #222; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
+        .reply-empty { font-size: 0.85rem; color: #999; text-align: center; padding: 0.5rem 0; }
+
+        /* Reply form */
+        .reply-form { display:flex; flex-direction:column; gap:0.4rem; }
+        .reply-form textarea {
+            width:100%; border:2px solid #d0d0d0; background:#fff;
+            border-radius:10px; padding:0.5rem 0.65rem; font:inherit; color:#111;
+            resize:vertical; min-height:60px; font-size:0.88rem;
+        }
+        .reply-form textarea:focus { outline:none; border-color:#111; box-shadow:0 0 0 3px rgba(0,0,0,0.08); }
+        .reply-form-row { display:flex; gap:0.4rem; flex-wrap:wrap; align-items:center; }
+        .reply-form input[type="text"] {
+            flex:1; border:2px solid #d0d0d0; background:#fff;
+            border-radius:10px; padding:0.45rem 0.65rem; font:inherit; font-size:0.88rem; color:#111; min-width:120px;
+        }
+        .reply-form input[type="text"]:focus { outline:none; border-color:#111; }
+        .reply-submit-btn {
+            border-radius:10px; border:none;
+            background:linear-gradient(135deg,#555,#111); color:#fff;
+            padding:0.45rem 1rem; font-size:0.85rem; font-weight:700;
+            cursor:pointer; font-family:inherit; white-space:nowrap;
+        }
+        .reply-submit-btn:hover { opacity:0.85; }
+        .reply-submit-btn:disabled { opacity:0.5; cursor:not-allowed; }
+
+        /* Fingerprint badge */
+        .fp-badge {
+            display:inline-block; font-size:0.72rem;
+            background:linear-gradient(135deg,#cc0000,#ff3333);
+            color:#fff; border-radius:6px; padding:0.18rem 0.5rem;
+            font-family:monospace; font-weight:700;
+        }
+
+        /* Slur warning banner */
+        .slur-banner {
+            display:none; position:fixed; top:0; left:0; right:0; z-index:9999;
+            background:linear-gradient(135deg,#aa0000,#ff0000); color:#fff;
+            padding:1.2rem 2rem; text-align:center;
+            font-weight:800; font-size:1.2rem;
+            box-shadow:0 6px 30px rgba(255,0,0,0.5);
+            border-bottom:3px solid #ff4444;
+        }
+        .slur-banner.visible { display:block; }
+        .slur-banner-close {
+            margin-left:1rem; background:rgba(255,255,255,0.25); border:2px solid rgba(255,255,255,0.5);
+            color:#fff; font-weight:800; padding:0.3rem 0.9rem; border-radius:999px; cursor:pointer; font-size:0.9rem;
+        }
+
         @media (max-width: 920px) { .layout { grid-template-columns:1fr; } }
+
+        @media (prefers-color-scheme: dark) {
+            body { background: linear-gradient(180deg,#0a0a0a,#111111); color:#f0f0f0; }
+            .hero { background:rgba(20,20,20,0.95); border-color:#2a2a2a; }
+            .hero .title { color:#f0f0f0; }
+            .hero .hero-copy { color:#aaa; }
+            .tagline { color:#888; }
+            .btn-ghost { background:#222; color:#f0f0f0; border-color:#444; }
+            .panel { background:#1a1a1a; border-color:#2a2a2a; }
+            .panel h2 { color:#f0f0f0; }
+            .subtitle { color:#888; }
+            .field input, .field textarea, .field select { background:#111; border-color:#333; color:#f0f0f0; }
+            .search { background:#111; border-color:#333; color:#f0f0f0; }
+            .filter-tab { background:#1a1a1a; border-color:#333; color:#aaa; }
+            .filter-tab.active { background:#f0f0f0; color:#111; border-color:#f0f0f0; }
+            .post { background:linear-gradient(180deg,#1a1a1a,#141414); border-color:#2a2a2a; }
+            .post.is-request { background:linear-gradient(135deg,rgba(79,70,229,0.08),#1a1a1a); border-color:rgba(79,70,229,0.3); }
+            .post h3 { color:#f0f0f0; }
+            .post p { color:#aaa; }
+            .meta { color:#777; }
+            .like-btn { background:#222; border-color:#333; color:#aaa; }
+            .reply-toggle-btn { background:#222; border-color:#333; color:#aaa; }
+            .reply-item { background:#111; border-color:#2a2a2a; }
+            .reply-meta { color:#666; }
+            .reply-body { color:#ccc; }
+            .reply-form textarea, .reply-form input[type="text"] { background:#111; border-color:#333; color:#f0f0f0; }
+            .status { color:#888; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Slur warning banner -->
+    <div id="slurBanner" class="slur-banner">
+        🚫 <strong>Warning:</strong> Hate speech detected and blocked. Your device has been fingerprinted and logged.
+        <button class="slur-banner-close" onclick="document.getElementById('slurBanner').classList.remove('visible')">Dismiss</button>
+    </div>
+
     <script src="firebase-config.js"></script>
+
     <main class="shell">
         <section class="hero">
             <div class="hero-top">
@@ -251,7 +359,7 @@
             <!-- Posts Feed -->
             <section class="panel">
                 <div class="feed-top">
-                    <h2>Recent Posts</h2>
+                    <h2>Recent Posts <span id="postCountBadge" style="font-size:0.8rem;font-weight:600;color:#888;"></span></h2>
                     <input id="searchPosts" class="search" type="search" placeholder="🔍 Search posts...">
                 </div>
                 <div class="filter-tabs">
@@ -269,65 +377,178 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp }
-            from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            getDoc,
+            setDoc,
+            deleteDoc,
+            updateDoc,
+            doc,
+            query,
+            orderBy,
+            increment,
+            serverTimestamp,
+            where
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import {
+            getAuth,
+            signInAnonymously,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-        const LIMITS = { title: 80, name: 30, body: 500 };
+        // ─── Constants ────────────────────────────────────────────────
+        const LIMITS   = { title: 80, name: 30, body: 500, replyBody: 300 };
         const LOCAL_KEY = "forumPostsLocal";
-        const LIKES_KEY = "forumLikes";
-        const statusEl = document.getElementById("forumStatus");
-        const postsEl  = document.getElementById("posts");
-        const lbEl     = document.getElementById("leaderboard");
-        const form     = document.getElementById("forumForm");
-        const searchInput = document.getElementById("searchPosts");
+        const LOCAL_REPLIES_KEY = "forumRepliesLocal";
 
-        let forumCol   = null;
+        // ─── DOM refs ─────────────────────────────────────────────────
+        const statusEl   = document.getElementById("forumStatus");
+        const postsEl    = document.getElementById("posts");
+        const lbEl       = document.getElementById("leaderboard");
+        const form       = document.getElementById("forumForm");
+        const searchInput = document.getElementById("searchPosts");
+        const countBadge  = document.getElementById("postCountBadge");
+
+        // ─── State ────────────────────────────────────────────────────
+        let db          = null;
+        let auth        = null;
+        let forumCol    = null;
+        let currentUid  = null;
         let cachedPosts = [];
         let activeFilter = "all";
 
-        // ── Firebase init ──
+        // ─── Firebase init ────────────────────────────────────────────
         const config = window.FIREBASE_CONFIG;
         if (config) {
             try {
                 const app = initializeApp(config);
-                const db  = getFirestore(app);
+                db        = getFirestore(app);
+                auth      = getAuth(app);
                 forumCol  = collection(db, "forumPosts");
-            } catch(e) { console.warn("Firebase init failed:", e); }
-        } else {
-            statusEl.textContent = "Firebase unavailable — using local storage.";
+
+                // Sign in anonymously so Firestore rules (uid-based) work
+                onAuthStateChanged(auth, user => {
+                    currentUid = user ? user.uid : null;
+                });
+                try {
+                    await signInAnonymously(auth);
+                } catch(e) {
+                    console.warn("Anonymous auth failed — likes will use localStorage:", e);
+                }
+            } catch(e) {
+                console.warn("Firebase init failed:", e);
+            }
         }
 
-        // ── Likes (localStorage, one per post per device) ──
-        function getLikes() {
-            try { return JSON.parse(localStorage.getItem(LIKES_KEY) || "{}"); } catch { return {}; }
-        }
-        function saveLikes(obj) { localStorage.setItem(LIKES_KEY, JSON.stringify(obj)); }
-        function getLikeCount(postId) { return getLikes()[postId]?.count || 0; }
-        function hasLiked(postId)     { return !!getLikes()[postId]?.liked; }
-        function toggleLike(postId) {
-            const all = getLikes();
-            const cur = all[postId] || { liked: false, count: 0 };
-            if (cur.liked) { cur.liked = false; cur.count = Math.max(0, cur.count - 1); }
-            else           { cur.liked = true;  cur.count = cur.count + 1; }
-            all[postId] = cur;
-            saveLikes(all);
-            return cur;
+        // ─── Fingerprinting ───────────────────────────────────────────
+        async function getFingerprint() {
+            const components = [
+                navigator.userAgent,
+                navigator.language,
+                screen.width + "x" + screen.height,
+                screen.colorDepth,
+                new Date().getTimezoneOffset(),
+                navigator.hardwareConcurrency || 0,
+                navigator.platform || "",
+                Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+            ].join("|");
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(components));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("").slice(0, 16);
         }
 
-        // ── Helpers ──
+        // ─── Slur filter ──────────────────────────────────────────────
+        const BLOCKED_PATTERNS = [
+            /n+[\W_]*i+[\W_]*g+[\W_]*[gae]+[\W_]*[re]+/gi,
+            /f+[\W_]*a+[\W_]*g+/gi,
+            /c+[\W_]*h+[\W_]*i+[\W_]*n+[\W_]*k/gi,
+            /s+[\W_]*p+[\W_]*i+[\W_]*c/gi,
+            /k+[\W_]*i+[\W_]*k+[\W_]*e/gi,
+            /r+[\W_]*e+[\W_]*t+[\W_]*a+[\W_]*r+[\W_]*d/gi,
+            /d+[\W_]*y+[\W_]*k+[\W_]*e/gi,
+            /t+[\W_]*r+[\W_]*a+[\W_]*n+[\W_]*n+[\W_]*y/gi,
+            /c+[\W_]*u+[\W_]*n+[\W_]*t/gi,
+            /w+[\W_]*e+[\W_]*t+[\W_]*b+[\W_]*a+[\W_]*c+[\W_]*k/gi,
+            /g+[\W_]*o+[\W_]*o+[\W_]*k/gi,
+            /\bj+[\W_]*e+[\W_]*w+[\W_]*s?\b/gi,
+            /\bc+[\W_]*o+[\W_]*o+[\W_]*n+[\W_]*s?\b/gi,
+        ];
+        function stripObfuscation(text) {
+            return text.toLowerCase()
+                .replace(/[0@]/g,"o").replace(/[1!|]/g,"i").replace(/3/g,"e")
+                .replace(/4/g,"a").replace(/5/g,"s").replace(/8/g,"b")
+                .replace(/\$/g,"s").replace(/\+/g,"t").replace(/[^a-z\s]/g,"");
+        }
+        function containsSlur(text) {
+            const cleaned = stripObfuscation(text);
+            return BLOCKED_PATTERNS.some(p => { p.lastIndex = 0; return p.test(cleaned); });
+        }
+
+        // ─── Firestore like helpers ───────────────────────────────────
+        async function getFirestoreLikeCount(postId) {
+            if (!db) return 0;
+            try {
+                const snap = await getDoc(doc(db, "forumPosts", postId));
+                return snap.exists() ? (snap.data().likes || 0) : 0;
+            } catch { return 0; }
+        }
+
+        async function hasFirestoreLiked(postId) {
+            if (!db || !currentUid) return false;
+            try {
+                const snap = await getDoc(doc(db, "forumPosts", postId, "likedBy", currentUid));
+                return snap.exists();
+            } catch { return false; }
+        }
+
+        async function toggleFirestoreLike(postId) {
+            if (!db || !currentUid) return null;
+            try {
+                const likeRef   = doc(db, "forumPosts", postId, "likedBy", currentUid);
+                const postRef   = doc(db, "forumPosts", postId);
+                const already   = (await getDoc(likeRef)).exists();
+                if (already) {
+                    await deleteDoc(likeRef);
+                    await updateDoc(postRef, { likes: increment(-1) });
+                    return { liked: false };
+                } else {
+                    await setDoc(likeRef, { uid: currentUid, likedAt: serverTimestamp() });
+                    await updateDoc(postRef, { likes: increment(1) });
+                    return { liked: true };
+                }
+            } catch(e) {
+                console.error("Firestore like error:", e);
+                return null;
+            }
+        }
+
+        // localStorage like fallback (used when not authed)
+        const LS_LIKES_KEY = "forumLikes";
+        function lsGetLikes() { try { return JSON.parse(localStorage.getItem(LS_LIKES_KEY)||"{}"); } catch { return {}; } }
+        function lsHasLiked(pid) { return !!lsGetLikes()[pid]; }
+        function lsToggleLike(pid) {
+            const all = lsGetLikes(); const cur = !!all[pid];
+            if (cur) { delete all[pid]; } else { all[pid] = true; }
+            localStorage.setItem(LS_LIKES_KEY, JSON.stringify(all));
+            return !cur;
+        }
+
+        // ─── Helpers ──────────────────────────────────────────────────
+        function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
         function normalize(v) { return String(v||"").replace(/[\u0000-\u001F\u007F]/g,"").replace(/\s+/g," ").trim(); }
-        function truncate(v, max) { return v.length > max ? v.slice(0, max) : v; }
+        function trunc(v, max) { return v.length > max ? v.slice(0, max) : v; }
         function formatDate(v) {
-            if (!v) return "No date";
+            if (!v) return "";
             if (typeof v === "string") return v;
             if (v.toDate) return v.toDate().toLocaleString();
-            return "No date";
+            return "";
         }
         function readLocal() { try { return JSON.parse(localStorage.getItem(LOCAL_KEY)||"[]"); } catch { return []; } }
         function saveLocal(posts) { localStorage.setItem(LOCAL_KEY, JSON.stringify(posts)); }
-        function makeId(post) { return post.id || `local_${post.title}_${post.createdAt}`; }
 
-        // ── Filter ──
+        // ─── Filter ──────────────────────────────────────────────────
         window.setFilter = function(filter, btn) {
             activeFilter = filter;
             document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
@@ -344,30 +565,29 @@
             });
         }
 
-        // ── Render leaderboard ──
+        // ─── Leaderboard ─────────────────────────────────────────────
         function renderLeaderboard() {
             const requests = cachedPosts
                 .filter(p => p.type === "New Game Request")
-                .map(p => ({ ...p, _id: makeId(p), _likes: getLikeCount(makeId(p)) }))
-                .sort((a, b) => b._likes - a._likes)
+                .map(p => ({ ...p, _likes: p.likes || 0 }))
+                .sort((a, b) => b._likes - a._likes || (b.createdAt > a.createdAt ? 1 : -1))
                 .slice(0, 8);
 
             if (!requests.length) {
                 lbEl.innerHTML = "<p class='lb-empty'>No game requests yet — be the first!</p>";
                 return;
             }
-
             lbEl.innerHTML = "";
             requests.forEach((post, i) => {
                 const rankClass = i === 0 ? "" : i === 1 ? "silver" : i === 2 ? "bronze" : "other";
-                const rankEmoji = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i+1}`;
+                const rankLabel = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i+1}`;
                 const row = document.createElement("div");
                 row.className = "lb-row";
                 row.innerHTML = `
-                    <div class="lb-rank ${rankClass}">${rankEmoji}</div>
+                    <div class="lb-rank ${rankClass}">${rankLabel}</div>
                     <div class="lb-info">
-                        <div class="lb-game">${escHtml(post.title)}</div>
-                        <div class="lb-by">by ${escHtml(post.name||"Anonymous")}</div>
+                        <div class="lb-game">${esc(post.title)}</div>
+                        <div class="lb-by">by ${esc(post.name||"Anonymous")}</div>
                     </div>
                     <div class="lb-likes">👍 ${post._likes}</div>
                 `;
@@ -375,68 +595,254 @@
             });
         }
 
-        // ── Render posts ──
-        function escHtml(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+        // ─── Replies ─────────────────────────────────────────────────
+        async function loadReplies(postId, repliesListEl) {
+            repliesListEl.innerHTML = "<p class='reply-empty'>Loading replies...</p>";
+            if (!db) {
+                // localStorage replies fallback
+                const local = getLocalReplies(postId);
+                renderRepliesList(local, repliesListEl);
+                return;
+            }
+            try {
+                const repliesCol = collection(db, "forumPosts", postId, "replies");
+                const snap = await getDocs(query(repliesCol, orderBy("createdAt", "asc")));
+                const replies = [];
+                snap.forEach(d => replies.push({ id: d.id, ...d.data() }));
+                renderRepliesList(replies, repliesListEl);
+            } catch(e) {
+                console.warn("Replies load failed:", e);
+                const local = getLocalReplies(postId);
+                renderRepliesList(local, repliesListEl);
+            }
+        }
 
-        function renderPosts(list) {
+        function renderRepliesList(replies, container) {
+            if (!replies.length) {
+                container.innerHTML = "<p class='reply-empty'>No replies yet. Be the first!</p>";
+                return;
+            }
+            container.innerHTML = "";
+            replies.forEach(r => {
+                const div = document.createElement("div");
+                div.className = "reply-item";
+                div.innerHTML = `
+                    <div class="reply-meta">${esc(r.name||"Anonymous")} · ${esc(formatDate(r.createdAt))}</div>
+                    <div class="reply-body">${esc(r.body||"")}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // localStorage reply helpers
+        function getLocalReplies(postId) {
+            try {
+                const all = JSON.parse(localStorage.getItem(LOCAL_REPLIES_KEY)||"{}");
+                return all[postId] || [];
+            } catch { return []; }
+        }
+        function saveLocalReply(postId, reply) {
+            try {
+                const all = JSON.parse(localStorage.getItem(LOCAL_REPLIES_KEY)||"{}");
+                if (!all[postId]) all[postId] = [];
+                all[postId].push(reply);
+                localStorage.setItem(LOCAL_REPLIES_KEY, JSON.stringify(all));
+            } catch(e) { console.error("Local reply save failed:", e); }
+        }
+
+        async function submitReply(postId, name, body, repliesListEl, replyBodyEl, replyNameEl, replyBtn) {
+            const cleanBody = trunc(normalize(body), LIMITS.replyBody);
+            const cleanName = trunc(normalize(name)||"Anonymous", LIMITS.name);
+            if (!cleanBody) return;
+
+            if (containsSlur(cleanBody) || containsSlur(cleanName)) {
+                document.getElementById("slurBanner").classList.add("visible");
+                alert("🚫 Your reply was blocked for containing prohibited language.");
+                try {
+                    const fp = await getFingerprint();
+                    if (db) await addDoc(collection(db, "violations"), {
+                        fingerprint: fp,
+                        attempted: { name: cleanName, body: cleanBody },
+                        source: "forumReply",
+                        createdAt: serverTimestamp()
+                    });
+                } catch {}
+                return;
+            }
+
+            replyBtn.disabled = true;
+            replyBtn.textContent = "Posting...";
+
+            const fp = await getFingerprint();
+
+            if (db) {
+                try {
+                    const repliesCol = collection(db, "forumPosts", postId, "replies");
+                    await addDoc(repliesCol, {
+                        name: cleanName,
+                        body: cleanBody,
+                        fingerprint: fp,
+                        createdAt: serverTimestamp()
+                    });
+                    // increment reply count on parent
+                    try { await updateDoc(doc(db, "forumPosts", postId), { replyCount: increment(1) }); } catch {}
+                } catch(e) {
+                    console.warn("Firestore reply failed, saving locally:", e);
+                    saveLocalReply(postId, { name: cleanName, body: cleanBody, fingerprint: fp, createdAt: new Date().toLocaleString() });
+                }
+            } else {
+                saveLocalReply(postId, { name: cleanName, body: cleanBody, fingerprint: fp, createdAt: new Date().toLocaleString() });
+            }
+
+            replyBodyEl.value = "";
+            replyBtn.disabled = false;
+            replyBtn.textContent = "Reply";
+            await loadReplies(postId, repliesListEl);
+        }
+
+        // ─── Render posts ─────────────────────────────────────────────
+        async function renderPosts(list) {
             postsEl.innerHTML = "";
             if (!list.length) {
                 postsEl.innerHTML = "<p class='status'>No matching posts yet.</p>";
                 return;
             }
-            list.forEach((post) => {
-                const pid = makeId(post);
+
+            // Pre-fetch liked state for all Firestore posts if authed
+            const likedSet = new Set();
+            if (db && currentUid) {
+                await Promise.all(
+                    list.filter(p => p.id && !p._local).map(async p => {
+                        const liked = await hasFirestoreLiked(p.id);
+                        if (liked) likedSet.add(p.id);
+                    })
+                );
+            }
+
+            for (const post of list) {
+                const pid       = post.id || `local_${post.title}_${post.createdAt}`;
+                const isLocal   = !!post._local;
                 const isRequest = post.type === "New Game Request";
-                const liked = hasLiked(pid);
-                const likeCount = getLikeCount(pid);
+
+                // Likes
+                const fsLikes   = isLocal ? 0 : (post.likes || 0);
+                const fsLiked   = isLocal ? lsHasLiked(pid) : likedSet.has(pid);
+                const likeCount = isLocal ? 0 : fsLikes;
+
+                const replyCount = post.replyCount || 0;
 
                 const article = document.createElement("article");
                 article.className = "post" + (isRequest ? " is-request" : "");
                 article.dataset.pid = pid;
 
                 const tagClass = isRequest ? "type-tag request" : "type-tag";
+
                 article.innerHTML = `
                     <div class="meta">
-                        <span class="${tagClass}">${escHtml(post.type||"General Feedback")}</span>
-                        <span>${escHtml(post.name||"Anonymous")} · ${escHtml(formatDate(post.createdAt))}</span>
+                        <span class="${tagClass}">${esc(post.type||"General Feedback")}</span>
+                        <span>${esc(post.name||"Anonymous")}${formatDate(post.createdAt) ? " · " + esc(formatDate(post.createdAt)) : ""}</span>
+                        ${post.fingerprint ? `<span class="fp-badge">🔍 ${esc(post.fingerprint)}</span>` : ""}
                     </div>
-                    <h3>${escHtml(post.title||"(No title)")}</h3>
-                    <p>${escHtml(post.body||"")}</p>
+                    <h3>${esc(post.title||"(No title)")}</h3>
+                    <p>${esc(post.body||"")}</p>
                     <div class="post-footer">
-                        <button class="like-btn${liked?" liked":""}" data-pid="${escHtml(pid)}">
+                        <button class="like-btn${fsLiked?" liked":""}" data-pid="${esc(pid)}" data-is-local="${isLocal}">
                             👍 <span class="like-count">${likeCount}</span> Like${likeCount===1?"":"s"}
                         </button>
+                        <button class="reply-toggle-btn" data-pid="${esc(pid)}">
+                            💬 <span class="reply-count-label">${replyCount > 0 ? replyCount + " " : ""}Replies</span>
+                        </button>
+                    </div>
+                    <div class="replies-section" id="replies-${esc(pid)}">
+                        <div class="replies-list" id="replies-list-${esc(pid)}"></div>
+                        <div class="reply-form">
+                            <textarea class="reply-body-input" maxlength="300" placeholder="Write a reply..."></textarea>
+                            <div class="reply-form-row">
+                                <input type="text" class="reply-name-input" maxlength="30" placeholder="Your name (optional)">
+                                <button class="reply-submit-btn" data-pid="${esc(pid)}">Reply</button>
+                            </div>
+                        </div>
                     </div>
                 `;
                 postsEl.appendChild(article);
-            });
 
-            // Bind like buttons
-            postsEl.querySelectorAll(".like-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const pid = btn.dataset.pid;
-                    const result = toggleLike(pid);
-                    const countEl = btn.querySelector(".like-count");
-                    countEl.textContent = result.count;
-                    btn.lastChild.textContent = ` Like${result.count===1?"":"s"}`;
-                    if (result.liked) { btn.classList.add("liked"); }
-                    else              { btn.classList.remove("liked"); }
-                    // Also refresh leaderboard live
-                    renderLeaderboard();
+                // Like button
+                const likeBtn = article.querySelector(".like-btn");
+                likeBtn.addEventListener("click", async () => {
+                    likeBtn.disabled = true;
+                    const countEl = likeBtn.querySelector(".like-count");
+                    const isLocalPost = likeBtn.dataset.isLocal === "true";
+
+                    if (!isLocalPost && db && currentUid) {
+                        const result = await toggleFirestoreLike(pid);
+                        if (result) {
+                            const newCount = parseInt(countEl.textContent) + (result.liked ? 1 : -1);
+                            countEl.textContent = Math.max(0, newCount);
+                            likeBtn.lastChild.textContent = ` Like${newCount===1?"":"s"}`;
+                            result.liked ? likeBtn.classList.add("liked") : likeBtn.classList.remove("liked");
+                            // Update cache
+                            const cp = cachedPosts.find(p => p.id === pid);
+                            if (cp) cp.likes = Math.max(0, newCount);
+                            renderLeaderboard();
+                        }
+                    } else {
+                        // localStorage fallback
+                        const nowLiked = lsToggleLike(pid);
+                        const newCount = parseInt(countEl.textContent) + (nowLiked ? 1 : -1);
+                        countEl.textContent = Math.max(0, newCount);
+                        likeBtn.lastChild.textContent = ` Like${Math.max(0,newCount)===1?"":"s"}`;
+                        nowLiked ? likeBtn.classList.add("liked") : likeBtn.classList.remove("liked");
+                    }
+                    likeBtn.disabled = false;
                 });
-            });
+
+                // Reply toggle button
+                const replyToggle = article.querySelector(".reply-toggle-btn");
+                const repliesSection = article.querySelector(`#replies-${pid}`);
+                const repliesListEl  = article.querySelector(`#replies-list-${pid}`);
+                let repliesLoaded = false;
+                replyToggle.addEventListener("click", async () => {
+                    const isOpen = repliesSection.classList.toggle("open");
+                    if (isOpen && !repliesLoaded) {
+                        repliesLoaded = true;
+                        await loadReplies(pid, repliesListEl);
+                    }
+                });
+
+                // Reply submit button
+                const replySubmitBtn  = article.querySelector(".reply-submit-btn");
+                const replyBodyInput  = article.querySelector(".reply-body-input");
+                const replyNameInput  = article.querySelector(".reply-name-input");
+                replySubmitBtn.addEventListener("click", async () => {
+                    await submitReply(
+                        pid,
+                        replyNameInput.value,
+                        replyBodyInput.value,
+                        repliesListEl,
+                        replyBodyInput,
+                        replyNameInput,
+                        replySubmitBtn
+                    );
+                    // Update reply count label
+                    const currentCount = parseInt(replyToggle.querySelector(".reply-count-label").textContent) || 0;
+                    const newReplyCount = currentCount + 1;
+                    replyToggle.querySelector(".reply-count-label").textContent = `${newReplyCount} Replies`;
+                });
+            }
         }
 
-        function renderCurrentView() {
-            renderPosts(getFilteredPosts());
+        async function renderCurrentView() {
+            await renderPosts(getFilteredPosts());
             renderLeaderboard();
         }
 
-        // ── Load posts ──
+        // ─── Load posts ───────────────────────────────────────────────
         async function loadPosts() {
+            statusEl.textContent = "Loading posts...";
             if (!forumCol) {
                 cachedPosts = readLocal().reverse();
                 statusEl.textContent = "Showing local posts (Firebase unavailable).";
+                countBadge.textContent = `(${cachedPosts.length})`;
                 renderCurrentView();
                 return;
             }
@@ -444,71 +850,106 @@
                 const snap = await getDocs(query(forumCol, orderBy("createdAt", "desc")));
                 const list = [];
                 snap.forEach(d => list.push({ id: d.id, ...d.data() }));
-                // Merge in any local posts not yet synced
+
+                // Merge local unsynced posts
                 const local = readLocal();
                 const merged = [...list, ...local.map(p => ({ ...p, _local: true }))];
                 cachedPosts = merged;
-                statusEl.textContent = `${list.length} post${list.length===1?"":"s"} — live`;
+
+                statusEl.textContent = `${list.length} post${list.length===1?"":"s"} · live`;
+                countBadge.textContent = `(${list.length})`;
                 renderCurrentView();
-            } catch (err) {
-                statusEl.textContent = `Firestore unavailable — showing local posts.`;
+            } catch(err) {
+                console.warn("Firestore load failed:", err);
+                statusEl.textContent = "Firestore unavailable — showing local posts.";
                 cachedPosts = readLocal().reverse();
+                countBadge.textContent = `(${cachedPosts.length})`;
                 renderCurrentView();
             }
         }
 
-        // ── Submit ──
+        // ─── Submit ───────────────────────────────────────────────────
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
             const type  = document.getElementById("postType").value;
-            const title = truncate(normalize(document.getElementById("postTitle").value), LIMITS.title);
-            const name  = truncate(normalize(document.getElementById("postName").value)||"Anonymous", LIMITS.name);
-            const body  = truncate(normalize(document.getElementById("postBody").value), LIMITS.body);
+            const title = trunc(normalize(document.getElementById("postTitle").value), LIMITS.title);
+            const name  = trunc(normalize(document.getElementById("postName").value)||"Anonymous", LIMITS.name);
+            const body  = trunc(normalize(document.getElementById("postBody").value), LIMITS.body);
             if (!title || !body) return;
+
+            // Slur check
+            if (containsSlur(title) || containsSlur(name) || containsSlur(body)) {
+                document.getElementById("slurBanner").classList.add("visible");
+                alert("🚫 Your post was blocked for containing prohibited language. Your device has been flagged.");
+                try {
+                    const fp = await getFingerprint();
+                    if (db) await addDoc(collection(db, "violations"), {
+                        fingerprint: fp,
+                        attempted: { type, title, name, body },
+                        source: "forumPost",
+                        createdAt: serverTimestamp()
+                    });
+                } catch {}
+                return;
+            }
 
             const submitBtn = form.querySelector("button[type=submit]");
             submitBtn.disabled = true;
             submitBtn.textContent = "Posting...";
 
+            const fp = await getFingerprint();
+
+            const postData = {
+                type, title, name, body,
+                fingerprint: fp,
+                likes: 0,
+                replyCount: 0,
+                createdAt: serverTimestamp()
+            };
+
             if (forumCol) {
                 try {
-                    await addDoc(forumCol, { type, title, name, body, createdAt: serverTimestamp() });
-                } catch {
+                    await addDoc(forumCol, postData);
+                } catch(e) {
+                    console.warn("Firestore write failed, saving locally:", e);
                     const local = readLocal();
-                    local.push({ type, title, name, body, createdAt: new Date().toLocaleString() });
+                    local.push({ ...postData, createdAt: new Date().toLocaleString() });
                     saveLocal(local);
                 }
             } else {
                 const local = readLocal();
-                local.push({ type, title, name, body, createdAt: new Date().toLocaleString() });
+                local.push({ ...postData, createdAt: new Date().toLocaleString() });
                 saveLocal(local);
             }
 
-            form.reset(); updateCounters();
+            form.reset();
+            updateAllCounters();
             submitBtn.disabled = false;
             submitBtn.textContent = "Post To Forum";
             await loadPosts();
         });
 
-        // ── Counters ──
+        // ─── Counters ─────────────────────────────────────────────────
         function bindCounter(inputId, outId, max) {
             const input = document.getElementById(inputId);
             const out   = document.getElementById(outId);
+            if (!input || !out) return;
             input.addEventListener("input", () => { out.textContent = `${input.value.length}/${max}`; });
         }
-        function updateCounters() {
-            ["postTitle","postName","postBody"].forEach(id => {
-                const el = document.getElementById(id);
-                const limit = id === "postTitle" ? LIMITS.title : id === "postName" ? LIMITS.name : LIMITS.body;
-                const outId = id === "postTitle" ? "titleCount" : id === "postName" ? "nameCount" : "bodyCount";
-                document.getElementById(outId).textContent = `${el.value.length}/${limit}`;
-            });
+        function updateAllCounters() {
+            [["postTitle","titleCount",LIMITS.title],["postName","nameCount",LIMITS.name],["postBody","bodyCount",LIMITS.body]]
+                .forEach(([id,outId,max]) => {
+                    const el = document.getElementById(id);
+                    const out = document.getElementById(outId);
+                    if (el && out) out.textContent = `${el.value.length}/${max}`;
+                });
         }
         bindCounter("postTitle","titleCount",LIMITS.title);
         bindCounter("postName","nameCount",LIMITS.name);
         bindCounter("postBody","bodyCount",LIMITS.body);
         searchInput.addEventListener("input", renderCurrentView);
 
+        // ─── Boot ─────────────────────────────────────────────────────
         loadPosts();
     </script>
 </body>
