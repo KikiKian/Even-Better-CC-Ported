@@ -137,7 +137,6 @@
             transform: translateY(-2px);
             box-shadow: 0 16px 30px rgba(0,0,0,0.45);
         }
-        /* Proxy float button */
         .proxy-float{
             position: fixed;
             right: 1.1rem;
@@ -166,15 +165,8 @@
             margin-bottom: 3rem;
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         }
-        .download-section h2{
-            margin: 0 0 0.75rem 0;
-            font-size: 2rem;
-        }
-        .download-section p{
-            margin: 0 0 1.5rem 0;
-            opacity: 0.95;
-            font-size: 1.1rem;
-        }
+        .download-section h2{ margin: 0 0 0.75rem 0; font-size: 2rem; }
+        .download-section p{ margin: 0 0 1.5rem 0; opacity: 0.95; font-size: 1.1rem; }
         .btn{
             display:inline-block;
             background: #fff;
@@ -189,13 +181,8 @@
             border:none;
             cursor:pointer;
         }
-        .btn:hover{
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-        }
-        .btn:active{
-            transform: translateY(0);
-        }
+        .btn:hover{ transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+        .btn:active{ transform: translateY(0); }
         .instructions{
             margin-top: 1.5rem;
             padding: 1.5rem;
@@ -206,15 +193,8 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .instructions h3{
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-        .instructions ol{
-            line-height: 1.8;
-            padding-left: 1.5rem;
-            margin: 0;
-        }
+        .instructions h3{ margin-top: 0; font-size: 1.1rem; }
+        .instructions ol{ line-height: 1.8; padding-left: 1.5rem; margin: 0; }
         .instructions code{
             background: rgba(255,255,255,0.3);
             padding: 0.2rem 0.5rem;
@@ -222,34 +202,15 @@
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
         }
-        .games-section h2{
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #111111;
-        }
-        .search-bar{
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+        .games-section h2{ font-size: 2rem; margin-bottom: 1.5rem; color: #111111; }
+        .search-bar{ margin-bottom: 2rem; text-align: center; }
         .search-bar input{
-            width: 100%;
-            max-width: 500px;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
-            border: 2px solid #888888;
-            border-radius: 50px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            width: 100%; max-width: 500px; padding: 1rem 1.5rem; font-size: 1rem;
+            border: 2px solid #888888; border-radius: 50px; outline: none;
+            transition: all 0.3s ease; font-family: inherit;
         }
-        .search-bar input:focus{
-            border-color: #111111;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
-        }
-        .search-bar input::placeholder{
-            color: #555555;
-            opacity: 0.7;
-        }
+        .search-bar input:focus{ border-color: #111111; box-shadow: 0 0 0 3px rgba(0,0,0,0.1); }
+        .search-bar input::placeholder{ color: #555555; opacity: 0.7; }
         .games-grid{
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -257,571 +218,129 @@
             margin-bottom: 2rem;
         }
         .game-card{
-            background: var(--bg);
-            border-radius: 14px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            text-align: center;
+            background: var(--bg); border-radius: 14px; padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease; text-align: center;
         }
-        .game-card:hover{
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-        .game-card h3{
-            margin: 0 0 0.75rem 0;
-            color: #111111;
-            font-size: 1.8rem;
-        }
-        .game-card p{
-            margin: 0 0 1.5rem 0;
-            color: #444444;
-            opacity: 0.85;
-            line-height: 1.6;
-        }
+        .game-card:hover{ transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .game-card h3{ margin: 0 0 0.75rem 0; color: #111111; font-size: 1.8rem; }
+        .game-card p{ margin: 0 0 1.5rem 0; color: #444444; opacity: 0.85; line-height: 1.6; }
         .game-icon{
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: linear-gradient(135deg,#555555,#111111);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1.5rem auto;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; margin: 0 auto 1.5rem auto; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
-        /* Dark icon variant for proxy card */
-        .game-icon.proxy-icon{
-            background: linear-gradient(135deg, #222222, #666666);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
+        .game-icon.proxy-icon{ background: linear-gradient(135deg, #222222, #666666); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
         .btn-play{
-            background: linear-gradient(135deg,#555555,#111111);
-            color: #fff;
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg,#555555,#111111); color: #fff;
+            padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1rem;
+            text-decoration: none; display: inline-block; transition: all 0.3s ease;
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
-        .btn-play:hover{
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        /* Dark play button variant for proxy */
-        .btn-play.btn-proxy{
-            background: linear-gradient(135deg, #222222, #555555);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-        }
-        .btn-play.btn-proxy:hover{
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        /* Global request cards */
-        .requests-section{
-            margin-top: 2rem;
-            margin-bottom: 3rem;
-        }
-        .requests-grid{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
+        .btn-play:hover{ transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .btn-play.btn-proxy{ background: linear-gradient(135deg, #222222, #555555); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .btn-play.btn-proxy:hover{ box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+        .requests-section{ margin-top: 2rem; margin-bottom: 3rem; }
+        .requests-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
         .request-card{
-            background: var(--bg);
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.08);
-            text-align: left;
+            background: var(--bg); border-radius: 12px; padding: 1.25rem 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.08); text-align: left;
         }
-        .request-card-title{
-            margin: 0 0 0.25rem 0;
-            font-weight: 700;
-            color: #111111;
-            font-size: 1.1rem;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
-        .request-card-meta{
-            margin: 0 0 0.5rem 0;
-            font-size: 0.85rem;
-            opacity: 0.8;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
-        .request-card-reason{
-            margin: 0 0 0.75rem 0;
-            font-size: 0.95rem;
-            color: #444444;
-            line-height: 1.45;
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
-
-        /* Like button */
-        .like-row{
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            margin-top: 0.25rem;
-        }
+        .request-card-title{ margin: 0 0 0.25rem 0; font-weight: 700; color: #111111; font-size: 1.1rem; overflow-wrap: anywhere; word-break: break-word; }
+        .request-card-meta{ margin: 0 0 0.5rem 0; font-size: 0.85rem; opacity: 0.8; overflow-wrap: anywhere; word-break: break-word; }
+        .request-card-reason{ margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #444444; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }
+        .like-row{ display: flex; align-items: center; gap: 0.4rem; margin-top: 0.25rem; }
         .like-button{
-            border:none;
-            border-radius:999px;
-            padding:0.25rem 0.7rem;
-            font-size:0.85rem;
-            cursor:pointer;
-            background:rgba(0,0,0,0.08);
-            color:#111111;
-            display:inline-flex;
-            align-items:center;
-            gap:0.25rem;
+            border:none; border-radius:999px; padding:0.25rem 0.7rem; font-size:0.85rem;
+            cursor:pointer; background:rgba(0,0,0,0.08); color:#111111;
+            display:inline-flex; align-items:center; gap:0.25rem;
         }
-        .like-button:hover{
-            background:rgba(0,0,0,0.18);
-        }
-        .like-button.liked{
-            background:rgba(0,0,0,0.3);
-            cursor:default;
-            opacity:0.8;
-        }
-        .like-count{
-            font-weight:600;
-            font-size:0.9rem;
-        }
-
-        /* Leaderboard */
-        .leaderboard-section{
-            margin-top: 2rem;
-            margin-bottom: 3rem;
-        }
-        .leaderboard-header{
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-end;
-            gap:1rem;
-            margin-bottom:0.75rem;
-        }
-        .leaderboard-title{
-            margin:0;
-            font-size:2rem;
-            color:#ffffff;
-        }
-        .leaderboard-subtitle{
-            margin:0.25rem 0 0 0;
-            font-size:0.95rem;
-            color:#cccccc;
-            opacity:0.9;
-        }
-        .leaderboard-badge{
-            padding:0.35rem 0.9rem;
-            border-radius:999px;
-            background:rgba(255,255,255,0.12);
-            font-size:0.85rem;
-            font-weight:600;
-            color:#ffffff;
-            white-space:nowrap;
-        }
-        .leaderboard-table-wrapper{
-            border-radius:14px;
-            overflow:hidden;
-            box-shadow:0 10px 30px rgba(0,0,0,0.3);
-            background:#1a1a1a;
-            border:1px solid rgba(255,255,255,0.08);
-        }
-        .leaderboard-table{
-            width:100%;
-            border-collapse:collapse;
-        }
-        .leaderboard-table thead{
-            background:linear-gradient(135deg,#333333,#111111);
-            color:#fff;
-        }
-        .leaderboard-table th,
-        .leaderboard-table td{
-            padding:0.75rem 1rem;
-            text-align:left;
-            font-size:0.95rem;
-            color:#ffffff;
-        }
-        .leaderboard-table th:first-child,
-        .leaderboard-table td:first-child{
-            width:48px;
-            text-align:center;
-        }
-        .leaderboard-table tbody tr:nth-child(even){
-            background:rgba(4,86,166,0.02);
-        }
-        .leaderboard-table tbody tr:first-child{
-            background:rgba(255,215,0,0.15);
-            font-weight:600;
-        }
-        .leaderboard-table tbody tr:first-child td:first-child::before{
-            content:"🥇";
-            margin-right:0.25rem;
-        }
-
+        .like-button:hover{ background:rgba(0,0,0,0.18); }
+        .like-button.liked{ background:rgba(0,0,0,0.3); cursor:default; opacity:0.8; }
+        .like-count{ font-weight:600; font-size:0.9rem; }
+        .leaderboard-section{ margin-top: 2rem; margin-bottom: 3rem; }
+        .leaderboard-header{ display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:0.75rem; }
+        .leaderboard-title{ margin:0; font-size:2rem; color:#ffffff; }
+        .leaderboard-subtitle{ margin:0.25rem 0 0 0; font-size:0.95rem; color:#cccccc; opacity:0.9; }
+        .leaderboard-badge{ padding:0.35rem 0.9rem; border-radius:999px; background:rgba(255,255,255,0.12); font-size:0.85rem; font-weight:600; color:#ffffff; white-space:nowrap; }
+        .leaderboard-table-wrapper{ border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3); background:#1a1a1a; border:1px solid rgba(255,255,255,0.08); }
+        .leaderboard-table{ width:100%; border-collapse:collapse; }
+        .leaderboard-table thead{ background:linear-gradient(135deg,#333333,#111111); color:#fff; }
+        .leaderboard-table th, .leaderboard-table td{ padding:0.75rem 1rem; text-align:left; font-size:0.95rem; color:#ffffff; }
+        .leaderboard-table th:first-child, .leaderboard-table td:first-child{ width:48px; text-align:center; }
+        .leaderboard-table tbody tr:nth-child(even){ background:rgba(4,86,166,0.02); }
+        .leaderboard-table tbody tr:first-child{ background:rgba(255,215,0,0.15); font-weight:600; }
+        .leaderboard-table tbody tr:first-child td:first-child::before{ content:"🥇"; margin-right:0.25rem; }
         @media (prefers-color-scheme: dark){
             body{background:linear-gradient(180deg,#0a0a0a 0%, #111111 40%);}
             .game-card{background:#1a1a1a; color:#f0f0f0; box-shadow: none; border:1px solid rgba(255,255,255,0.06)}
-            .game-card h3{color:#f0f0f0;}
-            .game-card p{color:#aaaaaa;}
-            h1{color:#f0f0f0;}
-            p.lead{color:#aaaaaa;}
-            .games-section h2{color:#f0f0f0;}
+            .game-card h3{color:#f0f0f0;} .game-card p{color:#aaaaaa;}
+            h1{color:#f0f0f0;} p.lead{color:#aaaaaa;} .games-section h2{color:#f0f0f0;}
             .request-card{background:#1a1a1a; color:#f0f0f0; border:1px solid rgba(255,255,255,0.06);}
-            .request-card-title{color:#f0f0f0;}
-            .request-card-reason{color:#aaaaaa;}
-            .leaderboard-table-wrapper{
-                background:#1a1a1a;
-                border:1px solid rgba(255,255,255,0.06);
-            }
-            .leaderboard-table thead{
-                background:linear-gradient(135deg,#333333,#555555);
-            }
-            .leaderboard-title{color:#f0f0f0;}
-            .leaderboard-subtitle{color:#aaaaaa;}
-            .leaderboard-badge{
-                background:rgba(255,255,255,0.1);
-                color:#f0f0f0;
-            }
+            .request-card-title{color:#f0f0f0;} .request-card-reason{color:#aaaaaa;}
+            .leaderboard-table-wrapper{background:#1a1a1a; border:1px solid rgba(255,255,255,0.06);}
+            .leaderboard-table thead{background:linear-gradient(135deg,#333333,#555555);}
+            .leaderboard-title{color:#f0f0f0;} .leaderboard-subtitle{color:#aaaaaa;}
+            .leaderboard-badge{background:rgba(255,255,255,0.1); color:#f0f0f0;}
         }
-
-        /* Password gate overlay */
-        .pw-gate {
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            background: #0a0a0a;
-            display: grid;
-            place-items: center;
-            padding: 1rem;
-        }
+        .pw-gate{ position: fixed; inset: 0; z-index: 999999; background: #0a0a0a; display: grid; place-items: center; padding: 1rem; }
         .pw-gate.hidden { display: none; }
-        .pw-box {
-            background: #111111;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 2.5rem;
-            width: 360px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-        }
-        .pw-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-            line-height: 1;
-        }
-        .pw-box h2 {
-            margin: 0 0 0.5rem 0;
-            color: #f0f0f0;
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-        .pw-box p {
-            margin: 0 0 1.5rem 0;
-            color: #888;
-            font-size: 0.88rem;
-            line-height: 1.55;
-            text-align: center;
-        }
-        .pw-input {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            color: #f0f0f0;
-            font-family: inherit;
-            text-align: center;
-            margin-bottom: 0.75rem;
-            transition: border-color 0.2s;
-        }
+        .pw-box{ background: #111111; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 2.5rem; width: 360px; box-shadow: 0 25px 60px rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; gap: 0; }
+        .pw-icon{ font-size: 2.5rem; margin-bottom: 0.75rem; line-height: 1; }
+        .pw-box h2{ margin: 0 0 0.5rem 0; color: #f0f0f0; font-size: 1.5rem; letter-spacing: -0.02em; text-align: center; }
+        .pw-box p{ margin: 0 0 1.5rem 0; color: #888; font-size: 0.88rem; line-height: 1.55; text-align: center; }
+        .pw-input{ display: block; width: 100%; box-sizing: border-box; background: #1a1a1a; border: 2px solid #333; border-radius: 12px; padding: 0.75rem 1rem; font-size: 1rem; color: #f0f0f0; font-family: inherit; text-align: center; margin-bottom: 0.75rem; transition: border-color 0.2s; }
         .pw-input:focus { outline: none; border-color: #dc2626; }
-        .pw-input.shake {
-            animation: pwShake 0.4s ease;
-            border-color: #ef4444;
-        }
-        @keyframes pwShake {
-            0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
-        }
-        .pw-submit {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            background: linear-gradient(135deg, #dc2626, #991b1b);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: transform 0.18s, box-shadow 0.18s;
-            box-shadow: 0 4px 20px rgba(220,38,38,0.35);
-        }
+        .pw-input.shake{ animation: pwShake 0.4s ease; border-color: #ef4444; }
+        @keyframes pwShake{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }
+        .pw-submit{ display: block; width: 100%; box-sizing: border-box; background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; border: none; border-radius: 12px; padding: 0.75rem 1rem; font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; box-shadow: 0 4px 20px rgba(220,38,38,0.35); }
         .pw-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(220,38,38,0.5); }
-        .pw-error {
-            color: #ef4444;
-            font-size: 0.83rem;
-            margin-top: 0.6rem;
-            min-height: 1.2em;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* ToS overlay */
-        .tos-overlay{
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: rgba(0,0,0,0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
+        .pw-error{ color: #ef4444; font-size: 0.83rem; margin-top: 0.6rem; min-height: 1.2em; text-align: center; width: 100%; }
+        .tos-overlay{ position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 1rem; }
         .tos-overlay.hidden{ display: none; }
-        .tos-box{
-            background: #fff;
-            border-radius: 18px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-        .tos-header{
-            padding: 1.75rem 2rem 1rem 2rem;
-            border-bottom: 2px solid #eee;
-        }
-        .tos-header h2{
-            margin: 0 0 0.25rem 0;
-            font-size: 1.8rem;
-            color: #111;
-        }
+        .tos-box{ background: #fff; border-radius: 18px; max-width: 600px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 30px 80px rgba(0,0,0,0.5); overflow: hidden; }
+        .tos-header{ padding: 1.75rem 2rem 1rem 2rem; border-bottom: 2px solid #eee; }
+        .tos-header h2{ margin: 0 0 0.25rem 0; font-size: 1.8rem; color: #111; }
         .tos-header p{ margin: 0; color: #555; font-size: 0.95rem; }
-        .tos-body{
-            padding: 1.25rem 2rem;
-            overflow-y: auto;
-            flex: 1;
-            font-size: 0.95rem;
-            color: #333;
-            line-height: 1.7;
-        }
+        .tos-body{ padding: 1.25rem 2rem; overflow-y: auto; flex: 1; font-size: 0.95rem; color: #333; line-height: 1.7; }
         .tos-body h3{ color: #111; font-size: 1.05rem; margin: 1.25rem 0 0.4rem 0; }
         .tos-body h3:first-child{ margin-top: 0; }
         .tos-body ul{ margin: 0.25rem 0 0.75rem 1.25rem; padding: 0; }
         .tos-body ul li{ margin-bottom: 0.3rem; }
-        .tos-rule-red{
-            background: linear-gradient(135deg, #2a0000, #1a0000);
-            border-left: 4px solid #ff0000;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: #ffaaaa;
-            margin: 0.75rem 0;
-        }
+        .tos-rule-red{ background: linear-gradient(135deg, #2a0000, #1a0000); border-left: 4px solid #ff0000; border-radius: 8px; padding: 0.75rem 1rem; color: #ffaaaa; margin: 0.75rem 0; }
         .tos-rule-red strong{ color: #ff4444; }
-        .tos-footer{
-            padding: 1.25rem 2rem;
-            border-top: 2px solid #eee;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .tos-checkbox-row{
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.95rem;
-            color: #111;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        .tos-footer{ padding: 1.25rem 2rem; border-top: 2px solid #eee; display: flex; flex-direction: column; gap: 0.75rem; }
+        .tos-checkbox-row{ display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem; color: #111; font-weight: 600; cursor: pointer; }
         .tos-checkbox-row input[type="checkbox"]{ width: 18px; height: 18px; cursor: pointer; accent-color: #111; }
-        .tos-accept-btn{
-            width: 100%;
-            background: linear-gradient(135deg, #111111, #444444);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 1rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            font-family: inherit;
-        }
+        .tos-accept-btn{ width: 100%; background: linear-gradient(135deg, #111111, #444444); color: #fff; border: none; border-radius: 10px; padding: 1rem; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s, opacity 0.2s; font-family: inherit; }
         .tos-accept-btn:disabled{ opacity: 0.4; cursor: not-allowed; }
         .tos-accept-btn:not(:disabled):hover{ transform: translateY(-2px); }
-        .tos-decline-btn{
-            width: 100%;
-            background: none;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            padding: 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #555;
-            cursor: pointer;
-            font-family: inherit;
-            transition: border-color 0.2s;
-        }
+        .tos-decline-btn{ width: 100%; background: none; border: 2px solid #ccc; border-radius: 10px; padding: 0.75rem; font-size: 0.95rem; font-weight: 600; color: #555; cursor: pointer; font-family: inherit; transition: border-color 0.2s; }
         .tos-decline-btn:hover{ border-color: #888; color: #111; }
         @media (prefers-color-scheme: dark){
-            .tos-box{ background: #111; }
-            .tos-header{ border-bottom-color: #222; }
-            .tos-header h2{ color: #f0f0f0; }
-            .tos-header p{ color: #aaa; }
-            .tos-body{ color: #ccc; }
-            .tos-body h3{ color: #f0f0f0; }
-            .tos-footer{ border-top-color: #222; }
-            .tos-checkbox-row{ color: #f0f0f0; }
+            .tos-box{ background: #111; } .tos-header{ border-bottom-color: #222; }
+            .tos-header h2{ color: #f0f0f0; } .tos-header p{ color: #aaa; }
+            .tos-body{ color: #ccc; } .tos-body h3{ color: #f0f0f0; }
+            .tos-footer{ border-top-color: #222; } .tos-checkbox-row{ color: #f0f0f0; }
             .tos-decline-btn{ border-color: #444; color: #aaa; }
         }
-
-        /* Slur warning banner */
-        .slur-banner{
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 9999;
-            background: linear-gradient(135deg, #aa0000, #ff0000);
-            color: #fff;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            font-weight: 800;
-            font-size: 1.4rem;
-            box-shadow: 0 6px 30px rgba(255,0,0,0.5);
-            animation: slideDown 0.3s ease;
-            letter-spacing: 0.01em;
-            border-bottom: 3px solid #ff4444;
-        }
+        .slur-banner{ display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: linear-gradient(135deg, #aa0000, #ff0000); color: #fff; padding: 1.5rem 2rem; text-align: center; font-weight: 800; font-size: 1.4rem; box-shadow: 0 6px 30px rgba(255,0,0,0.5); animation: slideDown 0.3s ease; letter-spacing: 0.01em; border-bottom: 3px solid #ff4444; }
         .slur-banner.visible{ display: block; }
-        .slur-banner-close{
-            margin-left: 1.5rem;
-            background: rgba(255,255,255,0.25);
-            border: 2px solid rgba(255,255,255,0.5);
-            color: #fff;
-            font-weight: 800;
-            padding: 0.4rem 1rem;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+        .slur-banner-close{ margin-left: 1.5rem; background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5); color: #fff; font-weight: 800; padding: 0.4rem 1rem; border-radius: 999px; cursor: pointer; font-size: 1rem; }
         .slur-banner-close:hover{ background: rgba(255,255,255,0.4); }
-
-        /* Fingerprint badge on request cards */
-        .fingerprint-badge{
-            display: inline-block;
-            font-size: 0.85rem;
-            background: linear-gradient(135deg, #cc0000, #ff3333);
-            color: #fff;
-            border-radius: 6px;
-            padding: 0.3rem 0.7rem;
-            margin-top: 0.5rem;
-            font-family: monospace;
-            font-weight: 700;
-            word-break: break-all;
-            box-shadow: 0 2px 8px rgba(200,0,0,0.3);
-        }
-
-        /* Premium modal */
-        .premium-modal{
-            display: none;
-            position: fixed;
-            z-index: 1100;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            animation: fadeIn 0.3s;
-        }
-        .premium-modal-content{
-            background: #fff;
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideDown 0.3s;
-            text-align: center;
-        }
-        .premium-icon{
-            font-size: 3rem;
-            margin-bottom: 0.75rem;
-        }
-        .premium-modal-content h2{
-            margin: 0 0 0.5rem 0;
-            color: #111111;
-            font-size: 1.6rem;
-        }
-        .premium-modal-content p{
-            color: #555555;
-            margin: 0 0 1.25rem 0;
-            line-height: 1.6;
-        }
-        .premium-input{
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #888888;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        .premium-input:focus{
-            outline: none;
-            border-color: #111111;
-        }
-        .premium-submit{
-            width: 100%;
-            background: linear-gradient(135deg, #111111, #555555);
-            color: #fff;
-            padding: 0.85rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s;
-            margin-bottom: 0.5rem;
-        }
+        .fingerprint-badge{ display: inline-block; font-size: 0.85rem; background: linear-gradient(135deg, #cc0000, #ff3333); color: #fff; border-radius: 6px; padding: 0.3rem 0.7rem; margin-top: 0.5rem; font-family: monospace; font-weight: 700; word-break: break-all; box-shadow: 0 2px 8px rgba(200,0,0,0.3); }
+        .premium-modal{ display: none; position: fixed; z-index: 1100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); animation: fadeIn 0.3s; }
+        .premium-modal-content{ background: #fff; margin: 10% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideDown 0.3s; text-align: center; }
+        .premium-icon{ font-size: 3rem; margin-bottom: 0.75rem; }
+        .premium-modal-content h2{ margin: 0 0 0.5rem 0; color: #111111; font-size: 1.6rem; }
+        .premium-modal-content p{ color: #555555; margin: 0 0 1.25rem 0; line-height: 1.6; }
+        .premium-input{ width: 100%; padding: 0.75rem; border: 2px solid #888888; border-radius: 8px; font-family: inherit; font-size: 1rem; margin-bottom: 0.75rem; box-sizing: border-box; transition: border-color 0.3s; }
+        .premium-input:focus{ outline: none; border-color: #111111; }
+        .premium-submit{ width: 100%; background: linear-gradient(135deg, #111111, #555555); color: #fff; padding: 0.85rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s; margin-bottom: 0.5rem; }
         .premium-submit:hover{ transform: translateY(-2px); }
-        .premium-error{
-            color: #cc0000;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-        .premium-close{
-            margin-top: 0.75rem;
-            background: none;
-            border: none;
-            color: #888888;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-family: inherit;
-        }
+        .premium-error{ color: #cc0000; font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+        .premium-close{ margin-top: 0.75rem; background: none; border: none; color: #888888; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
         .premium-close:hover{ color: #111111; }
         @media (prefers-color-scheme: dark){
             .premium-modal-content{ background: #1a1a1a; }
@@ -829,359 +348,70 @@
             .premium-modal-content p{ color: #aaaaaa; }
             .premium-input{ background: #111111; color: #f0f0f0; border-color: #444444; }
         }
-        /* Request modal */
-        .modal{
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s;
-        }
-        .modal-content{
-            background: var(--bg);
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideDown 0.3s;
-        }
-        .modal-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        .modal-header h2{
-            margin: 0;
-            color: #111111;
-        }
-        .close-btn{
-            font-size: 2rem;
-            font-weight: bold;
-            color: #999;
-            cursor: pointer;
-            border: none;
-            background: none;
-            transition: color 0.3s;
-        }
-        .close-btn:hover{
-            color: #333;
-        }
-        .form-group{
-            margin-bottom: 1.5rem;
-        }
-        .form-group label{
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #111111;
-            font-weight: 600;
-        }
-        .form-group input, .form-group textarea{
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #888888;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus, .form-group textarea:focus{
-            outline: none;
-            border-color: #111111;
-        }
-        .form-group textarea{
-            resize: vertical;
-            min-height: 100px;
-        }
-        .char-counter{
-            margin-top: 0.35rem;
-            text-align: right;
-            font-size: 0.8rem;
-            color: #555555;
-            opacity: 0.9;
-        }
-        .submit-btn{
-            width: 100%;
-            background: linear-gradient(135deg,#555555,#111111);
-            color: #fff;
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .submit-btn:hover{
-            transform: translateY(-2px);
-        }
-        @keyframes fadeIn{
-            from{opacity: 0;}
-            to{opacity: 1;}
-        }
-        @keyframes slideDown{
-            from{transform: translateY(-50px); opacity: 0;}
-            to{transform: translateY(0); opacity: 1;}
-        }
-
-        /* Tab Navigation */
-        .tabs-container{
-            margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(4,86,166,0.1);
-        }
-        .tabs{
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .tab-button{
-            background: transparent;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #111111;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-        .tab-button:hover{
-            color: #555555;
-            background: rgba(0,0,0,0.05);
-        }
-        .tab-button.active{
-            color: #111111;
-            border-bottom-color: #111111;
-            background: rgba(0,0,0,0.05);
-        }
-        .tab-content{
-            display: none;
-        }
-        .tab-content.active{
-            display: block;
-            animation: fadeIn 0.3s;
-        }
-
-        /* Announcements Section */
-        .announcements-section{
-            margin-bottom: 3rem;
-        }
-        .announcements-section > h2{
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #111111;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        .announcements-section > h2::after{
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #555555, #111111);
-            border-radius: 2px;
-        }
-        .announcement-card{
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-left: 5px solid;
-            border-image: linear-gradient(135deg, #555555, #111111) 1;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .announcement-card::before{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #555555, #111111, #555555);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
-        }
-        @keyframes shimmer{
-            0%{ background-position: -200% 0; }
-            100%{ background-position: 200% 0; }
-        }
-        .announcement-card:hover{
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1);
-            border-color: rgba(0,0,0,0.2);
-        }
-        .announcement-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            gap: 1rem;
-        }
-        .announcement-title{
-            margin: 0;
-            font-size: 1.5rem;
-            color: #111111;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.3;
-        }
-        .announcement-date{
-            font-size: 0.9rem;
-            color: #444444;
-            opacity: 0.8;
-            white-space: nowrap;
-            padding: 0.4rem 0.8rem;
-            background: rgba(0,0,0,0.06);
-            border-radius: 20px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .announcement-date::before{
-            content: '📅';
-            font-size: 0.85rem;
-        }
-        .announcement-content{
-            color: #444444;
-            line-height: 1.8;
-            margin: 0;
-            font-size: 1.05rem;
-        }
-        .announcement-badge{
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: linear-gradient(135deg, #555555, #111111);
-            color: #fff;
-            padding: 0.5rem 1.2rem;
-            border-radius: 25px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            transition: all 0.3s ease;
-        }
-        .announcement-badge:hover{
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        .announcement-card:nth-child(2) .announcement-badge{
-            background: linear-gradient(135deg, #333333, #666666);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .announcement-card:nth-child(2) .announcement-badge:hover{
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        .announcement-card:nth-child(3) .announcement-badge{
-            background: linear-gradient(135deg, #222222, #555555);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .announcement-card:nth-child(3) .announcement-badge:hover{
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
+        .modal{ display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content{ background: var(--bg); margin: 5% auto; padding: 2rem; border-radius: 16px; width: 90%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideDown 0.3s; }
+        .modal-header{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h2{ margin: 0; color: #111111; }
+        .close-btn{ font-size: 2rem; font-weight: bold; color: #999; cursor: pointer; border: none; background: none; transition: color 0.3s; }
+        .close-btn:hover{ color: #333; }
+        .form-group{ margin-bottom: 1.5rem; }
+        .form-group label{ display: block; margin-bottom: 0.5rem; color: #111111; font-weight: 600; }
+        .form-group input, .form-group textarea{ width: 100%; padding: 0.75rem; border: 2px solid #888888; border-radius: 8px; font-family: inherit; font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group textarea:focus{ outline: none; border-color: #111111; }
+        .form-group textarea{ resize: vertical; min-height: 100px; }
+        .char-counter{ margin-top: 0.35rem; text-align: right; font-size: 0.8rem; color: #555555; opacity: 0.9; }
+        .submit-btn{ width: 100%; background: linear-gradient(135deg,#555555,#111111); color: #fff; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s; }
+        .submit-btn:hover{ transform: translateY(-2px); }
+        @keyframes fadeIn{ from{opacity: 0;} to{opacity: 1;} }
+        @keyframes slideDown{ from{transform: translateY(-50px); opacity: 0;} to{transform: translateY(0); opacity: 1;} }
+        .tabs-container{ margin-bottom: 2rem; border-bottom: 2px solid rgba(4,86,166,0.1); }
+        .tabs{ display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+        .tab-button{ background: transparent; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 600; color: #111111; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s ease; font-family: inherit; }
+        .tab-button:hover{ color: #555555; background: rgba(0,0,0,0.05); }
+        .tab-button.active{ color: #111111; border-bottom-color: #111111; background: rgba(0,0,0,0.05); }
+        .tab-content{ display: none; }
+        .tab-content.active{ display: block; animation: fadeIn 0.3s; }
+        .announcements-section{ margin-bottom: 3rem; }
+        .announcements-section > h2{ font-size: 2.5rem; margin-bottom: 2rem; color: #111111; text-align: center; position: relative; display: inline-block; width: 100%; }
+        .announcements-section > h2::after{ content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(90deg, #555555, #111111); border-radius: 2px; }
+        .announcement-card{ background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1); border-left: 5px solid; border-image: linear-gradient(135deg, #555555, #111111) 1; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .announcement-card::before{ content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #555555, #111111, #555555); background-size: 200% 100%; animation: shimmer 3s infinite; }
+        @keyframes shimmer{ 0%{ background-position: -200% 0; } 100%{ background-position: 200% 0; } }
+        .announcement-card:hover{ transform: translateY(-5px) scale(1.01); box-shadow: 0 15px 50px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.2); }
+        .announcement-header{ display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
+        .announcement-title{ margin: 0; font-size: 1.5rem; color: #111111; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
+        .announcement-date{ font-size: 0.9rem; color: #444444; opacity: 0.8; white-space: nowrap; padding: 0.4rem 0.8rem; background: rgba(0,0,0,0.06); border-radius: 20px; font-weight: 500; display: flex; align-items: center; gap: 0.3rem; }
+        .announcement-date::before{ content: '📅'; font-size: 0.85rem; }
+        .announcement-content{ color: #444444; line-height: 1.8; margin: 0; font-size: 1.05rem; }
+        .announcement-badge{ display: inline-flex; align-items: center; gap: 0.4rem; background: linear-gradient(135deg, #555555, #111111); color: #fff; padding: 0.5rem 1.2rem; border-radius: 25px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-transform: uppercase; letter-spacing: 0.8px; transition: all 0.3s ease; }
+        .announcement-badge:hover{ transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .announcement-card:nth-child(2) .announcement-badge{ background: linear-gradient(135deg, #333333, #666666); }
+        .announcement-card:nth-child(3) .announcement-badge{ background: linear-gradient(135deg, #222222, #555555); }
         @media (max-width: 760px){
-            .forums-access{
-                padding: 1rem;
-            }
-            .forums-float{
-                right: 0.75rem;
-                bottom: 0.75rem;
-                padding: 0.72rem 0.95rem;
-                font-size: 0.92rem;
-            }
-            .proxy-float{
-                right: 0.75rem;
-                bottom: 4.2rem;
-                padding: 0.72rem 0.95rem;
-                font-size: 0.92rem;
-            }
+            .forums-access{ padding: 1rem; }
+            .forums-float{ right: 0.75rem; bottom: 0.75rem; padding: 0.72rem 0.95rem; font-size: 0.92rem; }
+            .proxy-float{ right: 0.75rem; bottom: 4.2rem; padding: 0.72rem 0.95rem; font-size: 0.92rem; }
         }
-
         @media (prefers-color-scheme: dark){
-            .tab-button{
-                color: #f0f0f0;
-            }
-            .tab-button:hover{
-                color: #aaaaaa;
-                background: rgba(255,255,255,0.08);
-            }
-            .tab-button.active{
-                color: #f0f0f0;
-                border-bottom-color: #aaaaaa;
-                background: rgba(255,255,255,0.06);
-            }
-            .announcement-card{
-                background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.85) 100%);
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(255,255,255,0.05);
-            }
-            .announcement-card:hover{
-                box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 5px 15px rgba(255,255,255,0.08);
-            }
-            .announcement-title{
-                color: #f0f0f0;
-            }
-            .announcement-content{
-                color: #aaaaaa;
-            }
-            .announcement-date{
-                background: rgba(255,255,255,0.1);
-                color: #aaaaaa;
-            }
-            .announcements-section > h2{
-                color: #f0f0f0;
-            }
-            .forums-access{
-                background: linear-gradient(125deg, #1a1a1a, #333333 46%, #444444);
-            }
-            .announcement-link{
-                background: linear-gradient(135deg, #333333, #111111);
-            }
+            .tab-button{ color: #f0f0f0; }
+            .tab-button:hover{ color: #aaaaaa; background: rgba(255,255,255,0.08); }
+            .tab-button.active{ color: #f0f0f0; border-bottom-color: #aaaaaa; background: rgba(255,255,255,0.06); }
+            .announcement-card{ background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.85) 100%); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(255,255,255,0.05); }
+            .announcement-card:hover{ box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 5px 15px rgba(255,255,255,0.08); }
+            .announcement-title{ color: #f0f0f0; } .announcement-content{ color: #aaaaaa; }
+            .announcement-date{ background: rgba(255,255,255,0.1); color: #aaaaaa; }
+            .announcements-section > h2{ color: #f0f0f0; }
+            .forums-access{ background: linear-gradient(125deg, #1a1a1a, #333333 46%, #444444); }
+            .announcement-link{ background: linear-gradient(135deg, #333333, #111111); }
         }
     </style>
 </head>
 <body>
 
     <!-- Intro Cutscene Overlay -->
-    <div id="cutsceneOverlay" style="
-        position:fixed;top:0;left:0;width:100%;height:100%;
-        background:#000;z-index:99999;
-        display:none;align-items:center;justify-content:center;
-        transition:opacity 0.8s ease;
-    ">
-        <video id="cutsceneVideo" src="intro.mp4"
-            muted playsinline
-            style="width:100%;height:100%;object-fit:cover;">
-        </video>
-        <button onclick="skipCutscene()" style="
-            position:absolute;bottom:2rem;right:2rem;
-            background:rgba(255,255,255,0.15);color:#fff;
-            border:1px solid rgba(255,255,255,0.4);
-            padding:0.5rem 1.2rem;border-radius:8px;
-            font-size:0.9rem;cursor:pointer;
-            backdrop-filter:blur(4px);
-        ">Skip</button>
+    <div id="cutsceneOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:99999;display:none;align-items:center;justify-content:center;transition:opacity 0.8s ease;">
+        <video id="cutsceneVideo" src="intro.mp4" muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+        <button onclick="skipCutscene()" style="position:absolute;bottom:2rem;right:2rem;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);padding:0.5rem 1.2rem;border-radius:8px;font-size:0.9rem;cursor:pointer;backdrop-filter:blur(4px);">Skip</button>
     </div>
     <script>
         function playCutscene() {
@@ -1197,7 +427,6 @@
                 overlay.style.opacity = '0';
                 setTimeout(function(){
                     overlay.style.display = 'none';
-                    // Show ToS if not yet accepted
                     if (localStorage.getItem("tosAccepted") !== "true") {
                         document.getElementById("tosOverlay").classList.remove("hidden");
                     }
@@ -1206,13 +435,12 @@
             video.addEventListener('ended', endCutscene, { once: true });
             window.skipCutscene = endCutscene;
         }
-        // If password already entered, play cutscene on load (ToS check happens after)
         if (localStorage.getItem("siteUnlocked") === "true") {
             document.addEventListener("DOMContentLoaded", playCutscene);
         }
     </script>
 
-    <!-- Password Gate (shows first, before ToS) -->
+    <!-- Password Gate -->
     <div id="pwGate" class="pw-gate">
         <div class="pw-box">
             <div class="pw-icon">🔒</div>
@@ -1238,33 +466,28 @@
                     <li>You agree to use this site respectfully and responsibly.</li>
                     <li>You must not attempt to exploit, hack, or disrupt the site.</li>
                 </ul>
-
                 <h3>2. Game Requests</h3>
                 <ul>
                     <li>Game requests must be genuine and respectful.</li>
                     <li>Spam, joke requests, and repeated duplicate submissions are not allowed.</li>
                     <li>Requests are not guaranteed to be fulfilled.</li>
                 </ul>
-
                 <div class="tos-rule-red">
                     <strong>3. Zero Tolerance for Hate Speech</strong><br>
                     Submitting slurs, hate speech, or any form of discriminatory language is <strong>strictly prohibited</strong>. Violations are automatically detected, your device fingerprint is logged, and repeat offenders will be permanently flagged. This includes attempts to bypass the filter using numbers, symbols, or spacing tricks.
                 </div>
-
                 <h3>4. Privacy</h3>
                 <ul>
                     <li>A device fingerprint is collected with every game request submission for moderation purposes.</li>
                     <li>No personal data is sold or shared with third parties.</li>
                     <li>Firebase is used to store requests and moderation logs.</li>
                 </ul>
-
                 <h3>5. Premium Access</h3>
                 <ul>
                     <li>The web proxy is a premium feature requiring a password from the site owner.</li>
                     <li>Sharing the premium password with others is not allowed.</li>
                     <li>Access may be revoked at any time.</li>
                 </ul>
-
                 <h3>6. Disclaimer</h3>
                 <ul>
                     <li>Games are hosted for educational and entertainment purposes.</li>
@@ -1284,7 +507,7 @@
     </div>
 
     <script>
-        // Password gate — shows before ToS, cached in localStorage
+        // ── Password gate ──────────────────────────────────────────────
         const PW_HASH = "6f9994cc050ba6017ca4b972464b2e70742f827bc6aca7d5e8043af28bcbf117";
         const PW_KEY  = "siteUnlocked";
 
@@ -1307,6 +530,8 @@
                 localStorage.setItem(PW_KEY, "true");
                 document.getElementById("pwGate").classList.add("hidden");
                 input.value = "";
+                // ── FIX 2: log fingerprint for returning users (ToS already accepted) ──
+                if (typeof window._logFingerprint === "function") window._logFingerprint("siteVisit");
                 playCutscene();
             } else {
                 error.textContent = "❌ Incorrect password.";
@@ -1318,17 +543,20 @@
     </script>
 
     <script>
-        // ToS gate — always starts hidden; shown after intro if not yet accepted
+        // ── ToS gate ───────────────────────────────────────────────────
         (function() {
             document.getElementById("tosOverlay").classList.add("hidden");
         })();
 
+        // ── FIX 1: acceptTos calls _logFingerprint (new users) ────────
         function acceptTos() {
             localStorage.setItem("tosAccepted", "true");
             const overlay = document.getElementById("tosOverlay");
             overlay.style.opacity = "0";
             overlay.style.transition = "opacity 0.4s ease";
             setTimeout(() => { overlay.classList.add("hidden"); }, 400);
+            // Log fingerprint silently — fires for new users after ToS accept
+            if (typeof window._logFingerprint === "function") window._logFingerprint("tosAccept");
         }
 
         function declineTos() {
@@ -1345,7 +573,6 @@
     </div>
 
     <script>
-        // Global banner functions — must be outside module scope
         function showSlurBanner() {
             const banner = document.getElementById("slurBanner");
             if (banner) banner.classList.add("visible");
@@ -1356,33 +583,18 @@
         }
     </script>
 
-    <!-- Firebase + Firestore (GLOBAL requests + likes + leaderboard) -->
+    <!-- Firebase + Firestore -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import {
-            getAuth,
-            onAuthStateChanged,
-            createUserWithEmailAndPassword,
-            signInWithEmailAndPassword,
-            signInAnonymously,
-            signOut,
+            getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+            signInWithEmailAndPassword, signInAnonymously, signOut,
             updateProfile as updateAuthProfile
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import {
-            getFirestore,
-            collection,
-            addDoc,
-            getDocs,
-            query,
-            orderBy,
-            serverTimestamp,
-            doc,
-            updateDoc,
-            increment,
-            getDoc,
-            setDoc,
-            deleteDoc,
-            where
+            getFirestore, collection, addDoc, getDocs, query, orderBy,
+            serverTimestamp, doc, updateDoc, increment, getDoc, setDoc,
+            deleteDoc, where
         } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = window.FIREBASE_CONFIG;
@@ -1392,30 +604,54 @@
         const db = app ? getFirestore(app) : null;
         const requestsCol = db ? collection(db, "gameRequests") : null;
         const profilesCol = db ? collection(db, "profiles") : null;
-        const ratingsCol = db ? collection(db, "ratings") : null;
+        const ratingsCol  = db ? collection(db, "ratings") : null;
         const gameStatsCol = db ? collection(db, "gameStats") : null;
         const LOCAL_REQUESTS_KEY = "localGameRequests";
         let lastCommunityAuthError = null;
-        const REQUEST_LIMITS = {
-            game: 60,
-            name: 30,
-            reason: 350
+        const REQUEST_LIMITS = { game: 60, name: 30, reason: 350 };
+
+        // ── FIX 3: _logFingerprint — uses already-imported modular SDK ──
+        // Exposed on window so the plain scripts above can call it.
+        window._logFingerprint = async function(source) {
+            if (!db) return;
+            try {
+                const components = [
+                    navigator.userAgent, navigator.language,
+                    screen.width + "x" + screen.height, screen.colorDepth,
+                    new Date().getTimezoneOffset(),
+                    navigator.hardwareConcurrency || 0,
+                    navigator.platform || "",
+                    Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+                ].join("|");
+                const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(components));
+                const fp = Array.from(new Uint8Array(buf))
+                    .map(b => b.toString(16).padStart(2,"0")).join("").slice(0, 16);
+                await setDoc(doc(db, "fingerprintLogs", fp), {
+                    fingerprint: fp,
+                    lastSeen: serverTimestamp(),
+                    lastName: "—",
+                    source: source || "siteVisit",
+                    page: location.pathname
+                }, { merge: true });
+            } catch(e) {
+                console.warn("Fingerprint log failed:", e);
+            }
         };
 
-        function normalizeRequestText(value) {
-            return String(value || "")
-                .replace(/[\u0000-\u001F\u007F]/g, "")
-                .replace(/\s+/g, " ")
-                .trim();
+        // Auto-log for users already past password + ToS (page refresh / direct visit)
+        if (localStorage.getItem("siteUnlocked") === "true" &&
+            localStorage.getItem("tosAccepted") === "true") {
+            window._logFingerprint("siteVisit");
         }
 
-        // ── Fingerprinting ────────────────────────────────────────────
+        function normalizeRequestText(value) {
+            return String(value || "").replace(/[\u0000-\u001F\u007F]/g, "").replace(/\s+/g, " ").trim();
+        }
+
         async function getFingerprint() {
             const components = [
-                navigator.userAgent,
-                navigator.language,
-                screen.width + "x" + screen.height,
-                screen.colorDepth,
+                navigator.userAgent, navigator.language,
+                screen.width + "x" + screen.height, screen.colorDepth,
                 new Date().getTimezoneOffset(),
                 navigator.hardwareConcurrency || 0,
                 navigator.platform || "",
@@ -1423,11 +659,9 @@
             ].join("|");
             const msgBuffer = new TextEncoder().encode(components);
             const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, "0")).join("").slice(0, 16);
+            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("").slice(0, 16);
         }
 
-        // ── Slur / profanity filter ───────────────────────────────────
         const BLOCKED_PATTERNS = [
             /n+[\W_]*i+[\W_]*g+[\W_]*[gae]+[\W_]*[re]+/gi,
             /f+[\W_]*a+[\W_]*g+/gi,
@@ -1445,31 +679,19 @@
             /\bc+[\W_]*o+[\W_]*o+[\W_]*n+[\W_]*s?\b/gi,
             /\bm+[\W_]*o+[\W_]*n+[\W_]*g+[\W_]*o+[\W_]*l+[\W_]*o+[\W_]*i+[\W_]*d/gi,
         ];
-
         function stripObfuscation(text) {
-            return text
-                .toLowerCase()
-                .replace(/[0@]/g, "o")
-                .replace(/[1!|]/g, "i")
-                .replace(/3/g, "e")
-                .replace(/4/g, "a")
-                .replace(/5/g, "s")
-                .replace(/8/g, "b")
-                .replace(/\$/g, "s")
-                .replace(/\+/g, "t")
-                .replace(/[^a-z\s]/g, "");
+            return text.toLowerCase()
+                .replace(/[0@]/g,"o").replace(/[1!|]/g,"i").replace(/3/g,"e")
+                .replace(/4/g,"a").replace(/5/g,"s").replace(/8/g,"b")
+                .replace(/\$/g,"s").replace(/\+/g,"t").replace(/[^a-z\s]/g,"");
         }
-
         function containsSlur(text) {
             const cleaned = stripObfuscation(text);
             return BLOCKED_PATTERNS.some(p => { p.lastIndex = 0; return p.test(cleaned); });
         }
 
-        // ── Slur banner — defined globally above module ───────────────
-
         function truncateText(value, limit) {
-            if (value.length <= limit) return value;
-            return value.slice(0, limit);
+            return value.length <= limit ? value : value.slice(0, limit);
         }
 
         async function ensureCommunityAuth() {
@@ -1486,15 +708,12 @@
             }
         }
 
-        // Auth State Management
         let currentUser = null;
         if (auth) {
             onAuthStateChanged(auth, async (user) => {
                 currentUser = user;
                 if (user) {
-                    if (!user.isAnonymous) {
-                        await initializeUserProfile(user);
-                    }
+                    if (!user.isAnonymous) await initializeUserProfile(user);
                     updateProfileUI();
                 } else {
                     updateProfileUI();
@@ -1502,38 +721,29 @@
             });
         }
 
-        // Initialize User Profile
         async function initializeUserProfile(user) {
             if (!profilesCol || !user || user.isAnonymous) return;
             const profileRef = doc(profilesCol, user.uid);
             const profileSnap = await getDoc(profileRef);
             if (!profileSnap.exists()) {
                 await setDoc(profileRef, {
-                    uid: user.uid,
-                    email: user.email || '',
+                    uid: user.uid, email: user.email || '',
                     displayName: user.displayName || 'User',
                     username: user.displayName || `user_${user.uid.substring(0, 8)}`,
-                    gamesPlayed: 0,
-                    favoriteGenres: {},
-                    totalPlayTime: 0,
-                    createdAt: serverTimestamp(),
-                    lastLogin: serverTimestamp()
+                    gamesPlayed: 0, favoriteGenres: {}, totalPlayTime: 0,
+                    createdAt: serverTimestamp(), lastLogin: serverTimestamp()
                 });
             } else {
-                await updateDoc(profileRef, {
-                    lastLogin: serverTimestamp()
-                });
+                await updateDoc(profileRef, { lastLogin: serverTimestamp() });
             }
         }
 
         function updateProfileUI() {
             const profileBtn = document.getElementById('profileBtn');
             if (profileBtn) {
-                if (currentUser) {
-                    profileBtn.textContent = currentUser.displayName || currentUser.email || '👤 Profile';
-                } else {
-                    profileBtn.textContent = 'Sign In';
-                }
+                profileBtn.textContent = currentUser
+                    ? (currentUser.displayName || currentUser.email || '👤 Profile')
+                    : 'Sign In';
             }
         }
 
@@ -1541,7 +751,7 @@
             if (!auth) { alert("Authentication is currently unavailable."); return; }
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                if (username) { await updateAuthProfile(userCredential.user, { displayName: username }); }
+                if (username) await updateAuthProfile(userCredential.user, { displayName: username });
                 await initializeUserProfile(userCredential.user);
                 closeLoginModal();
                 alert('Account created successfully!');
@@ -1550,40 +760,33 @@
 
         window.signIn = async function(email, password) {
             if (!auth) { alert("Authentication is currently unavailable."); return; }
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                closeLoginModal();
-            } catch (error) { alert('Error: ' + error.message); }
+            try { await signInWithEmailAndPassword(auth, email, password); closeLoginModal(); }
+            catch (error) { alert('Error: ' + error.message); }
         };
 
         window.signOutUser = async function() {
             if (!auth) { alert("Authentication is currently unavailable."); return; }
-            try {
-                await signOut(auth);
-                alert('Signed out successfully');
-            } catch (error) { alert('Error signing out: ' + error.message); }
+            try { await signOut(auth); alert('Signed out successfully'); }
+            catch (error) { alert('Error signing out: ' + error.message); }
         };
 
         window.getGlobalProfile = async function(uid) {
             if (!profilesCol) return null;
-            const profileRef = doc(profilesCol, uid);
-            const profileSnap = await getDoc(profileRef);
+            const profileSnap = await getDoc(doc(profilesCol, uid));
             return profileSnap.exists() ? profileSnap.data() : null;
         };
 
         window.getAllProfiles = async function() {
             if (!profilesCol) return [];
-            const q = query(profilesCol, orderBy("gamesPlayed", "desc"));
-            const snapshot = await getDocs(q);
+            const snapshot = await getDocs(query(profilesCol, orderBy("gamesPlayed", "desc")));
             const profiles = [];
-            snapshot.forEach(doc => { profiles.push({ id: doc.id, ...doc.data() }); });
+            snapshot.forEach(d => { profiles.push({ id: d.id, ...d.data() }); });
             return profiles;
         };
 
         window.trackGamePlay = async function(gameName, category) {
             if (!currentUser || !profilesCol) return;
-            const uid = currentUser.uid;
-            const profileRef = doc(profilesCol, uid);
+            const profileRef = doc(profilesCol, currentUser.uid);
             const profileSnap = await getDoc(profileRef);
             if (profileSnap.exists()) {
                 const data = profileSnap.data();
@@ -1596,8 +799,7 @@
 
         window.getUserStats = async function() {
             if (!currentUser || !profilesCol) return null;
-            const profileRef = doc(profilesCol, currentUser.uid);
-            const profileSnap = await getDoc(profileRef);
+            const profileSnap = await getDoc(doc(profilesCol, currentUser.uid));
             return profileSnap.exists() ? profileSnap.data() : null;
         };
 
@@ -1612,28 +814,23 @@
 
         window.getGameRatings = async function(gameName) {
             if (!ratingsCol) return [];
-            const q = query(ratingsCol, where("gameName", "==", gameName));
-            const snapshot = await getDocs(q);
+            const snapshot = await getDocs(query(ratingsCol, where("gameName", "==", gameName)));
             const ratings = [];
-            snapshot.forEach(doc => { ratings.push(doc.data()); });
+            snapshot.forEach(d => { ratings.push(d.data()); });
             return ratings;
         };
 
-        // ── Like system (Firestore-based, one like per user per request) ───
         async function getUserId() {
             if (!auth) return null;
             if (currentUser) return currentUser.uid;
-            try {
-                const cred = await signInAnonymously(auth);
-                return cred.user.uid;
-            } catch (e) { console.error("Could not get user id:", e); return null; }
+            try { const cred = await signInAnonymously(auth); return cred.user.uid; }
+            catch (e) { console.error("Could not get user id:", e); return null; }
         }
 
         async function hasLiked(requestId, uid) {
             if (!db || !uid) return false;
             try {
-                const likeRef = doc(db, "gameRequests", requestId, "likedBy", uid);
-                const snap = await getDoc(likeRef);
+                const snap = await getDoc(doc(db, "gameRequests", requestId, "likedBy", uid));
                 return snap.exists();
             } catch (e) { return false; }
         }
@@ -1665,7 +862,6 @@
             } finally { likeBtn.disabled = false; }
         }
 
-        // ── Local fallback ────────────────────────────────────────────
         function getLocalRequests() {
             try {
                 const raw = localStorage.getItem(LOCAL_REQUESTS_KEY);
@@ -1699,7 +895,6 @@
                 const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = entry.game || "(Unknown game)";
                 const metaEl = document.createElement("p"); metaEl.className = "request-card-meta"; metaEl.textContent = `Requested by ${entry.name || "Anonymous"} • ${entry.dateText || "Local draft"}`;
                 const reasonEl = document.createElement("p"); reasonEl.className = "request-card-reason"; reasonEl.textContent = entry.reason || "No reason provided.";
-                // Local like button (stored in localStorage)
                 const likeRow = document.createElement("div"); likeRow.className = "like-row";
                 const likeBtn = document.createElement("button"); likeBtn.className = "like-button";
                 const countSpan = document.createElement("span"); countSpan.className = "like-count";
@@ -1712,12 +907,10 @@
                 likeBtn.addEventListener("click", () => {
                     const isLiked = localStorage.getItem(likeKey) === "1";
                     if (isLiked) {
-                        localStorage.removeItem(likeKey);
-                        likeCount = Math.max(0, likeCount - 1);
+                        localStorage.removeItem(likeKey); likeCount = Math.max(0, likeCount - 1);
                         likeBtn.innerHTML = "👍 Like"; likeBtn.classList.remove("liked");
                     } else {
-                        localStorage.setItem(likeKey, "1");
-                        likeCount++;
+                        localStorage.setItem(likeKey, "1"); likeCount++;
                         likeBtn.innerHTML = "👍 Liked"; likeBtn.classList.add("liked");
                     }
                     localStorage.setItem(likeKey + "_count", likeCount);
@@ -1730,7 +923,6 @@
             buildLeaderboard(localRequests.map((r) => ({ game: r.game || "(Unknown game)", likes: 0 })));
         }
 
-        // ── Leaderboard ───────────────────────────────────────────────
         function buildLeaderboard(requests) {
             const tbody = document.getElementById("leaderboardBody");
             if (!tbody) return;
@@ -1744,7 +936,7 @@
             const byGame = {};
             requests.forEach(r => {
                 const game = (r.game || "(Unknown game)").trim();
-                if (!byGame[game]) { byGame[game] = { game, count: 0, likes: 0 }; }
+                if (!byGame[game]) byGame[game] = { game, count: 0, likes: 0 };
                 byGame[game].count += 1;
                 byGame[game].likes += r.likes || 0;
             });
@@ -1760,7 +952,6 @@
             });
         }
 
-        // ── Load requests ─────────────────────────────────────────────
         async function loadRequests() {
             const container = document.getElementById("requestsGrid");
             if (!container) return;
@@ -1779,11 +970,9 @@
                         p.style.opacity = "0.8"; p.style.fontSize = "0.95rem";
                         container.appendChild(p); buildLeaderboard([]); return;
                     }
-                    // Firebase empty but we have local — show them
                     renderLocalRequests(container); return;
                 }
                 container.innerHTML = "";
-                // Only check liked state if user is already signed in
                 const likedSet = new Set();
                 const uid = currentUser ? currentUser.uid : null;
                 if (uid) {
@@ -1795,12 +984,12 @@
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data();
                     const id = docSnap.id;
-                    const game = truncateText(normalizeRequestText(data.game || "(Unknown game)"), REQUEST_LIMITS.game);
-                    const name = truncateText(normalizeRequestText(data.name || "Anonymous"), REQUEST_LIMITS.name);
+                    const game   = truncateText(normalizeRequestText(data.game || "(Unknown game)"), REQUEST_LIMITS.game);
+                    const name   = truncateText(normalizeRequestText(data.name || "Anonymous"), REQUEST_LIMITS.name);
                     const reason = truncateText(normalizeRequestText(data.reason || "No reason provided."), REQUEST_LIMITS.reason);
-                    const likes = Math.max(0, data.likes || 0);
+                    const likes  = Math.max(0, data.likes || 0);
                     let dateText = "";
-                    if (data.createdAt?.toDate) { dateText = data.createdAt.toDate().toLocaleString(); }
+                    if (data.createdAt?.toDate) dateText = data.createdAt.toDate().toLocaleString();
                     allRequests.push({ id, game, name, reason, likes });
                     const card = document.createElement("div"); card.className = "request-card";
                     const titleEl = document.createElement("p"); titleEl.className = "request-card-title"; titleEl.textContent = game;
@@ -1815,7 +1004,6 @@
                     if (alreadyLiked) likeBtn.classList.add("liked");
                     likeBtn.addEventListener("click", () => toggleLike(id, likeBtn, countSpan));
                     likeRow.appendChild(likeBtn); likeRow.appendChild(countSpan);
-                    // Show fingerprint badge
                     const fpBadge = document.createElement("span");
                     fpBadge.className = "fingerprint-badge";
                     fpBadge.textContent = "🔍 ID: " + (data.fingerprint || "unknown");
@@ -1823,7 +1011,6 @@
                     container.appendChild(card);
                 });
 
-                // Also append any locally saved requests (submitted when Firebase write was denied)
                 const localRequests = getLocalRequests().slice().reverse();
                 if (localRequests.length) {
                     const localLabel = document.createElement("p");
@@ -1850,12 +1037,10 @@
                         likeBtn.addEventListener("click", () => {
                             const isLiked = localStorage.getItem(likeKey) === "1";
                             if (isLiked) {
-                                localStorage.removeItem(likeKey);
-                                likeCount = Math.max(0, likeCount - 1);
+                                localStorage.removeItem(likeKey); likeCount = Math.max(0, likeCount - 1);
                                 likeBtn.innerHTML = "👍 Like"; likeBtn.classList.remove("liked");
                             } else {
-                                localStorage.setItem(likeKey, "1");
-                                likeCount++;
+                                localStorage.setItem(likeKey, "1"); likeCount++;
                                 likeBtn.innerHTML = "👍 Liked"; likeBtn.classList.add("liked");
                             }
                             localStorage.setItem(likeKey + "_count", likeCount);
@@ -1866,12 +1051,9 @@
                         container.appendChild(card);
                     });
                 }
-
                 buildLeaderboard(allRequests);
             } catch (err) {
-                if (err?.code === "permission-denied") {
-                    renderLocalRequests(container); return;
-                }
+                if (err?.code === "permission-denied") { renderLocalRequests(container); return; }
                 console.error("Error loading requests:", err);
                 container.innerHTML = `<p style='opacity:0.7'>Error loading requests: ${err?.message || "Unknown error"}</p>`;
                 buildLeaderboard([]);
@@ -1883,16 +1065,13 @@
             if (!requestsCol) { alert("Requests are temporarily unavailable."); return; }
             const form = event.target;
             const gameName = truncateText(normalizeRequestText(document.getElementById('gameName').value), REQUEST_LIMITS.game);
-            const rawName = normalizeRequestText(document.getElementById('yourName').value);
+            const rawName  = normalizeRequestText(document.getElementById('yourName').value);
             const yourName = truncateText(rawName || 'Anonymous', REQUEST_LIMITS.name);
-            const reason = truncateText(normalizeRequestText(document.getElementById('reason').value), REQUEST_LIMITS.reason);
+            const reason   = truncateText(normalizeRequestText(document.getElementById('reason').value), REQUEST_LIMITS.reason);
             if (!gameName) { alert("Please enter a game name."); return; }
-
-            // Check for slurs/hate speech
             if (containsSlur(gameName) || containsSlur(yourName) || containsSlur(reason)) {
                 showSlurBanner();
                 alert("🚫 Your submission was blocked for containing prohibited language.\n\nDon't try it again. Your device has been flagged.");
-                // Log the violation to Firebase
                 try {
                     const fp = await getFingerprint();
                     await addDoc(collection(db, "violations"), {
@@ -1903,31 +1082,22 @@
                 } catch(e) { console.error("Could not log violation:", e); }
                 return;
             }
-
             const fp = await getFingerprint();
-            const writeRequest = async () => {
-                await addDoc(requestsCol, {
-                    game: gameName,
-                    name: yourName,
-                    reason,
-                    likes: 0,
-                    fingerprint: fp,
-                    createdAt: serverTimestamp()
-                });
-            };
             try {
-                await writeRequest();
+                await addDoc(requestsCol, {
+                    game: gameName, name: yourName, reason,
+                    likes: 0, fingerprint: fp, createdAt: serverTimestamp()
+                });
                 alert(`You have submitted the form.\n\nGame: "${gameName}"`);
                 form.reset();
-                if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
+                if (typeof window.closeRequestModal === "function") window.closeRequestModal();
                 loadRequests();
             } catch (err) {
                 if (err?.code === "permission-denied") {
-                    // Anonymous auth is disabled — save locally instead
                     saveLocalRequest({ game: gameName, name: yourName, reason, dateText: new Date().toLocaleString() });
                     alert(`Request saved locally.\n\nGame: "${gameName}"`);
                     form.reset();
-                    if (typeof window.closeRequestModal === "function") { window.closeRequestModal(); }
+                    if (typeof window.closeRequestModal === "function") window.closeRequestModal();
                     loadRequests(); return;
                 }
                 console.error("Error saving request:", err);
@@ -1935,7 +1105,6 @@
             }
         };
 
-        // Modules run after DOM is already parsed — just call loadRequests directly.
         loadRequests();
     </script>
 
@@ -1954,7 +1123,6 @@
             <a href="forums.html" class="btn-forums">Join The Forums</a>
         </div>
 
-        <!-- Announcements Section -->
         <div class="announcements-section" style="margin-bottom: 3rem;">
             <h2>Announcements</h2>
 
@@ -2030,7 +1198,6 @@
             <h2>Download Website</h2>
             <p>Get the full website with all games to run offline on your computer</p>
             <a href="https://github.com/KikiKian/Even-Better-CC-Ported" target="_blank" class="btn">Download from GitHub</a>
-            
             <div class="instructions">
                 <h3>How to Download & Run Locally:</h3>
                 <ol>
@@ -2057,7 +1224,6 @@
             </div>
             <div class="games-grid">
 
-                <!-- ✅ INTERSTELLAR CARD — premium locked -->
                 <div class="game-card">
                     <div class="game-icon proxy-icon">🚀</div>
                     <h3>ANYSITE <span style="font-size:1rem;">👑</span></h3>
@@ -2126,8 +1292,8 @@
                     <h3>Retro Bowl</h3>
                     <p>Lead your football team to victory in this retro-style sports management game!</p>
                     <a href="games/rb/index.html" class="btn-play">Play Now</a>
-                </div> 
-           
+                </div>
+
                 <div class="game-card">
                     <div class="game-icon">MC</div>
                     <h3>MC 1.8</h3>
@@ -2183,7 +1349,7 @@
                     <p>A game where you can drift and race cars in various environments.</p>
                     <a href="games/dh/index.html" class="btn-play">Play Now</a>
                 </div>
-        
+
                 <div class="game-card">
                     <div class="game-icon">3t</div>
                     <h3>Three.js Tetris</h3>
@@ -2312,13 +1478,11 @@
 
             </div>
         </div>
-
     </div>
 
-    <!-- Floating buttons -->
     <a class="proxy-float" href="https://interstellar-roan-pi.vercel.app/" target="_blank">🚀 Proxy</a>
     <a class="forums-float" href="forums.html">Community Forums</a>
-    
+
     <script>
         function switchTab(tabName, buttonElement) {
             const tabContents = document.querySelectorAll('.tab-content');
@@ -2326,8 +1490,8 @@
             const tabButtons = document.querySelectorAll('.tab-button');
             tabButtons.forEach(btn => { btn.classList.remove('active'); });
             const selectedTab = document.getElementById(tabName + 'Tab');
-            if (selectedTab) { selectedTab.classList.add('active'); }
-            if (buttonElement) { buttonElement.classList.add('active'); }
+            if (selectedTab) selectedTab.classList.add('active');
+            if (buttonElement) buttonElement.classList.add('active');
         }
 
         function searchGames() {
@@ -2345,21 +1509,17 @@
             document.getElementById('requestModal').style.display = 'block';
             updateAllCounters();
         }
-
         function closeRequestModal() {
             document.getElementById('requestModal').style.display = 'none';
         }
-
         function scrollToGlobalRequests() {
             const section = document.getElementById('globalRequests');
-            if (section) { section.scrollIntoView({ behavior: 'smooth' }); }
+            if (section) section.scrollIntoView({ behavior: 'smooth' });
         }
-
         window.onclick = function(event) {
             const modal = document.getElementById('requestModal');
-            if (event.target == modal) { closeRequestModal(); }
+            if (event.target == modal) closeRequestModal();
         }
-
         function bindCounter(inputId, counterId) {
             const input = document.getElementById(inputId);
             const counter = document.getElementById(counterId);
@@ -2369,7 +1529,6 @@
             input.addEventListener('input', update);
             update();
         }
-
         function updateAllCounters() {
             [['gameName','gameNameCount'],['yourName','yourNameCount'],['reason','reasonCount']].forEach(([inputId, counterId]) => {
                 const input = document.getElementById(inputId);
@@ -2379,7 +1538,6 @@
                 counter.textContent = `${input.value.length}/${max}`;
             });
         }
-
         window.addEventListener('DOMContentLoaded', () => {
             bindCounter('gameName', 'gameNameCount');
             bindCounter('yourName', 'yourNameCount');
